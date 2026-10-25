@@ -31,14 +31,13 @@
   }
 
   const girlShapes = [
-    { part: "hair", curves: [ [[-.25,-.6],[-.49,-.94],[-.29,-1.28],[.05,-1.23]], [[.05,-1.23],[.46,-1.24],[.43,-.83],[.37,-.59]], [[.37,-.59],[.3,-.27],[.58,-.12],[.42,.23]], [[.42,.23],[.24,.43],[.11,.21],[.04,.11]], [[.04,.11],[-.05,.3],[-.39,.31],[-.39,.04]], [[-.39,.04],[-.22,-.11],[-.48,-.36],[-.25,-.6]] ] },
-    { part: "skin", curves: [ [[-.065,-.61],[-.07,-.49],[-.08,-.43],[-.23,-.39]], [[-.23,-.39],[-.34,-.31],[-.25,-.15],[-.13,-.17]], [[-.13,-.17],[.01,-.11],[.19,-.17],[.26,-.31]], [[.26,-.31],[.21,-.39],[.08,-.42],[.085,-.6]], [[.085,-.6],[.04,-.65],[-.01,-.65],[-.065,-.61]] ] },
-    { part: "skin", curves: [ [[.17,-.35],[.32,-.39],[.31,-.12],[.35,.02]], [[.35,.02],[.36,.09],[.23,.21],[.14,.19]], [[.14,.19],[.07,.2],[.07,.11],[.14,.1]], [[.14,.1],[.21,.07],[.24,.04],[.23,-.02]], [[.23,-.02],[.18,-.13],[.11,-.25],[.17,-.35]] ] },
-    { part: "shoe", curves: [ [[-.17,.94],[-.21,1.04],[-.26,1.1],[-.12,1.1]], [[-.12,1.1],[-.04,1.12],[.01,1.06],[-.07,1.02]], [[-.07,1.02],[-.07,.99],[-.06,.97],[-.06,.94]], [[-.06,.94],[-.1,.92],[-.14,.92],[-.17,.94]] ] },
-    { part: "shoe", curves: [ [[.12,.94],[.13,1.04],[.12,1.1],[.23,1.1]], [[.23,1.1],[.37,1.11],[.35,1.03],[.23,1.02]], [[.23,1.02],[.22,.98],[.24,.96],[.23,.94]], [[.23,.94],[.19,.93],[.16,.93],[.12,.94]] ] },
-    { part: "dress", curves: [ [[-.18,-.26],[-.11,-.29],[-.05,-.24],[0,-.24]], [[0,-.24],[.07,-.3],[.14,-.3],[.21,-.26]], [[.21,-.26],[.15,-.11],[.13,.06],[.17,.18]], [[.17,.18],[.21,.48],[.42,.82],[.53,.98]], [[.53,.98],[.34,1.09],[.08,1.1],[-.03,1.04]], [[-.03,1.04],[-.25,1.09],[-.45,1.05],[-.53,.96]], [[-.53,.96],[-.34,.64],[-.19,.36],[-.17,.17]], [[-.17,.17],[-.14,.02],[-.15,-.1],[-.18,-.26]] ] },
-    { part: "face", curves: [ [[-.23,-.98],[-.29,-.82],[-.21,-.61],[-.03,-.56]], [[-.03,-.56],[.13,-.51],[.28,-.7],[.25,-.94]], [[.25,-.94],[.16,-1.1],[-.05,-1.11],[-.23,-.98]] ] },
-    { part: "fringe", curves: [ [[-.27,-.91],[-.27,-1.2],[.14,-1.26],[.29,-1.02]], [[.29,-1.02],[.38,-.92],[.25,-.74],[.19,-.73]], [[.19,-.73],[.21,-.93],[.09,-.96],[.015,-1.04]], [[.015,-1.04],[-.08,-.91],[-.18,-.85],[-.27,-.91]] ] }
+    { part: "hair", curves: [ [[-.13,-.92],[-.26,-1.19],[-.06,-1.32],[.12,-1.23]], [[.12,-1.23],[.33,-1.13],[.22,-.84],[.25,-.62]], [[.25,-.62],[.23,-.38],[.4,-.16],[.3,.12]], [[.3,.12],[.22,.29],[.12,.23],[.08,.12]], [[.08,.12],[.22,-.06],[-.12,-.29],[-.08,-.55]], [[-.08,-.55],[-.18,-.72],[-.12,-.8],[-.13,-.92]] ] },
+    { part: "skin", curves: [ [[-.015,-.85],[-.022,-.73],[-.035,-.68],[-.19,-.61]], [[-.19,-.61],[-.25,-.54],[-.19,-.4],[-.1,-.4]], [[-.1,-.4],[.01,-.36],[.13,-.39],[.2,-.52]], [[.2,-.52],[.2,-.59],[.07,-.64],[.07,-.84]], [[.07,-.84],[.04,-.87],[.01,-.87],[-.015,-.85]] ] },
+    { part: "skin", curves: [ [[.16,-.56],[.26,-.53],[.24,-.31],[.27,-.18]], [[.27,-.18],[.25,-.08],[.15,-.02],[.13,-.07]], [[.13,-.07],[.11,-.1],[.18,-.16],[.19,-.2]], [[.19,-.2],[.17,-.32],[.12,-.47],[.16,-.56]] ] },
+    { part: "shoe", curves: [ [[-.13,1.01],[-.16,1.04],[-.23,1.09],[-.13,1.1]], [[-.13,1.1],[-.03,1.11],[-.02,1.08],[-.06,1.02]], [[-.06,1.02],[-.08,1],[-.11,1],[-.13,1.01]] ] },
+    { part: "dress", curves: [ [[-.18,-.52],[-.12,-.48],[-.05,-.46],[.01,-.48]], [[.01,-.48],[.08,-.47],[.14,-.51],[.19,-.53]], [[.19,-.53],[.18,-.39],[.09,-.2],[.115,-.09]], [[.115,-.09],[.13,.24],[.28,.68],[.42,.94]], [[.42,.94],[.49,1.01],[.6,1.035],[.69,1.04]], [[.69,1.04],[.46,1.16],[.17,1.09],[.035,1.07]], [[.035,1.07],[-.18,1.13],[-.39,1.08],[-.43,1.025]], [[-.43,1.025],[-.33,.74],[-.17,.29],[-.12,-.08]], [[-.12,-.08],[-.09,-.24],[-.21,-.38],[-.18,-.52]] ] },
+    { part: "face", curves: [ [[-.13,-1.13],[-.18,-1.09],[-.15,-1.015],[-.19,-.985]], [[-.19,-.985],[-.235,-.95],[-.2,-.936],[-.174,-.933]], [[-.174,-.933],[-.177,-.904],[-.198,-.907],[-.175,-.89]], [[-.175,-.89],[-.173,-.847],[-.119,-.824],[-.08,-.834]], [[-.08,-.834],[.039,-.854],[.109,-.987],[.087,-1.091]], [[.087,-1.091],[.048,-1.18],[-.055,-1.19],[-.13,-1.13]] ] },
+    { part: "fringe", curves: [ [[-.167,-1.105],[-.18,-1.24],[.009,-1.29],[.132,-1.161]], [[.132,-1.161],[.22,-1.08],[.154,-.907],[.083,-.882]], [[.083,-.882],[.09,-1.014],[.007,-1.032],[-.025,-1.137]], [[-.025,-1.137],[-.085,-1.083],[-.12,-1.078],[-.167,-1.105]] ] }
   ];
 
   function traceShape(context, shape) {
@@ -86,12 +85,12 @@
   function proposalState(elapsed, reduced = false) {
     const time = reduced ? 38 : elapsed;
     return {
-      reveal: smoothStep((time - 25) / 4),
-      arrival: smoothStep((time - 27) / 2.5),
+      reveal: smoothStep((time - 23.5) / 4.5),
+      arrival: smoothStep((time - 26) / 3),
       kneel: smoothStep((time - 29.5) / 3),
       offer: smoothStep((time - 32) / 2.8),
       reach: smoothStep((time - 34) / 2.5),
-      farewell: 1 - smoothStep((time - 39) / 1)
+      farewell: 1 - smoothStep((time - 38.8) / 1.2)
     };
   }
 
@@ -140,30 +139,69 @@
     const random = randomGenerator(80225);
     const branches = [];
     const blossoms = [];
-    function branch(startX, startY, length, angle, width, level) {
-      const endX = startX + Math.cos(angle) * length;
-      const endY = startY + Math.sin(angle) * length;
-      const bend = (random() - .5) * length * .6;
-      const birth = (6 - level) * .095;
-      branches.push({ anchors: [[startX, startY], [startX + Math.cos(angle + .25) * length * .35 + bend, startY + Math.sin(angle) * length * .3], [endX - Math.cos(angle - .2) * length * .25, endY - Math.sin(angle) * length * .25], [endX, endY]], width, birth });
-      if (level < 3) {
-        const count = compact ? 10 : 17;
-        for (let index = 0; index < count; index++) {
-          const phase = random() * TAU;
-          const radius = Math.sqrt(random()) * (.075 + length * .25);
-          blossoms.push({ x: endX + Math.cos(phase) * radius * 1.3, y: endY + Math.sin(phase) * radius * .7, size: .009 + random() * .012, tone: Math.floor(random() * 4), birth: .44 + random() * .35, phase: random() * TAU });
-        }
+    const clusters = [];
+    const scaffold = [
+      { anchors:[[0,.025],[.075,-.22],[-.035,-.48],[.075,-.77]], width:.115 },
+      { anchors:[[.018,-.35],[-.16,-.54],[-.39,-.51],[-.64,-.81]], width:.066 },
+      { anchors:[[-.22,-.57],[-.47,-.67],[-.74,-.59],[-.91,-.79]], width:.033 },
+      { anchors:[[-.43,-.66],[-.58,-.83],[-.62,-.98],[-.81,-1.03]], width:.025 },
+      { anchors:[[-.09,-.49],[-.22,-.72],[-.12,-1],[-.35,-1.21]], width:.045 },
+      { anchors:[[-.15,-.78],[-.38,-.91],[-.29,-1.08],[-.49,-1.23]], width:.025 },
+      { anchors:[[.027,-.59],[.14,-.84],[.07,-1.04],[.17,-1.35]], width:.068 },
+      { anchors:[[.082,-.8],[.29,-.87],[.42,-.85],[.62,-1.04]], width:.044 },
+      { anchors:[[.1,-.92],[.28,-1.07],[.31,-1.22],[.47,-1.29]], width:.031 },
+      { anchors:[[.3,-.93],[.54,-.93],[.67,-.77],[.88,-.88]], width:.028 },
+      { anchors:[[.53,-.97],[.65,-1.12],[.85,-1.04],[.99,-1.12]], width:.018 },
+      { anchors:[[-.01,-.43],[.19,-.48],[.22,-.63],[.45,-.69]], width:.038 },
+      { anchors:[[.24,-.62],[.44,-.65],[.55,-.57],[.71,-.67]], width:.019 }
+    ];
+    const addBranch = (anchors, width, birth, depth) => {
+      const samples = sampleCurve(anchors, 24);
+      const bark = Array.from({length: Math.ceil(width * 600)}, () => ({along:random(),across:(random()-.5)*.85,light:random()>.55}));
+      branches.push({anchors,width,birth,depth,samples,bark});
+      return samples;
+    };
+    scaffold.forEach((limb, limbIndex) => {
+      const birth = limbIndex === 0 ? 0 : .06 + limbIndex*.018;
+      const depth = random();
+      const samples = addBranch(limb.anchors,limb.width,birth,depth);
+      if(limbIndex === 0) return;
+      const count = limbIndex < 7 ? 6 : 7;
+      for(let index=0;index<count;index++) {
+        const along = .42 + index/count*.57;
+        const sampleIndex = Math.min(22,Math.floor(along*24));
+        const start = samples[sampleIndex];
+        const next = samples[sampleIndex+1];
+        const angle = Math.atan2(next.y-start.y,next.x-start.x) + (random()-.62)*1.65;
+        const length = .065 + random()*.13;
+        const end = {x:start.x+Math.cos(angle)*length,y:start.y+Math.sin(angle)*length};
+        const droop = .016 + random()*.035;
+        addBranch([[start.x,start.y],[start.x+Math.cos(angle)*length*.4,start.y+Math.sin(angle)*length*.3],[end.x,end.y-droop],[end.x,end.y]],limb.width*(1-along)*.45+.0012,birth+.13,depth);
+        clusters.push({x:end.x,y:end.y,radius:.045+random()*.055,depth,birth:.3+random()*.2});
       }
-      if (!level) return;
-      const spread = level > 3 ? .53 : .45;
-      for (const direction of [-1, 1]) branch(endX, endY, length * (.65 + random() * .12), angle + direction * (spread + random() * .2), width * .65, level - 1);
-    }
-    branch(0, 0, .36, -Math.PI / 2 + .14, .045, 6);
-    const petals = Array.from({ length: compact ? 32 : 64 }, () => {
-      const flower = blossoms[Math.floor(random() * blossoms.length)];
-      return { x: flower.x, y: flower.y, phase: random() * TAU, offset: random(), speed: .7 + random() * .6, size: .012 + random() * .014, tone: Math.floor(random() * 4) };
+      clusters.push({x:limb.anchors[3][0],y:limb.anchors[3][1],radius:.08,depth,birth:.4});
     });
-    return { branches, blossoms, petals };
+    clusters.sort((first,second)=>first.depth-second.depth);
+    clusters.forEach(cluster=>{
+      const count=compact?32:50;
+      for(let index=0;index<count;index++) {
+        const phase=random()*TAU;
+        const radius=Math.sqrt(random())*cluster.radius;
+        blossoms.push({x:cluster.x+Math.cos(phase)*radius*1.4,y:cluster.y+Math.sin(phase)*radius*.72,size:.008+random()*.009,phase,depth:cluster.depth,tone:Math.floor(random()*4),birth:cluster.birth+random()*.16});
+      }
+    });
+    const petals = Array.from({ length: compact ? 25 : 44 }, () => {
+      const flower = blossoms[Math.floor(random() * blossoms.length)];
+      return { x: flower.x, y: flower.y, phase: random() * TAU, offset: random(), speed: .7 + random() * .6, size: .008 + random() * .008, tone: Math.floor(random() * 4) };
+    });
+    return { branches, blossoms, petals, clusters };
+  }
+
+  function butterflyState(index, elapsed, reduced = false) {
+    const time = reduced ? 37 : elapsed;
+    const phase = index*1.83;
+    const angle = time*.32+phase;
+    return { x:.49+Math.cos(angle)*(.24+index*.012),y:.4+Math.sin(angle*1.21+phase)*.13+Math.sin(time*.9+phase)*.015,depth:Math.sin(angle),flap:.2+Math.abs(Math.sin(time*7+phase))*.8,rotation:Math.sin(angle+phase)*.35,opacity:smoothStep((time-26-index*.65)/2.5)*(1-smoothStep((time-38.8)/1.2)) };
   }
 
   class Theatre {
@@ -186,7 +224,7 @@
       this.meteorShots = [];
       this.tick = this.tick.bind(this);
       this.resize();
-      this.canvas.setAttribute("aria-label", "星落倾心：流星落水、樱花星夜，星光汇成珠光长裙少女，西装男生单膝跪地递出闪耀钻戒");
+      this.canvas.setAttribute("aria-label", "星落倾心：流星落水、自然樱花树与蓝金星夜，星尘汇成修长礼服恋人，男生单膝献戒，几只蝴蝶环绕飞舞");
     }
 
     resize() {
@@ -212,6 +250,9 @@
       this.glowSprites = new Map();
       this.flowerSprites = [];
       this.girlSurface = null;
+      this.girlRevealSurface = null;
+      this.suitorSurface = null;
+      this.suitorPose = null;
       this.render();
     }
 
@@ -323,18 +364,34 @@
       const sprite = this.makeSurface(32, 32);
       if (sprite) {
         const context = sprite.getContext("2d");
-        const colors = ["#f8b9ce", "#e88aaf", "#ffe0df", "#cf85b0"];
-        context.fillStyle = colors[tone];
+        const colors = ["#f5c2cf", "#d997b1", "#fff0e8", "#b988a6"];
         for (let index = 0; index < 5; index++) {
           const angle = index / 5 * TAU;
+          context.save();
+          context.translate(16,16);
+          context.rotate(angle);
+          const gradient=context.createLinearGradient(0,0,11,0);
+          gradient.addColorStop(0,"#c784a0");gradient.addColorStop(.45,colors[tone]);gradient.addColorStop(1,"#ffe9e9");
+          context.fillStyle=gradient;
           context.beginPath();
-          context.ellipse(16 + Math.cos(angle) * 5, 16 + Math.sin(angle) * 5, 5.2, 3.2, angle, 0, TAU);
+          context.moveTo(0,0);
+          context.bezierCurveTo(4,-6,12,-5,11,-1);
+          context.lineTo(9,0);
+          context.lineTo(11,1);
+          context.bezierCurveTo(12,5,4,6,0,0);
           context.fill();
+          context.strokeStyle="rgba(255,236,228,.28)";context.lineWidth=.5;context.stroke();
+          context.restore();
         }
         context.fillStyle = "#ffe8b0";
         context.beginPath();
-        context.arc(16, 16, 1.7, 0, TAU);
+        context.arc(16, 16, 1, 0, TAU);
         context.fill();
+        for(let index=0;index<7;index++) {
+          const angle=index/7*TAU;
+          context.strokeStyle="#e3b99a";context.lineWidth=.45;
+          context.beginPath();context.moveTo(16,16);context.lineTo(16+Math.cos(angle)*3,16+Math.sin(angle)*3);context.stroke();
+        }
       }
       this.flowerSprites[tone] = sprite;
       return sprite;
@@ -342,32 +399,72 @@
 
     drawSakura(context, size, growth) {
       context.save();
-      context.translate(size * .9, size * 1.45);
+      context.translate(size * 1.05, size * 1.45);
       context.scale(size * .88, size * .88);
       context.lineCap = "round";
-      this.sakura.branches.forEach(branch => {
+      [...this.sakura.branches].sort((first,second)=>first.width-second.width).forEach(branch => {
         const reveal = smoothStep((growth - branch.birth) / .22);
         if (!reveal) return;
         const anchors = branch.anchors;
         context.save();
         context.globalAlpha = reveal;
-        context.strokeStyle = "#573441";
-        context.lineWidth = branch.width;
-        context.beginPath();
-        context.moveTo(...anchors[0]);
-        context.bezierCurveTo(...anchors[1], ...anchors[2], ...anchors[3]);
-        context.stroke();
-        context.strokeStyle = "rgba(242,163,185,.45)";
-        context.lineWidth = branch.width * .23;
-        context.stroke();
+        const samples=branch.samples;
+        const edges=samples.map((point,index)=>{
+          const previous=samples[Math.max(0,index-1)];const next=samples[Math.min(samples.length-1,index+1)];
+          const angle=Math.atan2(next.y-previous.y,next.x-previous.x)+Math.PI/2;
+          const radius=branch.width*(.53-index/(samples.length-1)*.43)*(1+Math.sin(index*1.7+branch.birth*20)*.05);
+          return {left:[point.x+Math.cos(angle)*radius,point.y+Math.sin(angle)*radius],right:[point.x-Math.cos(angle)*radius,point.y-Math.sin(angle)*radius]};
+        });
+        const material=context.createLinearGradient(anchors[0][0]-.065,anchors[0][1],anchors[0][0]+.065,anchors[0][1]);
+        material.addColorStop(0,"#211f2a");material.addColorStop(.3,"#6f5656");material.addColorStop(.48,"#9a7770");material.addColorStop(.66,"#58474c");material.addColorStop(1,"#292936");
+        context.beginPath();context.moveTo(...edges[0].left);edges.slice(1).forEach(edge=>context.lineTo(...edge.left));[...edges].reverse().forEach(edge=>context.lineTo(...edge.right));context.closePath();context.fillStyle=material;context.fill();
+        context.save();context.clip();
+        branch.bark.forEach(mark=>{
+          const sampleIndex=Math.min(samples.length-2,Math.floor(mark.along*(samples.length-1)));
+          const point=samples[sampleIndex];const next=samples[sampleIndex+1];
+          const angle=Math.atan2(next.y-point.y,next.x-point.x);const radius=branch.width*(.53-mark.along*.43);
+          const positionX=point.x+Math.cos(angle+Math.PI/2)*radius*mark.across;
+          const positionY=point.y+Math.sin(angle+Math.PI/2)*radius*mark.across;
+          context.strokeStyle=mark.light?"rgba(202,163,140,.32)":"rgba(16,20,29,.48)";context.lineWidth=.0013;
+          context.beginPath();context.moveTo(positionX-Math.cos(angle+Math.PI/2)*radius*.6,positionY-Math.sin(angle+Math.PI/2)*radius*.6);context.lineTo(positionX+Math.cos(angle+Math.PI/2)*radius*.5,positionY+Math.sin(angle+Math.PI/2)*radius*.5);context.stroke();
+        });
+        if (branch.width > .024) {
+          for (let seam = 0; seam < 3; seam++) {
+            context.beginPath();
+            samples.forEach((point, index) => {
+              const edge = edges[index];
+              const offset = .2 + seam * .27 + Math.sin(index * .63 + seam * 2.1) * .04;
+              const positionX = edge.left[0] + (edge.right[0] - edge.left[0]) * offset;
+              const positionY = edge.left[1] + (edge.right[1] - edge.left[1]) * offset;
+              if (index === 0) context.moveTo(positionX, positionY);
+              else context.lineTo(positionX, positionY);
+            });
+            context.strokeStyle = seam % 2 ? "rgba(220,178,155,.17)" : "rgba(19,23,32,.28)";
+            context.lineWidth = branch.width * .017;
+            context.stroke();
+          }
+          const knot = samples[10];
+          const direction = Math.atan2(samples[11].y - knot.y, samples[11].x - knot.x);
+          context.strokeStyle = "rgba(35,28,35,.46)";
+          context.lineWidth = .0014;
+          context.beginPath();
+          context.ellipse(knot.x, knot.y, branch.width * .23, branch.width * .095, direction, 0, TAU);
+          context.stroke();
+        }
+        context.restore();
+        context.strokeStyle="rgba(210,170,154,.24)";context.lineWidth=branch.width*.055;
+        context.beginPath();context.moveTo(...edges[0].left);edges.slice(1).forEach(edge=>context.lineTo(...edge.left));context.stroke();
         context.restore();
       });
+      for(const direction of [-1,1]) {
+        context.fillStyle="#4f4249";context.beginPath();context.moveTo(-.025,0);context.bezierCurveTo(direction*.08,.005,direction*.1,.015,direction*.17,.025);context.bezierCurveTo(direction*.07,.013,direction*.035,-.04,.025,-.1);context.closePath();context.fill();
+      }
       this.sakura.blossoms.forEach(flower => {
         const bloom = smoothStep((growth - flower.birth) / .18);
         if (!bloom) return;
         const sprite = this.flowerSprite(flower.tone);
         const radius = flower.size * ( .35 + bloom * .65);
-        context.globalAlpha = bloom * .85;
+        context.globalAlpha = bloom * (.64+flower.depth*.3);
         if (sprite) context.drawImage(sprite, flower.x - radius, flower.y - radius, radius * 2, radius * 2);
         else {
           context.fillStyle = ["#f8b9ce", "#e88aaf", "#ffe0df", "#cf85b0"][flower.tone];
@@ -384,18 +481,18 @@
       const compact = this.width < 600;
       const growth = this.reduced ? 1 : smoothStep((elapsed - .6) / 9);
       if (!growth) return;
-      const size = Math.min(this.width * (compact ? .56 : .32), this.height * .6);
+      const size = Math.min(this.width * (compact ? .58 : .34), this.height * .51);
       const shoreY = this.height * .66;
       const originX = this.width * (compact ? .19 : .17);
-      const left = originX - size * .9;
+      const left = originX - size * 1.05;
       const top = shoreY - size * 1.45;
-      const opacity = (compact ? .84 - finale * .43 : .98 - finale * .2);
-      if (!this.treeSurface) this.treeSurface = this.makeSurface(size * 2, size * 1.6);
-      const growthFrame = Math.round(growth * 36);
+      const opacity = (compact ? .96 - finale * .38 : 1 - finale * .15);
+      if (!this.treeSurface) this.treeSurface = this.makeSurface(size * 2.2, size * 1.6);
+      const growthFrame = Math.round(growth * 24);
       if (this.treeSurface && this.treeGrowth !== growthFrame) {
         const cachedContext = this.treeSurface.getContext("2d");
         cachedContext.clearRect(0, 0, this.treeSurface.width, this.treeSurface.height);
-        this.drawSakura(cachedContext, size, growthFrame / 36);
+        this.drawSakura(cachedContext, size, growthFrame / 24);
         this.treeGrowth = growthFrame;
       }
       const sway = this.reduced ? 0 : Math.sin(elapsed * .38) * .006;
@@ -549,11 +646,6 @@
       }
       context.lineTo(this.width, this.height * .79);
       context.lineTo(0, this.height * .79);
-      context.fill();
-      context.beginPath();
-      context.moveTo(this.width * .08, this.height * .61);
-      context.bezierCurveTo(this.width * .04, this.height * .44, this.width * .09, this.height * .34, this.width * .08, this.height * .25);
-      context.bezierCurveTo(this.width * .16, this.height * .42, this.width * .12, this.height * .43, this.width * .17, this.height * .61);
       context.fill();
       context.restore();
     }
@@ -716,87 +808,83 @@
     }
 
     paintGirl(context) {
-      const gradient = (startX, startY, endX, endY, stops) => {
-        const fill = context.createLinearGradient(startX, startY, endX, endY);
-        stops.forEach(([offset, color]) => fill.addColorStop(offset, color));
-        return fill;
+      const gradient=(startX,startY,endX,endY,stops)=>{
+        const fill=context.createLinearGradient(startX,startY,endX,endY);
+        stops.forEach(([offset,color])=>fill.addColorStop(offset,color));return fill;
       };
-      const skin = gradient(-.3, -.9, .29, -.55, [[0,"#a26977"],[.3,"#e4aca4"],[.52,"#ffe2c7"],[.76,"#edb3a2"],[1,"#b37586"]]);
-      const materials = {
-        hair: gradient(-.4, -.9, .45, .2, [[0,"#13172e"],[.2,"#3b2944"],[.42,"#72516a"],[.6,"#28233d"],[.82,"#4d354e"],[1,"#bb7f9f"]]),
-        fringe: gradient(-.25, -1.2, .26, -.75, [[0,"#262039"],[.42,"#795368"],[.66,"#3e2b41"],[1,"#201e35"]]),
-        skin, face: skin,
-        shoe: gradient(-.2, 1, .3, 1.1, [[0,"#946c93"],[.5,"#e0bce1"],[1,"#685a93"]]),
-        dress: gradient(-.53, .15, .52, .7, [[0,"#465e99"],[.14,"#a5a7da"],[.3,"#e3d7e9"],[.45,"#fff0e7"],[.58,"#c0c7e9"],[.72,"#bc9dce"],[.87,"#d5b2d1"],[1,"#647dac"]])
+      const skin=gradient(-.22,-1.06,.2,-.55,[[0,"#b27e83"],[.28,"#f5d2bb"],[.49,"#ffe6cd"],[.77,"#ddb3a5"],[1,"#a77c89"]]);
+      const materials={
+        hair:gradient(-.2,-1.2,.34,.15,[[0,"#171d2c"],[.32,"#483444"],[.49,"#79606c"],[.62,"#322d40"],[.9,"#473247"],[1,"#957084"]]),
+        fringe:gradient(-.18,-1.24,.2,-.85,[[0,"#51404b"],[.35,"#76606a"],[.62,"#3a2f40"],[1,"#212534"]]),
+        skin,face:skin,shoe:"#b8a6a6",
+        dress:gradient(-.43,-.1,.61,.5,[[0,"#748697"],[.19,"#c0c6cf"],[.34,"#f4e7df"],[.46,"#fff1e2"],[.6,"#b9c5d4"],[.77,"#d1b9cd"],[1,"#8196af"]])
       };
-      girlShapes.forEach(shape => {
-        traceShape(context, shape);
-        context.fillStyle = materials[shape.part];
-        context.fill();
-        context.strokeStyle = shape.part === "dress" ? "rgba(243,223,244,.7)" : "rgba(225,184,205,.35)";
-        context.lineWidth = .006;
-        context.stroke();
+      const curve=(anchors,color,width)=>{
+        context.beginPath();context.moveTo(...anchors[0]);context.bezierCurveTo(...anchors[1],...anchors[2],...anchors[3]);
+        context.strokeStyle=color;context.lineWidth=width;context.lineCap="round";context.stroke();
+      };
+      const ellipse=(positionX,positionY,radiusX,radiusY,color,rotation=0)=>{
+        context.fillStyle=color;context.beginPath();context.ellipse(positionX,positionY,radiusX,radiusY,rotation,0,TAU);context.fill();
+      };
+      girlShapes.forEach(shape=>{
+        traceShape(context,shape);context.fillStyle=materials[shape.part];context.fill();
+        context.strokeStyle=shape.part==="dress"?"rgba(255,234,217,.6)":"rgba(225,184,187,.18)";context.lineWidth=.003;context.stroke();
       });
-      const curve = (anchors, color, width) => {
-        context.beginPath();
-        context.moveTo(...anchors[0]);
-        context.bezierCurveTo(...anchors[1], ...anchors[2], ...anchors[3]);
-        context.strokeStyle = color;
-        context.lineWidth = width;
-        context.lineCap = "round";
-        context.stroke();
-      };
-      const ellipse = (positionX, positionY, radiusX, radiusY, color, rotation = 0) => {
-        context.fillStyle = color;
-        context.beginPath();
-        context.ellipse(positionX, positionY, radiusX, radiusY, rotation, 0, TAU);
-        context.fill();
-      };
-      traceShape(context, girlShapes.find(shape => shape.part === "dress"));
-      context.save();
-      context.clip();
-      for (let index = 0; index < 9; index++) {
-        const offset = (index - 4) * .09;
-        curve([[offset * .22,.07],[offset * .5,.34],[offset * 1.1,.76],[offset * 1.45,1.07]], index % 2 ? "rgba(255,246,241,.46)" : "rgba(76,99,156,.24)", index % 2 ? .009 : .019);
+      traceShape(context,girlShapes.find(shape=>shape.part==="dress"));
+      context.save();context.clip();
+      for(let index=0;index<10;index++){
+        const offset=(index-4.5)*.073;
+        curve([[offset*.25,-.18],[offset*.5,.14],[offset*1.2,.72],[offset*1.6+.06,1.1]],index%2?"rgba(255,246,229,.44)":"rgba(67,87,123,.2)",index%2?.009:.018);
       }
-      const random = randomGenerator(9371);
-      for (let index = 0; index < 165; index++) {
-        const positionY = -.22 + random() * 1.29;
-        const positionX = (random() - .5) * 1.08;
-        ellipse(positionX, positionY, .002 + random() * .003, .003, index % 3 ? "rgba(255,247,237,.52)" : "rgba(172,214,255,.55)");
+      for(let index=0;index<6;index++){
+        const offset=index*.018;
+        curve([[-.17,-.49+offset],[-.04,-.43+offset],[.09,-.5+offset],[.17,-.51+offset]],"rgba(255,242,222,.4)",.003);
+      }
+      const random=randomGenerator(9371);
+      for(let index=0;index<105;index++){
+        const positionY=-.45+random()*1.54;const positionX=(random()-.5)*1.1;
+        ellipse(positionX,positionY,.0018+random()*.0018,.002,index%3?"rgba(255,244,222,.37)":"rgba(185,209,228,.33)");
       }
       context.restore();
-      curve([[-.17,.13],[-.05,.17],[.06,.17],[.17,.13]], "#edc9d1", .012);
-      ellipse(.015,.15,.021,.014,"#fff0d1");
-      for (const offset of [-.14, .105]) {
-        ellipse(offset,-.81,.059,.025,"#f9e1d8",-.08);
-        ellipse(offset - .014,-.808,.025,.03,"#4f3b52");
-        ellipse(offset - .02,-.817,.009,.01,"#fff9ef");
-        curve([[offset-.064,-.82],[offset-.03,-.853],[offset+.029,-.85],[offset+.058,-.823]],"#413044",.011);
-        curve([[offset-.06,-.892],[offset-.025,-.91],[offset+.018,-.905],[offset+.047,-.888]],"#684552",.008);
+      curve([[-.12,-.09],[-.03,-.06],[.04,-.06],[.115,-.09]],"#d8c1b0",.008);
+      ellipse(.002,-.077,.01,.009,"#fff1cf");
+      curve([[-.156,-1.005],[-.13,-.999],[-.101,-1.006],[-.081,-1.021]],"#49353e",.006);
+      curve([[-.16,-1.007],[-.15,-1.014],[-.152,-1.02],[-.156,-1.023]],"#49353e",.004);
+      curve([[-.146,-1.044],[-.122,-1.055],[-.101,-1.054],[-.082,-1.049]],"rgba(85,58,67,.76)",.004);
+      ellipse(-.122,-.942,.023,.009,"rgba(202,122,138,.16)",-.2);
+      curve([[-.18,-.912],[-.167,-.908],[-.158,-.911],[-.15,-.914]],"#bc7b87",.004);
+      curve([[-.168,-.902],[-.16,-.9],[-.153,-.901],[-.147,-.904]],"rgba(255,230,214,.65)",.003);
+      ellipse(.077,-.945,.012,.019,"#ddb9a8");
+      ellipse(.079,-.918,.006,.02,"#fce1b3");
+      curve([[-.105,-.668],[-.035,-.614],[.03,-.613],[.11,-.645]],"rgba(242,214,184,.6)",.003);
+      ellipse(.002,-.625,.005,.009,"#fff0d1");
+      for(let index=0;index<7;index++){
+        const offset=index*.016;
+        curve([[.09+offset,-1.19],[.24+offset,-.92],[.1+offset,-.43],[.26+offset,.12]],"rgba(194,159,169,.22)",.0025);
       }
-      ellipse(-.17,-.74,.052,.025,"rgba(223,117,142,.22)");
-      ellipse(.14,-.74,.046,.025,"rgba(223,117,142,.22)");
-      curve([[.006,-.816],[-.018,-.77],[-.027,-.746],[.008,-.744]],"rgba(169,107,107,.55)",.006);
-      curve([[-.065,-.683],[-.026,-.657],[.011,-.659],[.05,-.692]],"#b46a81",.009);
-      curve([[-.04,-.678],[-.014,-.671],[.006,-.674],[.027,-.679]],"#ffe7da",.004);
-      curve([[-.14,-.4],[-.06,-.32],[.02,-.31],[.14,-.4]],"rgba(255,230,204,.7)",.006);
-      ellipse(0,-.331,.01,.016,"#fff0cb");
-      ellipse(-.238,-.72,.014,.025,"#ffe5b7");
-      ellipse(.251,-.72,.012,.024,"#ffe5b7");
-      for (let index = 0; index < 5; index++) {
-        const offset = index * .024;
-        curve([[-.22-offset*.3,-1.08],[-.37-offset,-.75],[-.18-offset,-.28],[-.29-offset,.12]],"rgba(221,161,188,.22)",.005);
-        curve([[.15+offset,-1.08],[.39+offset,-.79],[.17+offset,-.19],[.35+offset,.17]],"rgba(190,157,214,.22)",.004);
+      for(let index=0;index<5;index++){
+        const angle=index/5*TAU;
+        ellipse(.14+Math.cos(angle)*.018,-1.04+Math.sin(angle)*.018,.017,.008,"#f1c2cb",angle);
       }
-      for (let index = 0; index < 5; index++) {
-        const angle = index / 5 * TAU;
-        ellipse(.23 + Math.cos(angle)*.023,-.99 + Math.sin(angle)*.023,.025,.012,"#efbad7",angle);
-      }
-      ellipse(.23,-.99,.01,.01,"#fff0c8");
+      ellipse(.14,-1.04,.006,.006,"#ffe6bc");
     }
 
-    girlPortrait(context, positionX, positionY, scale, opacity) {
+    featherPortrait(surface, reveal) {
+      if (reveal >= 1) return;
+      const context = surface.getContext("2d");
+      const feather = surface.height * .16;
+      const boundary = surface.height * (1 - reveal) * 1.2 - feather;
+      const mask = context.createLinearGradient(0, boundary, 0, boundary + feather);
+      mask.addColorStop(0, "rgba(255,255,255,0)");
+      mask.addColorStop(1, "rgba(255,255,255,1)");
+      context.save();
+      context.globalCompositeOperation = "destination-in";
+      context.fillStyle = mask;
+      context.fillRect(0, 0, surface.width, surface.height);
+      context.restore();
+    }
+
+    girlPortrait(context, positionX, positionY, scale, opacity, reveal = 1) {
       if (opacity <= .001) return;
       const density = Math.min(this.ratio || 1, 1.5);
       if (!this.girlSurface) {
@@ -811,7 +899,19 @@
       }
       context.save();
       context.globalAlpha *= opacity;
-      if (this.girlSurface) context.drawImage(this.girlSurface, positionX - this.girlSurface.width / density / 2, positionY - scale * 1.32, this.girlSurface.width / density, this.girlSurface.height / density);
+      if (this.girlSurface) {
+        let portrait=this.girlSurface;
+        if(reveal<1) {
+          if(!this.girlRevealSurface)this.girlRevealSurface=this.makeSurface(portrait.width,portrait.height);
+          if(this.girlRevealSurface) {
+            const target=this.girlRevealSurface.getContext("2d");
+            target.clearRect(0,0,portrait.width,portrait.height);target.drawImage(portrait,0,0);
+            this.featherPortrait(this.girlRevealSurface, reveal);
+            portrait=this.girlRevealSurface;
+          }
+        }
+        context.drawImage(portrait, positionX - this.girlSurface.width / density / 2, positionY - scale * 1.32, this.girlSurface.width / density, this.girlSurface.height / density);
+      }
       else {
         context.translate(positionX, positionY);
         context.scale(scale, scale);
@@ -823,10 +923,10 @@
     drawSuitor(context, state) {
       const kneel = state.kneel;
       const offer = state.offer;
-      const hip = { x: -1.19, y: .1 + kneel * .46 };
-      const shoulder = { x: -1.22 + kneel * .075, y: -.57 + kneel * .46 };
-      const neck = { x: shoulder.x + .035, y: shoulder.y - .12 };
-      const head = { x: neck.x + .04, y: neck.y - .19 };
+      const hip = { x: -1.15, y: .02 + kneel * .43 };
+      const shoulder = { x: -1.19 + kneel * .1, y: -.72 + kneel * .47 };
+      const neck = { x: shoulder.x + .022, y: shoulder.y - .095 };
+      const head = { x: neck.x + .025, y: neck.y - .135 };
       const kneeFront = { x: -.95 + kneel * .26, y: .57 + kneel * .055 };
       const footFront = { x: -.9 + kneel * .3, y: 1.05 };
       const kneeBack = { x: -1.37 - kneel * .14, y: .6 + kneel * .45 };
@@ -860,44 +960,100 @@
       jacket.addColorStop(.4,"#394e72");
       jacket.addColorStop(.7,"#203451");
       jacket.addColorStop(1,"#6d7291");
-      line([hip,kneeBack,footBack],"#172640",.19);
-      line([hip,kneeFront,footFront],"#2d4263",.2);
+      line([hip,kneeBack,footBack],"#17243a",.145);
+      line([hip,kneeFront,footFront],"#2c3c53",.155);
       line([{x:hip.x+.045,y:hip.y+.03},kneeFront,{x:footFront.x-.02,y:1}],"rgba(166,183,214,.32)",.012);
-      line([{x:footFront.x-.09,y:1.075},{x:footFront.x+.14,y:1.075}],"#111a2c",.09);
-      line([{x:footBack.x-.12,y:1.075},{x:footBack.x+.08,y:1.075}],"#131d32",.085);
+      line([{x:footFront.x-.075,y:1.075},{x:footFront.x+.12,y:1.075}],"#111a2c",.055);
+      line([{x:footBack.x-.1,y:1.075},{x:footBack.x+.07,y:1.075}],"#131d32",.053);
       line([{x:shoulder.x-.08,y:shoulder.y+.02},{x:elbow.x-.08,y:elbow.y+.035},{x:hand.x-.07,y:hand.y+.07}],"#283855",.15);
-      polygon([[shoulder.x-.18,shoulder.y],[shoulder.x+.12,shoulder.y-.015],[hip.x+.16,hip.y+.14],[hip.x-.19,hip.y+.12]],jacket);
+      context.beginPath();context.moveTo(shoulder.x-.15,shoulder.y+.025);context.quadraticCurveTo(shoulder.x-.07,shoulder.y-.035,shoulder.x+.115,shoulder.y+.005);context.bezierCurveTo(shoulder.x+.14,shoulder.y+.16,hip.x+.085,hip.y-.09,hip.x+.13,hip.y+.115);context.quadraticCurveTo(hip.x-.04,hip.y+.14,hip.x-.145,hip.y+.095);context.closePath();context.fillStyle=jacket;context.fill();
       polygon([[neck.x-.06,shoulder.y-.025],[neck.x+.095,shoulder.y-.025],[hip.x+.06,hip.y-.03]],"#e7e2df");
       polygon([[neck.x+.015,shoulder.y+.04],[neck.x+.05,shoulder.y+.1],[hip.x+.065,hip.y-.16],[hip.x+.005,hip.y-.12]],"#aa7493");
       line([{x:shoulder.x-.12,y:shoulder.y+.005},{x:shoulder.x-.05,y:shoulder.y+.21},{x:hip.x+.035,y:hip.y-.05}],"#8d91b0",.016);
       line([{x:shoulder.x+.11,y:shoulder.y+.01},{x:shoulder.x+.17,y:shoulder.y+.18},{x:hip.x+.035,y:hip.y-.05}],"#697d9c",.014);
-      line([{x:neck.x,y:neck.y-.02},{x:neck.x,y:shoulder.y+.02}],face,.13);
+      line([{x:neck.x,y:neck.y-.02},{x:neck.x,y:shoulder.y+.02}],face,.085);
       context.save();
       context.translate(head.x,head.y);
-      context.rotate(-.08-kneel*.2);
-      polygon([[-.12,-.17],[.06,-.18],[.13,-.095],[.15,.005],[.205,.045],[.153,.075],[.14,.17],[.065,.205],[-.065,.15],[-.14,.015]],face);
-      polygon([[-.14,.045],[-.18,-.075],[-.155,-.205],[-.11,-.23],[-.11,-.27],[-.015,-.24],[.07,-.265],[.17,-.175],[.1,-.105],[-.005,-.13],[-.055,-.03]],"#202039");
-      line([{x:-.125,y:-.16},{x:-.015,y:-.21},{x:.09,y:-.17}],"#665269",.02);
-      context.fillStyle = "#f6e8d9";
-      context.beginPath();
-      context.ellipse(.086,-.019,.034,.016,-.08,0,TAU);
-      context.fill();
-      context.fillStyle = "#493c51";
-      context.beginPath();
-      context.ellipse(.099,-.02,.012,.016,0,0,TAU);
-      context.fill();
-      line([{x:.05,y:-.044},{x:.118,y:-.035}],"#453449",.012);
-      line([{x:.105,y:.123},{x:.15,y:.111}],"#ab7582",.009);
-      context.fillStyle = "#e4ac9e";
-      context.beginPath();
-      context.ellipse(-.095,.045,.04,.058,0,0,TAU);
-      context.fill();
+      context.rotate(-.045-kneel*.12);
+      context.beginPath();context.moveTo(-.095,-.106);context.bezierCurveTo(-.07,-.18,.074,-.17,.102,-.089);context.quadraticCurveTo(.094,-.042,.115,-.014);context.lineTo(.146,.026);context.quadraticCurveTo(.139,.04,.108,.044);context.lineTo(.112,.078);context.quadraticCurveTo(.097,.081,.111,.095);context.quadraticCurveTo(.092,.137,.037,.146);context.quadraticCurveTo(-.032,.114,-.072,.061);context.closePath();context.fillStyle=face;context.fill();
+      context.beginPath();context.moveTo(-.094,.045);context.bezierCurveTo(-.142,-.025,-.119,-.169,-.032,-.184);context.quadraticCurveTo(.057,-.207,.121,-.125);context.quadraticCurveTo(.092,-.084,.036,-.089);context.quadraticCurveTo(-.02,-.112,-.031,-.019);context.lineTo(-.055,.042);context.closePath();context.fillStyle="#242533";context.fill();
+      line([{x:-.093,y:-.108},{x:-.032,y:-.157},{x:.063,y:-.128}],"rgba(160,140,144,.42)",.008);
+      line([{x:.046,y:-.03},{x:.089,y:-.026}],"#4a3b43",.005);
+      line([{x:.048,y:-.006},{x:.091,y:-.009}],"#443b42",.004);
+      line([{x:.102,y:.083},{x:.087,y:.083}],"#a66e77",.004);
+      context.fillStyle="#d5a398";context.beginPath();context.ellipse(-.065,.035,.022,.035,0,0,TAU);context.fill();
       context.restore();
-      line([shoulder,elbow,{x:hand.x-.06,y:hand.y}],jacket,.16);
+      line([shoulder,elbow,{x:hand.x-.06,y:hand.y}],jacket,.115);
       line([{x:elbow.x,y:elbow.y-.065},{x:hand.x-.09,y:hand.y-.055}],"rgba(192,197,219,.4)",.011);
-      line([{x:hand.x-.095,y:hand.y},{x:hand.x-.045,y:hand.y}],"#eee4de",.105);
-      line([{x:hand.x-.02,y:hand.y},{x:hand.x+.055,y:hand.y-.015}],face,.075);
+      line([{x:hand.x-.095,y:hand.y},{x:hand.x-.045,y:hand.y}],"#eee4de",.073);
+      line([{x:hand.x-.02,y:hand.y},{x:hand.x+.055,y:hand.y-.015}],face,.045);
       return hand;
+    }
+
+    suitorPortrait(context, state, scale) {
+      const density = Math.min(this.ratio || 1, 1.5);
+      const resolution = scale * density;
+      if (!this.suitorSurface) this.suitorSurface = this.makeSurface(resolution * 2.3, resolution * 2.6);
+      if (!this.suitorSurface) return this.drawSuitor(context, state);
+      if (this.suitorPose !== state) {
+        const portrait = this.suitorSurface.getContext("2d");
+        portrait.clearRect(0, 0, this.suitorSurface.width, this.suitorSurface.height);
+        portrait.save();
+        portrait.translate(resolution * 2, resolution * 1.32);
+        portrait.scale(resolution, resolution);
+        this.suitorHand = this.drawSuitor(portrait, state);
+        portrait.restore();
+        this.featherPortrait(this.suitorSurface, this.reduced ? 1 : state.arrival);
+        this.suitorPose = state;
+      }
+      context.drawImage(this.suitorSurface, -2, -1.32, this.suitorSurface.width / resolution, this.suitorSurface.height / resolution);
+      return this.suitorHand;
+    }
+
+    entranceStardust(elapsed) {
+      if(this.reduced || elapsed<21 || elapsed>30) return;
+      const context=this.context;
+      const layout=proposalLayout(this.width,this.height);
+      const progress=smoothStep((elapsed-21)/7);
+      const fade=smoothStep((elapsed-21)/1.5)*(1-smoothStep((elapsed-27)/3));
+      const count=this.width<600?90:150;
+      context.save();context.globalCompositeOperation="lighter";
+      for(let index=0;index<count;index++) {
+        const along=index/(count-1);
+        const angle=along*TAU*2.2+elapsed*.55;
+        const radius=layout.scale*(.8-along*.4)*(1-progress*.35);
+        const positionX=layout.centerX+layout.scale*.1+Math.cos(angle)*radius;
+        const positionY=layout.groundY-along*layout.scale*2.6+Math.sin(angle)*layout.scale*.1;
+        this.point(positionX,positionY,index%9===0?1.2:.55,index%3?"255,217,176":"236,177,206",fade*(.12+along*.22));
+      }
+      context.restore();
+    }
+
+    flutteringButterflies(elapsed,foreground) {
+      const context=this.context;
+      const count=this.width<600?3:5;
+      for(let index=0;index<count;index++) {
+        const state=butterflyState(index,elapsed,this.reduced);
+        if(state.opacity<.005 || (state.depth>0)!==foreground) continue;
+        const size=Math.min(this.width,this.height)*(.012+index*.001)*(1+state.depth*.17);
+        const positionX=state.x*this.width;const positionY=state.y*this.height;
+        context.save();context.translate(positionX,positionY);context.rotate(state.rotation);
+        context.globalAlpha=state.opacity*(.7+state.depth*.15);
+        for(const side of [-1,1]) {
+          context.save();context.scale(side*(.22+state.flap*.78),1);
+          const wing=context.createLinearGradient(0,0,size*1.25,-size*.6);
+          wing.addColorStop(0,index%2?"#a98cbd":"#ba8c99");wing.addColorStop(.56,index%2?"#c6c8ef":"#f3c5d0");wing.addColorStop(1,"#fff0d7");
+          context.fillStyle=wing;context.strokeStyle="rgba(252,227,205,.68)";context.lineWidth=.55;
+          context.beginPath();context.moveTo(0,0);context.bezierCurveTo(size*.25,-size*.92,size*1.46,-size*1.24,size*1.2,-size*.14);context.bezierCurveTo(size*1.05,size*.15,size*.45,size*.1,0,0);context.fill();context.stroke();
+          context.beginPath();context.moveTo(0,0);context.bezierCurveTo(size*.96,-size*.04,size*1.11,size*.69,size*.49,size*.7);context.bezierCurveTo(size*.16,size*.64,size*.08,size*.2,0,0);context.fill();context.stroke();
+          context.strokeStyle="rgba(100,81,130,.3)";context.lineWidth=.4;
+          for(let vein=0;vein<3;vein++){context.beginPath();context.moveTo(0,0);context.quadraticCurveTo(size*.35,-size*.17,size*(.55+vein*.22),-size*(.25+vein*.22));context.stroke();}
+          context.restore();
+        }
+        context.strokeStyle="#ebd2bd";context.lineWidth=.85;context.beginPath();context.moveTo(0,-size*.32);context.lineTo(0,size*.42);context.stroke();
+        context.lineWidth=.45;context.beginPath();context.moveTo(0,-size*.3);context.quadraticCurveTo(-size*.14,-size*.58,-size*.22,-size*.57);context.moveTo(0,-size*.3);context.quadraticCurveTo(size*.14,-size*.58,size*.22,-size*.57);context.stroke();
+        context.restore();
+      }
     }
 
     proposalScene(elapsed) {
@@ -908,8 +1064,8 @@
       const { scale, centerX, centerY, groundY } = proposalLayout(this.width, this.height);
       const time = this.reduced ? 38 : elapsed;
       const girlX = centerX + scale * .47;
-      const manX = centerX - scale * (1 - state.arrival) * .42;
-      const lift = (1-state.reveal)*scale*.05;
+      const manX = centerX;
+      const lift = 0;
       context.save();
       context.globalAlpha *= opacity;
       this.glow(girlX,centerY-scale*.4,scale*1.25,"215,161,205",.16);
@@ -922,17 +1078,17 @@
       context.beginPath();
       context.ellipse(centerX-scale*.4,groundY+scale*.03,scale*1.45,scale*.14,0,0,TAU);
       context.stroke();
-      this.girlPortrait(context,girlX,centerY+lift,scale,state.reveal);
+      this.girlPortrait(context,girlX,centerY+lift,scale,1,state.reveal);
       context.save();
       context.translate(0,groundY*1.22);
       context.scale(1,-.22);
-      this.girlPortrait(context,girlX,centerY,scale,.13);
+      this.girlPortrait(context,girlX,centerY,scale,.13,state.reveal);
       context.restore();
       context.save();
       context.translate(manX,centerY+lift);
       context.scale(scale,scale);
       context.globalAlpha *= state.arrival;
-      const hand = this.drawSuitor(context,state);
+      const hand = this.suitorPortrait(context, state, scale);
       context.restore();
       context.save();
       context.translate(0,groundY*1.22);
@@ -940,7 +1096,7 @@
       context.translate(manX,centerY+lift);
       context.scale(scale,scale);
       context.globalAlpha *= state.arrival*.1;
-      this.drawSuitor(context,state);
+      this.suitorPortrait(context, state, scale);
       context.restore();
       const ringX = manX + (hand.x+.02)*scale;
       const ringY = centerY + (hand.y-.14)*scale + lift;
@@ -1002,14 +1158,15 @@
       }
       if (state.reveal > .001) {
         context.save();
+        context.globalAlpha *= smoothStep((state.reveal - .58) / .3);
         context.strokeStyle = "#f4c7b3";
-        context.lineWidth = scale*.064;
+        context.lineWidth = scale*.044;
         context.lineCap = "round";
         const handX = (girlX-scale*.17)*(1-state.reach) + (ringX+scale*.125)*state.reach;
-        const handY = (centerY+scale*.15)*(1-state.reach) + (ringY-scale*.045)*state.reach;
+        const handY = (centerY-scale*.03)*(1-state.reach) + (ringY-scale*.045)*state.reach;
         context.beginPath();
-        context.moveTo(girlX-scale*.235,centerY-scale*.23);
-        context.quadraticCurveTo(girlX-scale*.35,centerY+scale*.1,handX,handY);
+        context.moveTo(girlX-scale*.19,centerY-scale*.57);
+        context.quadraticCurveTo(girlX-scale*.32,centerY-scale*.14,handX,handY);
         context.stroke();
         context.lineWidth = scale*.03;
         context.beginPath();
@@ -1052,6 +1209,8 @@
       this.starrySky(elapsed, (.1 + paint * .64) * (1 - finale * .45));
       this.waterSurface(elapsed, finale);
       this.sakuraTree(elapsed, finale);
+      this.entranceStardust(elapsed);
+      this.flutteringButterflies(elapsed,false);
       this.proposalScene(elapsed);
       context.save();
       context.globalCompositeOperation = "lighter";
@@ -1074,8 +1233,8 @@
         const parallax = Math.sin(particle.phase) * .06 * (1 - particleState.gather) + particle.z * particleState.gather;
         const positionX = centerX + (particleState.x * Math.cos(yaw) + parallax * Math.sin(yaw)) * scale;
         const positionY = centerY + particleState.y * scale;
-        const settledOpacity = ["face", "skin", "shoe"].includes(particle.part) ? .025 : .23;
-        const alpha = particleState.alpha * (particleState.gather > .9 ? settledOpacity : .23) * state.farewell * (this.reduced ? 1 : Math.min(1, (elapsed - 6) / 3));
+        const settledOpacity = ["face", "skin", "shoe", "fringe", "hair"].includes(particle.part) ? .005 : .055;
+        const alpha = particleState.alpha * (particleState.gather > .9 ? settledOpacity : .12) * state.farewell * (this.reduced ? 1 : Math.min(1, (elapsed - 6) / 3));
         const color = particleState.gather < .2 ? index % 4 === 0 ? "255,214,124" : "113,179,251" : particle.color;
         if (index % 17 === 0) this.point(positionX, positionY, particle.size * 3, color, alpha * .065);
         if (alpha <= .005) return;
@@ -1091,6 +1250,7 @@
         });
       });
       context.restore();
+      this.flutteringButterflies(elapsed,true);
     }
 
     render() {
@@ -1229,5 +1389,5 @@
     }
   }
 
-  window.RomanceParticles = Object.freeze({ Theatre, NameDedication, makeGirlParticles, makeMeteorEvents, makeSakuraTree, meteorEventState, meteorParticleState, proposalState, proposalLayout, meteorChapters, duration });
+  window.RomanceParticles = Object.freeze({ Theatre, NameDedication, makeGirlParticles, makeMeteorEvents, makeSakuraTree, meteorEventState, meteorParticleState, proposalState, proposalLayout, butterflyState, meteorChapters, duration });
 })();
