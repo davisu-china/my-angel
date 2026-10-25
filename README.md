@@ -8,7 +8,7 @@ The portable browser experience lives in `experience/`. Run `npm run dev:offline
 
 ## Soundtrack
 
-Default soundtrack: **Angel — Yoon Mi-rae (尹美莱), Tiger JK (徐正权), and Bizzy**. The user-provided file is included as `experience/assets/bgm.mp3` (about 4:15, 320 kbps), copied without transcoding. The page only plays after an explicit click, loops the song, and pauses when hidden without automatically resuming. Only the top-right music toggle remains; the bottom footer, soundtrack card and local file picker are removed.
+Default soundtrack: **Angel — Yoon Mi-rae (尹美莱), Tiger JK (徐正权), and Bizzy**. The user-provided file is included as `experience/assets/bgm.mp3` (about 4:15, 320 kbps), copied without transcoding. There are no music buttons, player controls, soundtrack cards or file pickers. The hidden audio attempts playback on entry and loops. If the browser requires a gesture, a click, tap, Enter or Space starts playback during normal interaction without showing a prompt. Music pauses when hidden and attempts to resume when the page returns. Autoplay restrictions cannot be bypassed; playback failures stay silent and do not interrupt the experience.
 
 The audio element's `data-src` is set to `assets/bgm.mp3`. The offline build embeds it; the hosted copy uses the file. MP3, M4A, OGG and WAV are supported. Media rights remain with their respective owners; including a user-provided file does not grant redistribution rights.
 

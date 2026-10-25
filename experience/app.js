@@ -134,64 +134,42 @@
 
   selectAll("[data-scroll]").forEach((button)=>button.addEventListener("click",()=>scrollToElement(button.dataset.scroll)));
   const music = select("#background-music");
-  const soundToggle = select(".sound-toggle");
   let musicLoading = false;
   let musicRequest = 0;
+  let musicUnavailable = false;
   music.volume = .45;
-  if (music.dataset.src) music.src = music.dataset.src;
-
-  function updateSoundButton() {
-    const playing = !music.paused;
-    soundToggle.setAttribute("aria-pressed", String(playing));
-    soundToggle.setAttribute("aria-busy", String(musicLoading));
-    soundToggle.setAttribute("aria-label", musicLoading ? "取消歌曲加载" : playing ? "暂停歌曲" : "播放歌曲");
-    select(".sound-label").textContent = musicLoading ? "加载中" : playing ? "音乐开启" : "播放音乐";
-  }
 
   function pauseMusic() {
     musicRequest++;
     musicLoading = false;
     music.pause();
-    updateSoundButton();
-  }
-
-  function musicFailed() {
-    pauseMusic();
-    toast("歌曲暂时无法播放，请检查音频文件或稍后重试。");
   }
 
   async function playMusic() {
-    if (document.hidden) return;
-    if (!music.getAttribute("src")) { toast("暂未找到背景音乐，请检查配乐文件。"); return; }
+    if (document.hidden || musicUnavailable || musicLoading || !music.paused || !music.getAttribute("src")) return;
     const request = ++musicRequest;
     musicLoading = true;
-    updateSoundButton();
     try {
       await music.play();
-      if (request !== musicRequest) return;
-      musicLoading = false;
-      updateSoundButton();
     } catch (error) {
       if (request !== musicRequest) return;
-      if (error.name === "NotAllowedError") {
-        pauseMusic();
-        toast("浏览器需要手动确认，请点击右上角播放音乐。");
-      } else musicFailed();
+      if (error.name !== "NotAllowedError" && error.name !== "AbortError") musicUnavailable = true;
+    } finally {
+      if (request === musicRequest) musicLoading = false;
     }
   }
 
-  soundToggle.addEventListener("click", () => {
-    if (musicLoading || !music.paused) pauseMusic();
-    else playMusic();
+  function startBackgroundMusic(event) {
+    if (event.type === "keydown" && (event.repeat || event.ctrlKey || event.metaKey || event.altKey || !["Enter", " "].includes(event.key))) return;
+    playMusic();
+  }
+  ["pointerup", "touchend", "click", "keydown"].forEach(event => {
+    document.addEventListener(event, startBackgroundMusic, { capture: true, passive: true });
   });
-  music.addEventListener("play", updateSoundButton);
-  music.addEventListener("pause", updateSoundButton);
-  music.addEventListener("error", musicFailed);
+  music.addEventListener("error", () => { musicUnavailable = true; pauseMusic(); });
   window.addEventListener("pagehide", pauseMusic);
-  updateSoundButton();
-
-  let toastTimer;
-  function toast(message){const node=select(".toast");node.textContent=message;node.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>node.classList.remove("visible"),3500);}
+  window.addEventListener("pageshow", event => { if (event.persisted) playMusic(); });
+  if (music.dataset.src) music.src = music.dataset.src;
 
   let resizeTimer;
   window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { if (theatre.active) theatre.resize(); }, 150); });
@@ -199,6 +177,7 @@
   document.addEventListener("visibilitychange", () => {
     theatre.sync();
     if (document.hidden) { stopFilm(); pauseMusic(); }
+    else playMusic();
   });
   motionPreference.addEventListener("change", () => {
     reducedMotion = motionPreference.matches;
@@ -209,4 +188,5 @@
   });
   theatre.active = true;
   theatre.sync();
+  playMusic();
 })();
