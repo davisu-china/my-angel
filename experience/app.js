@@ -5,6 +5,22 @@
   const selectAll = (selector, root = document) => [...root.querySelectorAll(selector)];
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
   let reducedMotion = motionPreference.matches;
+  const nameCanvas = select("#dedication-particles");
+  const dedication = nameCanvas ? new window.RomanceParticles.NameDedication(nameCanvas, reducedMotion) : null;
+  if (dedication) {
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(entries => {
+        dedication.visible = entries[0].isIntersecting;
+        dedication.sync();
+      }, { threshold: .15 }).observe(nameCanvas);
+    } else {
+      dedication.visible = true;
+      dedication.sync();
+    }
+    document.fonts?.ready.then(() => dedication.resize(true));
+    window.addEventListener("pagehide", () => { dedication.active = false; dedication.sync(); });
+    window.addEventListener("pageshow", () => { dedication.active = !select("#photo-dialog").open; dedication.sync(); });
+  }
 
   if ("IntersectionObserver" in window) {
     const revealObserver = new IntersectionObserver(entries => {
@@ -75,6 +91,7 @@
   function syncPhotoDialog() {
     document.body.classList.toggle("photo-open", photoDialog.open);
     theatre.active = !photoDialog.open;
+    if (dedication) { dedication.active = !photoDialog.open; dedication.sync(); }
     theatre.sync();
   }
   selectAll("[data-photo]").forEach(button => button.addEventListener("click", () => {
@@ -164,22 +181,28 @@
   let resizeTimer;
   function resizeTheatre() {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => theatre.resize(), 120);
+    resizeTimer = setTimeout(() => { theatre.resize(); dedication?.resize(); }, 120);
   }
   window.addEventListener("resize", resizeTheatre);
-  if ("ResizeObserver" in window) new ResizeObserver(resizeTheatre).observe(theatreCanvas.parentElement);
+  if ("ResizeObserver" in window) {
+    const resizeObserver = new ResizeObserver(resizeTheatre);
+    resizeObserver.observe(theatreCanvas.parentElement);
+    if (nameCanvas) resizeObserver.observe(nameCanvas.parentElement);
+  }
   window.addEventListener("scroll", () => {
     const maxScroll = document.documentElement.scrollHeight - innerHeight;
     select(".reading-progress span").style.transform = `scaleX(${maxScroll > 0 ? Math.min(scrollY / maxScroll, 1) : 0})`;
   }, { passive: true });
   document.addEventListener("visibilitychange", () => {
     theatre.sync();
+    dedication?.sync();
     if (document.hidden) pauseMusic();
     else playMusic();
   });
   motionPreference.addEventListener("change", () => {
     reducedMotion = motionPreference.matches;
     theatre.reduced = reducedMotion;
+    if (dedication) { dedication.reduced = reducedMotion; dedication.sync(); }
     if (reducedMotion) theatre.seekChapter(2);
     theatre.sync();
   });

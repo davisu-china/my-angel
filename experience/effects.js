@@ -1110,5 +1110,124 @@
     }
   }
 
-  window.RomanceParticles = Object.freeze({ Theatre, makeGirlParticles, makeMeteorEvents, makeSakuraTree, meteorEventState, meteorParticleState, proposalState, proposalLayout, meteorChapters, duration });
+  class NameDedication {
+    constructor(canvas, reduced = false) {
+      this.canvas = canvas;
+      this.context = canvas.getContext("2d");
+      this.name = canvas.parentElement.querySelector(".dedication-fallback").textContent.trim();
+      this.reduced = reduced;
+      this.elapsed = reduced ? 4.8 : 0;
+      this.visible = false;
+      this.active = true;
+      this.frame = 0;
+      this.lastTime = 0;
+      this.points = [];
+      this.tick = this.tick.bind(this);
+      this.resize();
+    }
+
+    resize(refreshFont = false) {
+      if (!this.context) return;
+      const bounds = this.canvas.getBoundingClientRect();
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      if (!bounds.width || !bounds.height) return;
+      if (!refreshFont && this.width === bounds.width && this.height === bounds.height && this.ratio === ratio) return;
+      this.width = bounds.width;
+      this.height = bounds.height;
+      this.ratio = ratio;
+      this.canvas.width = Math.round(this.width * ratio);
+      this.canvas.height = Math.round(this.height * ratio);
+      this.context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      const mask = this.canvas.ownerDocument.createElement("canvas");
+      mask.width = Math.round(this.width * 2);
+      mask.height = Math.round(this.height * 2);
+      const context = mask.getContext("2d", { willReadFrequently: true });
+      if (!context) { this.points = []; this.canvas.parentElement.classList.remove("is-particle-ready"); return; }
+      const letters = Array.from(this.name);
+      const fontSize = Math.min(33, (this.width - 30) / (letters.length * 1.16));
+      const advance = fontSize * 1.16;
+      const family = window.getComputedStyle(this.canvas).getPropertyValue("--serif").trim() || '"Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif';
+      context.scale(2, 2);
+      context.font = `500 ${fontSize}px ${family}`;
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.fillStyle = "#ffffff";
+      letters.forEach((letter, index) => context.fillText(letter, this.width / 2 + (index - (letters.length - 1) / 2) * advance, this.height / 2 + 1));
+      let pixels;
+      try { pixels = context.getImageData(0, 0, mask.width, mask.height)?.data; }
+      catch { pixels = null; }
+      const random = randomGenerator(90816);
+      const points = [];
+      if (pixels) {
+        for (let positionY = 4; positionY < mask.height - 4; positionY += 2) {
+          for (let positionX = 4; positionX < mask.width - 4; positionX += 2) {
+            const opacity = pixels[(positionY * mask.width + positionX) * 4 + 3] / 255;
+            if (opacity < .2) continue;
+            const targetX = positionX / 2;
+            const letter = Math.max(0, Math.min(letters.length - 1, Math.floor((targetX - this.width / 2) / advance + letters.length / 2)));
+            points.push({ x: targetX, y: positionY / 2, sourceX: random() * this.width, sourceY: this.height + random() * 20, orbit: 6 + random() * 17, phase: random() * TAU, delay: letter * .34 + random() * .5, size: .38 + random() * .25, opacity: opacity * (.65 + random() * .35), tone: Math.floor(random() * 3) });
+          }
+        }
+      }
+      this.points = points;
+      this.canvas.parentElement.classList.toggle("is-particle-ready", points.length > 0);
+      this.sync();
+    }
+
+    sync() {
+      cancelAnimationFrame(this.frame);
+      this.frame = 0;
+      this.lastTime = 0;
+      if (this.reduced) this.elapsed = 4.8;
+      this.render();
+      if (this.context && this.points.length && this.visible && this.active && !this.reduced && !document.hidden && this.elapsed < 4.8) this.frame = requestAnimationFrame(this.tick);
+    }
+
+    tick(time) {
+      this.frame = 0;
+      if (!this.visible || !this.active || this.reduced || document.hidden) return;
+      if (!this.lastTime) this.lastTime = time;
+      const delta = time - this.lastTime;
+      if (delta >= 40) {
+        this.elapsed = Math.min(4.8, this.elapsed + Math.min(delta, 80) / 1000);
+        this.lastTime = time;
+        this.render();
+      }
+      if (this.elapsed < 4.8) this.frame = requestAnimationFrame(this.tick);
+    }
+
+    render() {
+      if (!this.context || !this.width) return;
+      const context = this.context;
+      context.clearRect(0, 0, this.width, this.height);
+      const time = this.reduced ? 4.8 : this.elapsed;
+      const tones = ["236,207,158", "255,232,188", "195,161,112"];
+      const batches = new Map();
+      this.points.forEach((particle, index) => {
+        const progress = smoothStep((time - particle.delay) / 3.1);
+        const orbit = Math.sin(progress * Math.PI) * (1 - progress) * particle.orbit;
+        const angle = particle.phase + progress * TAU * 1.2;
+        const positionX = particle.sourceX + (particle.x - particle.sourceX) * progress + Math.cos(angle) * orbit;
+        const positionY = particle.sourceY + (particle.y - particle.sourceY) * progress + Math.sin(angle) * orbit * .5;
+        const reveal = smoothStep((time - particle.delay) / .8);
+        const alpha = Math.round(particle.opacity * reveal * (.4 + progress * .6) * 10) / 10;
+        if (alpha <= 0) return;
+        const key = `${tones[particle.tone]},${alpha}`;
+        if (!batches.has(key)) batches.set(key, []);
+        batches.get(key).push({ x: positionX, y: positionY, size: particle.size });
+        if (index % 61 === 0) {
+          context.fillStyle = `rgba(250,214,164,${alpha * .055})`;
+          context.beginPath();
+          context.arc(positionX, positionY, 2.4, 0, TAU);
+          context.fill();
+        }
+      });
+      batches.forEach((particles, tone) => {
+        context.fillStyle = `rgba(${tone})`;
+        particles.forEach(particle => context.fillRect(particle.x - particle.size, particle.y - particle.size, particle.size * 2, particle.size * 2));
+      });
+    }
+  }
+
+  window.RomanceParticles = Object.freeze({ Theatre, NameDedication, makeGirlParticles, makeMeteorEvents, makeSakuraTree, meteorEventState, meteorParticleState, proposalState, proposalLayout, meteorChapters, duration });
 })();
