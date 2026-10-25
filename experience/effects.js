@@ -1304,15 +1304,19 @@
       const context = mask.getContext("2d", { willReadFrequently: true });
       if (!context) { this.points = []; this.canvas.parentElement.classList.remove("is-particle-ready"); return; }
       const letters = Array.from(this.name);
-      const fontSize = Math.min(33, (this.width - 30) / (letters.length * 1.16));
-      const advance = fontSize * 1.16;
+      const fontSize = Math.min(30, (this.width - 24) / (letters.length * 1.2));
+      const advance = fontSize * 1.2;
       const family = window.getComputedStyle(this.canvas).getPropertyValue("--serif").trim() || '"Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif';
       context.scale(2, 2);
       context.font = `500 ${fontSize}px ${family}`;
       context.textAlign = "center";
-      context.textBaseline = "middle";
+      context.textBaseline = "alphabetic";
       context.fillStyle = "#ffffff";
-      letters.forEach((letter, index) => context.fillText(letter, this.width / 2 + (index - (letters.length - 1) / 2) * advance, this.height / 2 + 1));
+      const metrics = context.measureText(this.name) || {};
+      const ascent = metrics.actualBoundingBoxAscent ?? fontSize * .8;
+      const descent = metrics.actualBoundingBoxDescent ?? fontSize * .2;
+      const baseline = this.height / 2 + (ascent - descent) / 2;
+      letters.forEach((letter, index) => context.fillText(letter, this.width / 2 + (index - (letters.length - 1) / 2) * advance, baseline));
       let pixels;
       try { pixels = context.getImageData(0, 0, mask.width, mask.height)?.data; }
       catch { pixels = null; }
