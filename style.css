@@ -40,37 +40,36 @@ main, .site-header { position: relative; z-index: 1; }
 .scene-nav a { display: grid; place-items: center; min-height: 44px; min-width: 44px; color: var(--muted); font-size: 12px; letter-spacing: 2px; transition: color .25s; }
 .scene-nav a:hover { color: var(--accent); }
 .eyebrow { font-size: 10px; line-height: 1.7; letter-spacing: 2.5px; color: var(--accent); }
-.cinema-hero { position: relative; display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; column-gap: 5%; padding-top: 20px; padding-bottom: 76px; }
+.cinema-hero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); align-items: center; column-gap: clamp(32px, 5vw, 72px); padding-top: 24px; padding-bottom: 40px; }
 .hero-visual { grid-column: 2; grid-row: 1; min-width: 0; position: relative; }
 .film-portrait { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 46%; }
 .hero-visual figcaption { position: absolute; bottom: 20px; right: 20px; color: #fff1d6; font-size: 8px; letter-spacing: 2.5px; text-shadow: 0 1px 12px #000; }
-.hero-copy { grid-column: 1; grid-row: 1; padding-block: 30px; }
-.hero-copy h1 { margin-top: 30px; font-size: clamp(42px, 5.3vw, 72px); line-height: 1.4; letter-spacing: -1px; }
-.hero-description { color: var(--muted); font-size: 14px; line-height: 2.1; letter-spacing: 1px; margin-top: 28px; }
-.hero-dedication { display: flex; align-items: center; gap: 14px; margin-top: 56px; color: var(--accent); font-size: 12px; letter-spacing: 2px; }
-.dedication-line { flex: 0 0 32px; height: 1px; background: var(--accent); }
-.dedication-label { flex-shrink: 0; white-space: nowrap; }
-.dedication-name { position: relative; display: inline-grid; place-items: center; flex: 0 1 168px; width: clamp(128px, 16vw, 168px); min-width: 112px; height: 64px; }
+.hero-copy { grid-column: 1; grid-row: 1; min-width: 0; padding-block: 24px; }
+.hero-copy h1 { margin-top: 24px; font-size: clamp(38px, 4.6vw, 64px); line-height: 1.3; letter-spacing: 0; }
+.hero-copy h1 > span { display: block; white-space: nowrap; }
+.hero-copy h1 > span + span { margin-top: 8px; }
+.hero-description { color: var(--muted); font-size: 14px; line-height: 2; letter-spacing: .5px; margin-top: 24px; }
+.hero-dedication { display: flex; align-items: center; gap: 12px; width: fit-content; max-width: 100%; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--accent); }
+.dedication-label { flex-shrink: 0; color: var(--muted); font-size: 11px; line-height: 1; letter-spacing: 2px; white-space: nowrap; }
+.dedication-name { position: relative; display: inline-grid; place-items: center; flex: 0 1 144px; width: 144px; min-width: 112px; height: 48px; }
 #dedication-particles { display: block; width: 100%; height: 100%; pointer-events: none; }
-.dedication-fallback { position: absolute; inset: 0; display: grid; place-items: center; color: var(--accent); font: 28px/1 var(--serif); letter-spacing: 7px; white-space: nowrap; pointer-events: none; }
+.dedication-fallback { position: absolute; inset: 0; display: grid; place-items: center; padding-left: 5px; color: var(--accent); font: 28px/1 var(--serif); letter-spacing: 5px; white-space: nowrap; pointer-events: none; }
 .dedication-name.is-particle-ready .dedication-fallback { opacity: 0; }
-.scroll-cue { display: flex; align-items: center; gap: 32px; min-height: 44px; position: absolute; bottom: 0; left: 0; color: var(--muted); font-size: 11px; letter-spacing: 2px; }
+.scroll-cue { display: inline-flex; align-items: center; gap: 20px; min-height: 44px; margin-top: 28px; color: var(--muted); font-size: 10px; letter-spacing: 1.5px; }
 .scroll-cue span:last-child { font-size: 20px; color: var(--accent); }
-.moments-section { padding-top: clamp(80px, 11vw, 150px); }
-.section-heading h2 { margin-top: 22px; font-size: clamp(30px, 3.2vw, 46px); line-height: 1.65; letter-spacing: 2px; text-wrap: balance; }
+.moments-section { padding-top: clamp(64px, 8vw, 112px); }
+.section-heading h2 { margin-top: 20px; font-size: clamp(30px, 3.2vw, 44px); line-height: 1.5; letter-spacing: 1px; text-wrap: balance; }
 .moments-section > .section-heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; }
 .moments-section .eyebrow { grid-column: 1 / -1; }
 .section-description { justify-self: end; color: var(--muted); font-size: 13px; line-height: 2.1; padding-bottom: 8px; }
-.portrait-grid { display: grid; grid-template-columns: 1.14fr .9fr .9fr; align-items: start; gap: clamp(24px, 3.5vw, 50px); margin-top: 54px; }
+.portrait-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; gap: clamp(24px, 3vw, 40px); margin-top: 40px; }
 .portrait-card { min-width: 0; }
-.portrait-day { margin-top: 116px; }
-.portrait-night { margin-top: 44px; }
 .portrait-image { display: block; width: 100%; padding: 0; background: #1b1a18; overflow: hidden; }
-.portrait-image img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform .8s; }
-.portrait-warm img { aspect-ratio: 1.12; object-position: 50% 50%; }
+.portrait-image img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .8s; }
+.portrait-warm img { object-position: 50% 50%; }
 .portrait-day img { object-position: 50% 43%; }
 .portrait-night img { object-position: 50% 44%; }
-.portrait-number { display: block; margin-top: 23px; color: var(--accent); font: 8px/1.8 var(--sans); letter-spacing: 1.5px; }
+.portrait-number { display: block; margin-top: 20px; color: var(--accent); font: 8px/1.8 var(--sans); letter-spacing: 1.5px; }
 .portrait-card h3 { margin-top: 10px; font-size: clamp(17px, 1.6vw, 21px); line-height: 1.8; }
 .portrait-card figcaption p { margin-top: 7px; font-size: 12px; line-height: 1.9; color: var(--muted); }
 .particle-theatre { padding-top: clamp(90px, 12vw, 160px); }
@@ -106,12 +105,13 @@ main, .site-header { position: relative; z-index: 1; }
 }
 
 @media (max-width: 900px) {
-  .hero-copy h1 { font-size: clamp(34px, 5.4vw, 48px); }
+  .hero-copy h1 { font-size: clamp(32px, 4.4vw, 40px); }
   .hero-copy .eyebrow { font-size: 9px; letter-spacing: 1.5px; }
-  .hero-dedication { margin-top: 30px; }
+  .hero-copy { padding-block: 12px; }
+  .hero-description { font-size: 13px; margin-top: 20px; }
+  .hero-dedication { margin-top: 24px; }
+  .scroll-cue { margin-top: 20px; }
   .portrait-grid { gap: 24px; }
-  .portrait-day { margin-top: 72px; }
-  .portrait-night { margin-top: 32px; }
   .portrait-number { font-size: 7px; letter-spacing: .8px; }
   .portrait-card h3 { font-size: 17px; }
   .portrait-card figcaption p { font-size: 11px; }
@@ -127,29 +127,27 @@ main, .site-header { position: relative; z-index: 1; }
   .brand span { font-size: 22px; }
   .scene-nav { gap: 8px; }
   .scene-nav a { font-size: 11px; letter-spacing: 1px; }
-  .cinema-hero { display: flex; flex-direction: column; align-items: stretch; padding-top: 0; padding-bottom: 50px; }
+  .cinema-hero { display: flex; flex-direction: column; align-items: stretch; padding-top: 0; padding-bottom: 0; }
   .hero-visual { width: 100%; }
   .film-portrait { aspect-ratio: 4 / 5; max-height: 58vh; max-height: 58svh; object-position: 50% 44%; }
   .hero-visual figcaption { right: 14px; bottom: 14px; font-size: 6px; letter-spacing: 1.8px; }
-  .hero-copy { padding: 32px 0 0; }
-  .hero-copy h1 { margin-top: 18px; font-size: clamp(37px, 9.8vw, 58px); line-height: 1.42; letter-spacing: 0; }
-  .hero-description { font-size: 13px; margin-top: 18px; }
+  .hero-copy { padding: 28px 0 0; }
+  .hero-copy h1 { margin-top: 16px; font-size: clamp(34px, 9vw, 48px); line-height: 1.3; }
+  .hero-copy h1 > span + span { margin-top: 6px; }
+  .hero-description { font-size: 13px; margin-top: 20px; }
   .hero-description br { display: none; }
-  .hero-dedication { margin-top: 24px; font-size: 11px; gap: 12px; }
-  .dedication-line { flex-basis: 24px; }
-  .dedication-name { flex-basis: 148px; }
-  .scroll-cue { bottom: -8px; font-size: 10px; gap: 24px; }
-  .moments-section { padding-top: 90px; }
+  .hero-dedication { margin-top: 24px; padding-top: 12px; }
+  .dedication-name { width: 132px; flex-basis: 132px; }
+  .scroll-cue { margin-top: 20px; }
+  .moments-section { padding-top: 64px; }
   .eyebrow { font-size: 8px; letter-spacing: 1.8px; }
-  .section-heading h2 { font-size: clamp(30px, 7.5vw, 40px); line-height: 1.65; margin-top: 18px; letter-spacing: 1px; }
+  .section-heading h2 { font-size: clamp(28px, 7.5vw, 36px); line-height: 1.5; margin-top: 16px; letter-spacing: 1px; }
   .moments-section > .section-heading { display: block; }
   .section-description { font-size: 12px; margin-top: 20px; padding: 0; }
   .portrait-grid { display: flex; flex-direction: column; gap: 48px; margin-top: 34px; }
-  .portrait-warm { width: 100%; }
-  .portrait-day { width: 84%; margin: 0 0 0 auto; }
-  .portrait-night { width: 90%; margin: 0 auto 0 0; }
-  .portrait-image img { aspect-ratio: 3 / 4; }
-  .portrait-warm img { aspect-ratio: 4 / 3; }
+  .portrait-card { width: 100%; }
+  .portrait-image img { aspect-ratio: 4 / 5; }
+  .portrait-warm img, .portrait-night img { aspect-ratio: 4 / 3; }
   .portrait-number { font-size: 8px; letter-spacing: 1px; margin-top: 19px; }
   .portrait-card h3 { font-size: 20px; margin-top: 8px; }
   .portrait-card figcaption p { font-size: 12px; margin-top: 4px; }
@@ -173,7 +171,7 @@ main, .site-header { position: relative; z-index: 1; }
   :root { --gutter: 20px; }
   .scene-nav { gap: 2px; }
   .brand { gap: 6px; letter-spacing: 1.5px; }
-  .hero-copy h1 { font-size: 36px; }
+  .hero-copy h1 { font-size: 34px; }
   .portrait-card h3 { font-size: 18px; }
   .portrait-card figcaption p { font-size: 11px; }
   .particle-stage-caption { inset-inline: 20px; }
@@ -181,13 +179,14 @@ main, .site-header { position: relative; z-index: 1; }
 }
 
 @media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
-  .cinema-hero { display: grid; grid-template-columns: .9fr 1.1fr; column-gap: 6%; padding-bottom: 56px; }
+  .cinema-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); column-gap: 32px; padding-bottom: 24px; }
   .hero-visual { grid-column: 2; grid-row: 1; }
   .film-portrait { max-height: none; aspect-ratio: 4 / 5; }
   .hero-copy { grid-column: 1; grid-row: 1; padding: 0; }
-  .hero-copy h1 { font-size: 32px; }
+  .hero-copy h1 { font-size: clamp(24px, 4vw, 32px); }
   .hero-description { font-size: 12px; }
   .hero-dedication { margin-top: 20px; }
+  .scroll-cue { margin-top: 16px; }
 }
 
 @supports (padding: max(0px)) {
