@@ -44,6 +44,7 @@ next-env.d.ts
 !/experience/assets/ziye-warm.jpg
 !/experience/assets/ziye-daylight.jpg
 !/experience/assets/ziye-evening.jpg
+!/experience/assets/bgm.mp3
 !/experience/assets/starlight-placeholder.svg
 !/experience/assets/README.md
 *.zip

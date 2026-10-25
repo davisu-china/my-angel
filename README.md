@@ -8,13 +8,13 @@ The portable browser experience lives in `experience/`. Run `npm run dev:offline
 
 ## Soundtrack
 
-Confirmed soundtrack: **Angel — Yoon Mi-rae (尹美莱), Tiger JK (徐正权), and Bizzy**. The audio file is still needed: no commercial recording is bundled and the previous synthesized melody is removed. The page accepts an authorized local audio file without uploading it, and only plays after an explicit click. It pauses when hidden and does not automatically resume.
+Default soundtrack: **Angel — Yoon Mi-rae (尹美莱), Tiger JK (徐正权), and Bizzy**. The user-provided file is included as `experience/assets/bgm.mp3` (about 4:15, 320 kbps), copied without transcoding. The page only plays after an explicit click, loops the song, and pauses when hidden without automatically resuming. The local file picker remains available to change the song without uploading it.
 
-For a preconfigured soundtrack, place an authorized audio file at `experience/assets/angel.mp3` and set the audio element's `data-src` to `assets/angel.mp3`. The offline build embeds it; the hosted copy uses the file. MP3, M4A, OGG and WAV are supported. Downloading a song for listening does not itself grant redistribution rights.
+The audio element's `data-src` is set to `assets/bgm.mp3`. The offline build embeds it; the hosted copy uses the file. MP3, M4A, OGG and WAV are supported. Media rights remain with their respective owners; including a user-provided file does not grant redistribution rights.
 
 ## Private Media
 
-The three optimized photos (`ziye-warm.jpg`, `ziye-daylight.jpg`, and `ziye-evening.jpg`) are included in Git at the user's explicit request. Original attachments, additional media, audio, generated `public/experience/`, offline HTML and ZIPs are not included. Missing photos still fall back to a starlight placeholder. See `experience/assets/README.md`. A public repository makes the included photos downloadable; confirm the relevant sharing permissions before publication. Review actual hosting output, which can contain locally added media even when Git ignores it.
+The three optimized photos (`ziye-warm.jpg`, `ziye-daylight.jpg`, and `ziye-evening.jpg`) and user-supplied `bgm.mp3` are included in Git for this experience. Original photo attachments, additional media, generated `public/experience/`, offline HTML and ZIPs are not included. Missing photos still fall back to a starlight placeholder. See `experience/assets/README.md`. A public repository makes included media downloadable; confirm the relevant sharing permissions before publication. Review actual hosting output, which can contain locally added media even when Git ignores it.
 
 The intended remote is `https://github.com/davisu-china/my-angel`. A local commit or archive is not confirmation that a remote push succeeded. Fetch and inspect the existing remote branch before integrating; do not force-push or overwrite existing history.
 
