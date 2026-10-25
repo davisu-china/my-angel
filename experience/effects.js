@@ -32,11 +32,10 @@
 
   const girlShapes = [
     { part: "hair", curves: [ [[-.13,-.92],[-.26,-1.19],[-.06,-1.32],[.12,-1.23]], [[.12,-1.23],[.33,-1.13],[.22,-.84],[.25,-.62]], [[.25,-.62],[.23,-.38],[.4,-.16],[.3,.12]], [[.3,.12],[.22,.29],[.12,.23],[.08,.12]], [[.08,.12],[.22,-.06],[-.12,-.29],[-.08,-.55]], [[-.08,-.55],[-.18,-.72],[-.12,-.8],[-.13,-.92]] ] },
-    { part: "skin", curves: [ [[-.015,-.85],[-.022,-.73],[-.035,-.68],[-.19,-.61]], [[-.19,-.61],[-.25,-.54],[-.19,-.4],[-.1,-.4]], [[-.1,-.4],[.01,-.36],[.13,-.39],[.2,-.52]], [[.2,-.52],[.2,-.59],[.07,-.64],[.07,-.84]], [[.07,-.84],[.04,-.87],[.01,-.87],[-.015,-.85]] ] },
-    { part: "skin", curves: [ [[.16,-.56],[.26,-.53],[.24,-.31],[.27,-.18]], [[.27,-.18],[.25,-.08],[.15,-.02],[.13,-.07]], [[.13,-.07],[.11,-.1],[.18,-.16],[.19,-.2]], [[.19,-.2],[.17,-.32],[.12,-.47],[.16,-.56]] ] },
+    { part: "skin", curves: [ [[-.015,-.85],[-.022,-.77],[-.05,-.755],[-.19,-.71]], [[-.19,-.71],[-.24,-.66],[-.19,-.56],[-.1,-.55]], [[-.1,-.55],[.01,-.51],[.14,-.54],[.2,-.64]], [[.2,-.64],[.17,-.71],[.07,-.73],[.07,-.84]], [[.07,-.84],[.04,-.87],[.01,-.87],[-.015,-.85]] ] },
     { part: "shoe", curves: [ [[-.13,1.01],[-.16,1.04],[-.23,1.09],[-.13,1.1]], [[-.13,1.1],[-.03,1.11],[-.02,1.08],[-.06,1.02]], [[-.06,1.02],[-.08,1],[-.11,1],[-.13,1.01]] ] },
-    { part: "dress", curves: [ [[-.18,-.52],[-.12,-.48],[-.05,-.46],[.01,-.48]], [[.01,-.48],[.08,-.47],[.14,-.51],[.19,-.53]], [[.19,-.53],[.18,-.39],[.09,-.2],[.115,-.09]], [[.115,-.09],[.13,.24],[.28,.68],[.42,.94]], [[.42,.94],[.49,1.01],[.6,1.035],[.69,1.04]], [[.69,1.04],[.46,1.16],[.17,1.09],[.035,1.07]], [[.035,1.07],[-.18,1.13],[-.39,1.08],[-.43,1.025]], [[-.43,1.025],[-.33,.74],[-.17,.29],[-.12,-.08]], [[-.12,-.08],[-.09,-.24],[-.21,-.38],[-.18,-.52]] ] },
-    { part: "face", curves: [ [[-.13,-1.13],[-.18,-1.09],[-.15,-1.015],[-.19,-.985]], [[-.19,-.985],[-.235,-.95],[-.2,-.936],[-.174,-.933]], [[-.174,-.933],[-.177,-.904],[-.198,-.907],[-.175,-.89]], [[-.175,-.89],[-.173,-.847],[-.119,-.824],[-.08,-.834]], [[-.08,-.834],[.039,-.854],[.109,-.987],[.087,-1.091]], [[.087,-1.091],[.048,-1.18],[-.055,-1.19],[-.13,-1.13]] ] },
+    { part: "dress", curves: [ [[-.18,-.63],[-.1,-.59],[-.04,-.57],[.01,-.59]], [[.01,-.59],[.08,-.57],[.14,-.61],[.19,-.64]], [[.19,-.64],[.18,-.44],[.085,-.21],[.115,-.09]], [[.115,-.09],[.13,.24],[.28,.68],[.42,.94]], [[.42,.94],[.49,1.01],[.6,1.035],[.69,1.04]], [[.69,1.04],[.46,1.16],[.17,1.09],[.035,1.07]], [[.035,1.07],[-.18,1.13],[-.39,1.08],[-.43,1.025]], [[-.43,1.025],[-.33,.74],[-.17,.29],[-.12,-.08]], [[-.12,-.08],[-.09,-.26],[-.21,-.46],[-.18,-.63]] ] },
+    { part: "face", curves: [ [[-.13,-1.13],[-.163,-1.08],[-.14,-1.025],[-.168,-.994]], [[-.168,-.994],[-.197,-.965],[-.181,-.951],[-.162,-.949]], [[-.162,-.949],[-.167,-.931],[-.181,-.924],[-.164,-.916]], [[-.164,-.916],[-.165,-.877],[-.126,-.842],[-.083,-.844]], [[-.083,-.844],[.015,-.861],[.086,-.984],[.069,-1.09]], [[.069,-1.09],[.035,-1.165],[-.059,-1.177],[-.13,-1.13]] ] },
     { part: "fringe", curves: [ [[-.167,-1.105],[-.18,-1.24],[.009,-1.29],[.132,-1.161]], [[.132,-1.161],[.22,-1.08],[.154,-.907],[.083,-.882]], [[.083,-.882],[.09,-1.014],[.007,-1.032],[-.025,-1.137]], [[-.025,-1.137],[-.085,-1.083],[-.12,-1.078],[-.167,-1.105]] ] }
   ];
 
@@ -141,27 +140,40 @@
     const blossoms = [];
     const clusters = [];
     const scaffold = [
-      { anchors:[[0,.025],[.075,-.22],[-.035,-.48],[.075,-.77]], width:.115 },
-      { anchors:[[.018,-.35],[-.16,-.54],[-.39,-.51],[-.64,-.81]], width:.066 },
-      { anchors:[[-.22,-.57],[-.47,-.67],[-.74,-.59],[-.91,-.79]], width:.033 },
-      { anchors:[[-.43,-.66],[-.58,-.83],[-.62,-.98],[-.81,-1.03]], width:.025 },
-      { anchors:[[-.09,-.49],[-.22,-.72],[-.12,-1],[-.35,-1.21]], width:.045 },
-      { anchors:[[-.15,-.78],[-.38,-.91],[-.29,-1.08],[-.49,-1.23]], width:.025 },
-      { anchors:[[.027,-.59],[.14,-.84],[.07,-1.04],[.17,-1.35]], width:.068 },
-      { anchors:[[.082,-.8],[.29,-.87],[.42,-.85],[.62,-1.04]], width:.044 },
-      { anchors:[[.1,-.92],[.28,-1.07],[.31,-1.22],[.47,-1.29]], width:.031 },
-      { anchors:[[.3,-.93],[.54,-.93],[.67,-.77],[.88,-.88]], width:.028 },
-      { anchors:[[.53,-.97],[.65,-1.12],[.85,-1.04],[.99,-1.12]], width:.018 },
-      { anchors:[[-.01,-.43],[.19,-.48],[.22,-.63],[.45,-.69]], width:.038 },
-      { anchors:[[.24,-.62],[.44,-.65],[.55,-.57],[.71,-.67]], width:.019 }
+      { anchors:[[0,.025],[-.055,-.2],[.135,-.43],[.02,-.71]], width:.105 },
+      { parent:0, along:.69, controls:[[-.13,-.62],[-.45,-.64],[-.7,-.91]], width:.053 },
+      { parent:1, along:.59, controls:[[-.59,-.76],[-.77,-.77],[-.97,-.91]], width:.027 },
+      { parent:1, along:.85, controls:[[-.62,-1.02],[-.69,-1.09],[-.86,-1.1]], width:.021 },
+      { parent:0, along:.86, controls:[[-.13,-.84],[-.23,-1.07],[-.4,-1.19]], width:.042 },
+      { parent:4, along:.66, controls:[[-.3,-1.13],[-.43,-1.24],[-.61,-1.2]], width:.021 },
+      { parent:0, along:1, controls:[[-.04,-.87],[.015,-1.1],[.19,-1.26]], width:.047 },
+      { parent:6, along:.52, controls:[[.32,-.96],[.49,-.93],[.68,-1.05]], width:.032 },
+      { parent:6, along:.8, controls:[[.28,-1.17],[.39,-1.27],[.57,-1.23]], width:.024 },
+      { parent:7, along:.53, controls:[[.6,-.97],[.78,-.82],[.98,-.86]], width:.021 },
+      { parent:7, along:.88, controls:[[.73,-1.17],[.9,-1.13],[1.04,-1.02]], width:.016 },
+      { parent:0, along:.63, controls:[[.23,-.57],[.39,-.7],[.63,-.69]], width:.033 },
+      { parent:11, along:.78, controls:[[.67,-.66],[.78,-.58],[.9,-.64]], width:.014 }
     ];
     const addBranch = (anchors, width, birth, depth) => {
       const samples = sampleCurve(anchors, 24);
       const bark = Array.from({length: Math.ceil(width * 600)}, () => ({along:random(),across:(random()-.5)*.85,light:random()>.55}));
-      branches.push({anchors,width,birth,depth,samples,bark});
+      branches.push({anchors,width,birth,depth,samples,bark,taper:branches.length===0?.3:.43});
       return samples;
     };
     scaffold.forEach((limb, limbIndex) => {
+      if (limb.parent !== undefined) {
+        const parent = branches[scaffold[limb.parent].branchIndex];
+        const parentSamples = sampleCurve(parent.anchors, 100);
+        const jointIndex = Math.round(limb.along * 100);
+        const joint = parentSamples[jointIndex];
+        const previous = parentSamples[Math.max(0,jointIndex-2)];
+        const next = parentSamples[Math.min(100,jointIndex+2)];
+        const tangent = Math.atan2(next.y-previous.y,next.x-previous.x);
+        const control = limb.controls[0];
+        const distance = Math.min(.14,Math.hypot(control[0]-joint.x,control[1]-joint.y)*.65);
+        limb.anchors = [[joint.x, joint.y], [joint.x+Math.cos(tangent)*distance,joint.y+Math.sin(tangent)*distance], ...limb.controls.slice(1)];
+      }
+      limb.branchIndex = branches.length;
       const birth = limbIndex === 0 ? 0 : .06 + limbIndex*.018;
       const depth = random();
       const samples = addBranch(limb.anchors,limb.width,birth,depth);
@@ -177,17 +189,26 @@
         const end = {x:start.x+Math.cos(angle)*length,y:start.y+Math.sin(angle)*length};
         const droop = .016 + random()*.035;
         addBranch([[start.x,start.y],[start.x+Math.cos(angle)*length*.4,start.y+Math.sin(angle)*length*.3],[end.x,end.y-droop],[end.x,end.y]],limb.width*(1-along)*.45+.0012,birth+.13,depth);
-        clusters.push({x:end.x,y:end.y,radius:.045+random()*.055,depth,birth:.3+random()*.2});
+        clusters.push({x:end.x,y:end.y,radius:.065+random()*.075,depth,birth:.3+random()*.2});
       }
-      clusters.push({x:limb.anchors[3][0],y:limb.anchors[3][1],radius:.08,depth,birth:.4});
+      clusters.push({x:limb.anchors[3][0],y:limb.anchors[3][1],radius:.12,depth,birth:.4});
     });
     clusters.sort((first,second)=>first.depth-second.depth);
     clusters.forEach(cluster=>{
-      const count=compact?32:50;
+      const count=compact?78:118;
       for(let index=0;index<count;index++) {
         const phase=random()*TAU;
         const radius=Math.sqrt(random())*cluster.radius;
-        blossoms.push({x:cluster.x+Math.cos(phase)*radius*1.4,y:cluster.y+Math.sin(phase)*radius*.72,size:.008+random()*.009,phase,depth:cluster.depth,tone:Math.floor(random()*4),birth:cluster.birth+random()*.16});
+        const vertical = Math.sin(phase) * radius * .78;
+        const tone = vertical > cluster.radius * .12 ? 3 : random() > .48 ? 2 : random() > .4 ? 0 : 1;
+        blossoms.push({x:cluster.x+Math.cos(phase)*radius*1.32,y:cluster.y+vertical,size:.005+random()*.01,phase,depth:cluster.depth,tone,birth:cluster.birth+random()*.16});
+      }
+      if (cluster.depth > .6) {
+        const length = .045 + random() * .1;
+        for (let index = 0; index < 8; index++) {
+          const along = index / 7;
+          blossoms.push({x:cluster.x+Math.sin(along*2.2)*.02,y:cluster.y+cluster.radius*.4+along*length,size:.006+random()*.004,phase:random()*TAU,depth:cluster.depth,tone:index%3?0:3,birth:cluster.birth+along*.1});
+        }
       }
     });
     const petals = Array.from({ length: compact ? 25 : 44 }, () => {
@@ -364,14 +385,14 @@
       const sprite = this.makeSurface(32, 32);
       if (sprite) {
         const context = sprite.getContext("2d");
-        const colors = ["#f5c2cf", "#d997b1", "#fff0e8", "#b988a6"];
+        const colors = ["#e9b4c9", "#cb8fae", "#fff1ea", "#916f96"];
         for (let index = 0; index < 5; index++) {
           const angle = index / 5 * TAU;
           context.save();
           context.translate(16,16);
           context.rotate(angle);
           const gradient=context.createLinearGradient(0,0,11,0);
-          gradient.addColorStop(0,"#c784a0");gradient.addColorStop(.45,colors[tone]);gradient.addColorStop(1,"#ffe9e9");
+          gradient.addColorStop(0,tone===3?"#6c577a":"#be809c");gradient.addColorStop(.45,colors[tone]);gradient.addColorStop(1,tone===3?"#b792b4":"#ffe9e9");
           context.fillStyle=gradient;
           context.beginPath();
           context.moveTo(0,0);
@@ -402,6 +423,21 @@
       context.translate(size * 1.05, size * 1.45);
       context.scale(size * .88, size * .88);
       context.lineCap = "round";
+      this.sakura.clusters.forEach(cluster => {
+        const bloom = smoothStep((growth - cluster.birth) / .24);
+        if (!bloom) return;
+        const radius = cluster.radius * 1.35;
+        const volume = context.createRadialGradient(cluster.x - radius * .2, cluster.y - radius * .25, radius * .1, cluster.x, cluster.y, radius);
+        volume.addColorStop(0, "rgba(176,114,149,.18)");
+        volume.addColorStop(.62, "rgba(107,79,118,.1)");
+        volume.addColorStop(1, "rgba(89,63,99,0)");
+        context.globalAlpha = bloom * (.65 + cluster.depth * .25);
+        context.fillStyle = volume;
+        context.beginPath();
+        context.ellipse(cluster.x, cluster.y, radius * 1.2, radius * .8, -.12, 0, TAU);
+        context.fill();
+      });
+      context.globalAlpha = 1;
       [...this.sakura.branches].sort((first,second)=>first.width-second.width).forEach(branch => {
         const reveal = smoothStep((growth - branch.birth) / .22);
         if (!reveal) return;
@@ -412,17 +448,32 @@
         const edges=samples.map((point,index)=>{
           const previous=samples[Math.max(0,index-1)];const next=samples[Math.min(samples.length-1,index+1)];
           const angle=Math.atan2(next.y-previous.y,next.x-previous.x)+Math.PI/2;
-          const radius=branch.width*(.53-index/(samples.length-1)*.43)*(1+Math.sin(index*1.7+branch.birth*20)*.05);
+          const radius=branch.width*(.53-index/(samples.length-1)*branch.taper)*(1+Math.sin(index*1.7+branch.birth*20)*.035);
           return {left:[point.x+Math.cos(angle)*radius,point.y+Math.sin(angle)*radius],right:[point.x-Math.cos(angle)*radius,point.y-Math.sin(angle)*radius]};
         });
-        const material=context.createLinearGradient(anchors[0][0]-.065,anchors[0][1],anchors[0][0]+.065,anchors[0][1]);
-        material.addColorStop(0,"#211f2a");material.addColorStop(.3,"#6f5656");material.addColorStop(.48,"#9a7770");material.addColorStop(.66,"#58474c");material.addColorStop(1,"#292936");
+        const material=context.createLinearGradient(...edges[0].left,...edges[0].right);
+        material.addColorStop(0,"#7b6066");material.addColorStop(.26,"#5e4a55");material.addColorStop(.62,"#3d3445");material.addColorStop(1,"#252a3a");
         context.beginPath();context.moveTo(...edges[0].left);edges.slice(1).forEach(edge=>context.lineTo(...edge.left));[...edges].reverse().forEach(edge=>context.lineTo(...edge.right));context.closePath();context.fillStyle=material;context.fill();
         context.save();context.clip();
+        if (branch.width > .018) {
+          for (let index = 0; index < edges.length - 1; index++) {
+            const first = edges[index];
+            const next = edges[index + 1];
+            const shading = context.createLinearGradient(...first.left, ...first.right);
+            shading.addColorStop(0, "#796169");
+            shading.addColorStop(.28, "#65505c");
+            shading.addColorStop(.65, "#42394b");
+            shading.addColorStop(1, "#292e40");
+            context.fillStyle = shading;
+            context.beginPath();
+            context.moveTo(...first.left);context.lineTo(...next.left);context.lineTo(...next.right);context.lineTo(...first.right);context.closePath();
+            context.fill();
+          }
+        }
         branch.bark.forEach(mark=>{
           const sampleIndex=Math.min(samples.length-2,Math.floor(mark.along*(samples.length-1)));
           const point=samples[sampleIndex];const next=samples[sampleIndex+1];
-          const angle=Math.atan2(next.y-point.y,next.x-point.x);const radius=branch.width*(.53-mark.along*.43);
+          const angle=Math.atan2(next.y-point.y,next.x-point.x);const radius=branch.width*(.53-mark.along*branch.taper);
           const positionX=point.x+Math.cos(angle+Math.PI/2)*radius*mark.across;
           const positionY=point.y+Math.sin(angle+Math.PI/2)*radius*mark.across;
           context.strokeStyle=mark.light?"rgba(202,163,140,.32)":"rgba(16,20,29,.48)";context.lineWidth=.0013;
@@ -452,19 +503,20 @@
           context.stroke();
         }
         context.restore();
-        context.strokeStyle="rgba(210,170,154,.24)";context.lineWidth=branch.width*.055;
+        context.strokeStyle="rgba(210,170,154,.14)";context.lineWidth=branch.width*.035;
         context.beginPath();context.moveTo(...edges[0].left);edges.slice(1).forEach(edge=>context.lineTo(...edge.left));context.stroke();
         context.restore();
       });
       for(const direction of [-1,1]) {
-        context.fillStyle="#4f4249";context.beginPath();context.moveTo(-.025,0);context.bezierCurveTo(direction*.08,.005,direction*.1,.015,direction*.17,.025);context.bezierCurveTo(direction*.07,.013,direction*.035,-.04,.025,-.1);context.closePath();context.fill();
+        context.globalAlpha = smoothStep(growth / .22);
+        context.fillStyle="#4f4249";context.beginPath();context.moveTo(-.025,0);context.bezierCurveTo(direction*.07,.015,direction*.1,.02,direction*.13,.022);context.bezierCurveTo(direction*.06,.014,direction*.035,-.04,.025,-.1);context.closePath();context.fill();
       }
       this.sakura.blossoms.forEach(flower => {
         const bloom = smoothStep((growth - flower.birth) / .18);
         if (!bloom) return;
         const sprite = this.flowerSprite(flower.tone);
         const radius = flower.size * ( .35 + bloom * .65);
-        context.globalAlpha = bloom * (.64+flower.depth*.3);
+        context.globalAlpha = bloom * (.66+flower.depth*.3);
         if (sprite) context.drawImage(sprite, flower.x - radius, flower.y - radius, radius * 2, radius * 2);
         else {
           context.fillStyle = ["#f8b9ce", "#e88aaf", "#ffe0df", "#cf85b0"][flower.tone];
@@ -481,9 +533,9 @@
       const compact = this.width < 600;
       const growth = this.reduced ? 1 : smoothStep((elapsed - .6) / 9);
       if (!growth) return;
-      const size = Math.min(this.width * (compact ? .58 : .34), this.height * .51);
+      const size = Math.min(this.width * (compact ? .6 : .3), this.height * .48);
       const shoreY = this.height * .66;
-      const originX = this.width * (compact ? .19 : .17);
+      const originX = this.width * (compact ? .35 : .24);
       const left = originX - size * 1.05;
       const top = shoreY - size * 1.45;
       const opacity = (compact ? .96 - finale * .38 : 1 - finale * .15);
@@ -807,12 +859,61 @@
       if (state.impacted) this.meteorImpact(event, state.impactAge, opacity);
     }
 
+    paintHand(context, positionX, positionY, direction = 1, rotation = 0, supporting = false) {
+      context.save();
+      context.translate(positionX, positionY);
+      context.rotate(rotation);
+      context.scale(direction, 1);
+      const skin = context.createLinearGradient(0, -.025, 0, .04);
+      skin.addColorStop(0, "#fce1d0");
+      skin.addColorStop(.5, "#efc3ae");
+      skin.addColorStop(1, "#c58f8d");
+      context.fillStyle = skin;
+      context.beginPath();
+      context.moveTo(-.02, -.017);
+      context.bezierCurveTo(.005, -.022, .023, -.03, .047, -.025);
+      context.bezierCurveTo(.055, -.01, .05, .014, .032, .021);
+      context.quadraticCurveTo(.007, .024, -.02, .012);
+      context.closePath();
+      context.fill();
+      const lengths = [.061, .075, .069, .052];
+      lengths.forEach((length, index) => {
+        const baseY = -.02 + index * .011;
+        const bend = supporting ? -.016 : .008 + index * .003;
+        context.beginPath();
+        context.moveTo(.034, baseY - .0035);
+        context.bezierCurveTo(.061, baseY - .008, .045 + length, baseY + bend - .012, .046 + length, baseY + bend);
+        context.quadraticCurveTo(.046 + length, baseY + bend + .004, .039 + length, baseY + bend + .004);
+        context.bezierCurveTo(.069, baseY + .009, .051, baseY + .008, .03, baseY + .004);
+        context.closePath();
+        context.fill();
+        context.strokeStyle = "rgba(123,76,84,.24)";
+        context.lineWidth = .0018;
+        context.stroke();
+        context.strokeStyle = "rgba(255,239,227,.75)";
+        context.lineWidth = .0024;
+        context.beginPath();
+        context.moveTo(.036 + length, baseY + bend - .001);
+        context.lineTo(.042 + length, baseY + bend - .001);
+        context.stroke();
+      });
+      context.fillStyle = skin;
+      context.beginPath();
+      context.moveTo(.004, .012);
+      context.bezierCurveTo(.017, .024, .036, .043, .054, .039);
+      context.quadraticCurveTo(.062, .031, .05, .027);
+      context.quadraticCurveTo(.03, .027, .026, .006);
+      context.closePath();
+      context.fill();
+      context.restore();
+    }
+
     paintGirl(context) {
       const gradient=(startX,startY,endX,endY,stops)=>{
         const fill=context.createLinearGradient(startX,startY,endX,endY);
         stops.forEach(([offset,color])=>fill.addColorStop(offset,color));return fill;
       };
-      const skin=gradient(-.22,-1.06,.2,-.55,[[0,"#b27e83"],[.28,"#f5d2bb"],[.49,"#ffe6cd"],[.77,"#ddb3a5"],[1,"#a77c89"]]);
+      const skin=gradient(-.22,-1.06,.2,-.55,[[0,"#c5969e"],[.28,"#f5d7c8"],[.49,"#ffe8d7"],[.77,"#deb6b0"],[1,"#a47b8e"]]);
       const materials={
         hair:gradient(-.2,-1.2,.34,.15,[[0,"#171d2c"],[.32,"#483444"],[.49,"#79606c"],[.62,"#322d40"],[.9,"#473247"],[1,"#957084"]]),
         fringe:gradient(-.18,-1.24,.2,-.85,[[0,"#51404b"],[.35,"#76606a"],[.62,"#3a2f40"],[1,"#212534"]]),
@@ -826,6 +927,8 @@
       const ellipse=(positionX,positionY,radiusX,radiusY,color,rotation=0)=>{
         context.fillStyle=color;context.beginPath();context.ellipse(positionX,positionY,radiusX,radiusY,rotation,0,TAU);context.fill();
       };
+      curve([[.17,-.67],[.24,-.48],[.21,-.27],[.18,-.13]],skin,.038);
+      this.paintHand(context,.18,-.12,1,1.34);
       girlShapes.forEach(shape=>{
         traceShape(context,shape);context.fillStyle=materials[shape.part];context.fill();
         context.strokeStyle=shape.part==="dress"?"rgba(255,234,217,.6)":"rgba(225,184,187,.18)";context.lineWidth=.003;context.stroke();
@@ -838,7 +941,7 @@
       }
       for(let index=0;index<6;index++){
         const offset=index*.018;
-        curve([[-.17,-.49+offset],[-.04,-.43+offset],[.09,-.5+offset],[.17,-.51+offset]],"rgba(255,242,222,.4)",.003);
+        curve([[-.17,-.6+offset],[-.04,-.54+offset],[.09,-.61+offset],[.17,-.62+offset]],"rgba(255,242,222,.4)",.003);
       }
       const random=randomGenerator(9371);
       for(let index=0;index<105;index++){
@@ -848,16 +951,26 @@
       context.restore();
       curve([[-.12,-.09],[-.03,-.06],[.04,-.06],[.115,-.09]],"#d8c1b0",.008);
       ellipse(.002,-.077,.01,.009,"#fff1cf");
-      curve([[-.156,-1.005],[-.13,-.999],[-.101,-1.006],[-.081,-1.021]],"#49353e",.006);
-      curve([[-.16,-1.007],[-.15,-1.014],[-.152,-1.02],[-.156,-1.023]],"#49353e",.004);
+      traceShape(context,girlShapes.find(shape=>shape.part==="face"));
+      context.save();context.clip();
+      const cheek=context.createRadialGradient(-.102,-.947,.002,-.102,-.947,.067);
+      cheek.addColorStop(0,"rgba(226,137,149,.28)");cheek.addColorStop(1,"rgba(223,145,157,0)");
+      ellipse(-.102,-.947,.067,.067,cheek);
+      ellipse(-.114,-1.013,.037,.017,"#fff0e1",-.14);
+      ellipse(-.133,-1.013,.009,.011,"#6a5865");
+      ellipse(-.135,-1.014,.004,.007,"#292d43");
+      ellipse(-.137,-1.017,.0025,.0025,"#fff6e8");
+      curve([[-.151,-1.014],[-.13,-1.032],[-.103,-1.025],[-.079,-1.023]],"#49353e",.005);
+      curve([[-.151,-1.014],[-.159,-1.016],[-.158,-1.023],[-.159,-1.026]],"#49353e",.003);
+      context.restore();
       curve([[-.146,-1.044],[-.122,-1.055],[-.101,-1.054],[-.082,-1.049]],"rgba(85,58,67,.76)",.004);
       ellipse(-.122,-.942,.023,.009,"rgba(202,122,138,.16)",-.2);
-      curve([[-.18,-.912],[-.167,-.908],[-.158,-.911],[-.15,-.914]],"#bc7b87",.004);
-      curve([[-.168,-.902],[-.16,-.9],[-.153,-.901],[-.147,-.904]],"rgba(255,230,214,.65)",.003);
+      curve([[-.168,-.928],[-.157,-.931],[-.15,-.924],[-.143,-.927]],"#b87585",.004);
+      curve([[-.162,-.919],[-.155,-.916],[-.148,-.919],[-.143,-.921]],"rgba(255,230,224,.7)",.003);
       ellipse(.077,-.945,.012,.019,"#ddb9a8");
       ellipse(.079,-.918,.006,.02,"#fce1b3");
-      curve([[-.105,-.668],[-.035,-.614],[.03,-.613],[.11,-.645]],"rgba(242,214,184,.6)",.003);
-      ellipse(.002,-.625,.005,.009,"#fff0d1");
+      curve([[-.105,-.748],[-.035,-.694],[.03,-.693],[.11,-.725]],"rgba(242,214,184,.6)",.003);
+      ellipse(.002,-.705,.005,.009,"#fff0d1");
       for(let index=0;index<7;index++){
         const offset=index*.016;
         curve([[.09+offset,-1.19],[.24+offset,-.92],[.1+offset,-.43],[.26+offset,.12]],"rgba(194,159,169,.22)",.0025);
@@ -932,7 +1045,7 @@
       const kneeBack = { x: -1.37 - kneel * .14, y: .6 + kneel * .45 };
       const footBack = { x: -1.43 - kneel * .32, y: 1.05 };
       const hand = { x: shoulder.x + .22 + offer * .5, y: shoulder.y + .49 - offer * .44 };
-      const elbow = { x: shoulder.x + .09 + offer * .15, y: shoulder.y + .45 - offer * .1 };
+      const elbow = { x: shoulder.x + .1 + offer * .17, y: shoulder.y + .4 - offer * .07 };
       const line = (points, color, width) => {
         context.beginPath();
         context.moveTo(points[0].x, points[0].y);
@@ -951,42 +1064,69 @@
         context.fillStyle = color;
         context.fill();
       };
+      const limb = (start, middle, end, upperWidth, lowerWidth, material) => {
+        const upperAngle = Math.atan2(middle.y - start.y, middle.x - start.x) + Math.PI / 2;
+        const lowerAngle = Math.atan2(end.y - middle.y, end.x - middle.x) + Math.PI / 2;
+        const upper = { x: Math.cos(upperAngle) * upperWidth, y: Math.sin(upperAngle) * upperWidth };
+        const lower = { x: Math.cos(lowerAngle) * lowerWidth, y: Math.sin(lowerAngle) * lowerWidth };
+        context.beginPath();
+        context.moveTo(start.x + upper.x, start.y + upper.y);
+        context.lineTo(middle.x + upper.x * .7, middle.y + upper.y * .7);
+        context.quadraticCurveTo(middle.x + upper.x, middle.y + upper.y, middle.x + lower.x, middle.y + lower.y);
+        context.lineTo(end.x + lower.x, end.y + lower.y);
+        context.lineTo(end.x - lower.x, end.y - lower.y);
+        context.lineTo(middle.x - lower.x, middle.y - lower.y);
+        context.quadraticCurveTo(middle.x - upper.x, middle.y - upper.y, middle.x - upper.x * .7, middle.y - upper.y * .7);
+        context.lineTo(start.x - upper.x, start.y - upper.y);
+        context.closePath();
+        context.fillStyle = material;
+        context.fill();
+      };
       const face = context.createLinearGradient(head.x - .13, head.y, head.x + .21, head.y + .15);
-      face.addColorStop(0,"#aa7e8e");
-      face.addColorStop(.52,"#f2c7ae");
-      face.addColorStop(1,"#ffdfbf");
+      face.addColorStop(0,"#9f7a8d");
+      face.addColorStop(.52,"#edc7b7");
+      face.addColorStop(1,"#f9decb");
       const jacket = context.createLinearGradient(shoulder.x - .2, shoulder.y, shoulder.x + .2, shoulder.y + .1);
       jacket.addColorStop(0,"#141e39");
       jacket.addColorStop(.4,"#394e72");
       jacket.addColorStop(.7,"#203451");
       jacket.addColorStop(1,"#6d7291");
-      line([hip,kneeBack,footBack],"#17243a",.145);
-      line([hip,kneeFront,footFront],"#2c3c53",.155);
-      line([{x:hip.x+.045,y:hip.y+.03},kneeFront,{x:footFront.x-.02,y:1}],"rgba(166,183,214,.32)",.012);
+      limb(hip,kneeBack,footBack,.083,.052,"#17243a");
+      limb(hip,kneeFront,footFront,.087,.05,"#2c3c53");
+      line([{x:hip.x+.045,y:hip.y+.03},kneeFront,{x:footFront.x-.02,y:1}],"rgba(166,183,214,.26)",.007);
       line([{x:footFront.x-.075,y:1.075},{x:footFront.x+.12,y:1.075}],"#111a2c",.055);
       line([{x:footBack.x-.1,y:1.075},{x:footBack.x+.07,y:1.075}],"#131d32",.053);
-      line([{x:shoulder.x-.08,y:shoulder.y+.02},{x:elbow.x-.08,y:elbow.y+.035},{x:hand.x-.07,y:hand.y+.07}],"#283855",.15);
+      const restingHand = { x: kneeFront.x - .045, y: kneeFront.y - .09 };
+      limb({x:shoulder.x-.08,y:shoulder.y+.02},{x:shoulder.x-.13,y:shoulder.y+.41},restingHand,.062,.028,"#24334e");
+      this.paintHand(context, restingHand.x, restingHand.y, 1, .38);
       context.beginPath();context.moveTo(shoulder.x-.15,shoulder.y+.025);context.quadraticCurveTo(shoulder.x-.07,shoulder.y-.035,shoulder.x+.115,shoulder.y+.005);context.bezierCurveTo(shoulder.x+.14,shoulder.y+.16,hip.x+.085,hip.y-.09,hip.x+.13,hip.y+.115);context.quadraticCurveTo(hip.x-.04,hip.y+.14,hip.x-.145,hip.y+.095);context.closePath();context.fillStyle=jacket;context.fill();
-      polygon([[neck.x-.06,shoulder.y-.025],[neck.x+.095,shoulder.y-.025],[hip.x+.06,hip.y-.03]],"#e7e2df");
-      polygon([[neck.x+.015,shoulder.y+.04],[neck.x+.05,shoulder.y+.1],[hip.x+.065,hip.y-.16],[hip.x+.005,hip.y-.12]],"#aa7493");
-      line([{x:shoulder.x-.12,y:shoulder.y+.005},{x:shoulder.x-.05,y:shoulder.y+.21},{x:hip.x+.035,y:hip.y-.05}],"#8d91b0",.016);
-      line([{x:shoulder.x+.11,y:shoulder.y+.01},{x:shoulder.x+.17,y:shoulder.y+.18},{x:hip.x+.035,y:hip.y-.05}],"#697d9c",.014);
+      polygon([[neck.x-.06,shoulder.y-.025],[neck.x+.095,shoulder.y-.025],[shoulder.x+.035,shoulder.y+.42]],"#e7e2df");
+      polygon([[neck.x+.015,shoulder.y+.04],[neck.x+.045,shoulder.y+.09],[shoulder.x+.05,shoulder.y+.32],[shoulder.x+.02,shoulder.y+.35],[shoulder.x+.005,shoulder.y+.3]],"#a78098");
+      polygon([[shoulder.x-.115,shoulder.y+.015],[shoulder.x-.044,shoulder.y+.035],[shoulder.x+.025,shoulder.y+.35],[shoulder.x-.09,shoulder.y+.18],[shoulder.x-.05,shoulder.y+.14]],"#57617d");
+      polygon([[shoulder.x+.095,shoulder.y+.01],[shoulder.x+.14,shoulder.y+.15],[shoulder.x+.098,shoulder.y+.21],[shoulder.x+.025,shoulder.y+.35]],"#485674");
+      line([{x:shoulder.x-.044,y:shoulder.y+.035},{x:shoulder.x+.025,y:shoulder.y+.35}],"rgba(182,188,211,.46)",.005);
+      context.fillStyle = "#a4a6b5";
+      for (let button = 0; button < 2; button++) { context.beginPath();context.arc(shoulder.x+.04,shoulder.y+.43+button*.11,.005,0,TAU);context.fill(); }
       line([{x:neck.x,y:neck.y-.02},{x:neck.x,y:shoulder.y+.02}],face,.085);
       context.save();
       context.translate(head.x,head.y);
-      context.rotate(-.045-kneel*.12);
-      context.beginPath();context.moveTo(-.095,-.106);context.bezierCurveTo(-.07,-.18,.074,-.17,.102,-.089);context.quadraticCurveTo(.094,-.042,.115,-.014);context.lineTo(.146,.026);context.quadraticCurveTo(.139,.04,.108,.044);context.lineTo(.112,.078);context.quadraticCurveTo(.097,.081,.111,.095);context.quadraticCurveTo(.092,.137,.037,.146);context.quadraticCurveTo(-.032,.114,-.072,.061);context.closePath();context.fillStyle=face;context.fill();
-      context.beginPath();context.moveTo(-.094,.045);context.bezierCurveTo(-.142,-.025,-.119,-.169,-.032,-.184);context.quadraticCurveTo(.057,-.207,.121,-.125);context.quadraticCurveTo(.092,-.084,.036,-.089);context.quadraticCurveTo(-.02,-.112,-.031,-.019);context.lineTo(-.055,.042);context.closePath();context.fillStyle="#242533";context.fill();
-      line([{x:-.093,y:-.108},{x:-.032,y:-.157},{x:.063,y:-.128}],"rgba(160,140,144,.42)",.008);
-      line([{x:.046,y:-.03},{x:.089,y:-.026}],"#4a3b43",.005);
-      line([{x:.048,y:-.006},{x:.091,y:-.009}],"#443b42",.004);
-      line([{x:.102,y:.083},{x:.087,y:.083}],"#a66e77",.004);
-      context.fillStyle="#d5a398";context.beginPath();context.ellipse(-.065,.035,.022,.035,0,0,TAU);context.fill();
+      context.rotate(-.05-kneel*.18);
+      context.beginPath();context.moveTo(-.087,-.11);context.bezierCurveTo(-.06,-.18,.067,-.16,.092,-.087);context.quadraticCurveTo(.09,-.047,.106,-.013);context.quadraticCurveTo(.117,.008,.132,.023);context.quadraticCurveTo(.131,.037,.102,.04);context.lineTo(.104,.065);context.quadraticCurveTo(.118,.075,.1,.083);context.lineTo(.103,.099);context.quadraticCurveTo(.075,.13,.037,.135);context.lineTo(-.042,.082);context.lineTo(-.075,.04);context.closePath();context.fillStyle=face;context.fill();
+      context.strokeStyle="rgba(116,77,94,.3)";context.lineWidth=.003;context.beginPath();context.moveTo(.1,.099);context.quadraticCurveTo(.068,.116,.037,.135);context.lineTo(-.042,.082);context.stroke();
+      const hair=context.createLinearGradient(-.1,-.18,.1,.03);hair.addColorStop(0,"#151e32");hair.addColorStop(.45,"#3d3544");hair.addColorStop(1,"#242c40");
+      context.beginPath();context.moveTo(-.092,.04);context.bezierCurveTo(-.13,-.024,-.116,-.16,-.055,-.18);context.bezierCurveTo(-.024,-.196,.016,-.219,.041,-.191);context.quadraticCurveTo(.112,-.186,.12,-.118);context.quadraticCurveTo(.07,-.079,.014,-.103);context.quadraticCurveTo(-.027,-.112,-.034,-.018);context.lineTo(-.054,.042);context.closePath();context.fillStyle=hair;context.fill();
+      for(let strand=0;strand<4;strand++){context.strokeStyle="rgba(160,146,164,.3)";context.lineWidth=.002;context.beginPath();context.moveTo(-.096+strand*.012,-.08);context.bezierCurveTo(-.07,-.16,.01,-.18,.087,-.134+strand*.008);context.stroke();}
+      line([{x:.038,y:-.035},{x:.079,y:-.04}],"#493442",.006);
+      context.fillStyle="#fce7d7";context.beginPath();context.ellipse(.061,-.017,.022,.009,-.12,0,TAU);context.fill();
+      context.fillStyle="#35354b";context.beginPath();context.ellipse(.074,-.018,.005,.007,0,0,TAU);context.fill();
+      line([{x:.04,y:-.022},{x:.067,y:-.03},{x:.083,y:-.023}],"#3c3442",.0035);
+      line([{x:.101,y:.073},{x:.088,y:.077}],"#9d687c",.003);
+      context.fillStyle="#d5a398";context.beginPath();context.ellipse(-.063,.031,.016,.026,-.12,0,TAU);context.fill();
       context.restore();
-      line([shoulder,elbow,{x:hand.x-.06,y:hand.y}],jacket,.115);
-      line([{x:elbow.x,y:elbow.y-.065},{x:hand.x-.09,y:hand.y-.055}],"rgba(192,197,219,.4)",.011);
-      line([{x:hand.x-.095,y:hand.y},{x:hand.x-.045,y:hand.y}],"#eee4de",.073);
-      line([{x:hand.x-.02,y:hand.y},{x:hand.x+.055,y:hand.y-.015}],face,.045);
+      limb(shoulder,elbow,{x:hand.x-.03,y:hand.y},.067,.028,jacket);
+      line([{x:elbow.x,y:elbow.y-.045},{x:hand.x-.055,y:hand.y-.027}],"rgba(192,197,219,.35)",.005);
+      line([{x:hand.x-.065,y:hand.y},{x:hand.x-.018,y:hand.y}],"#eee4de",.052);
+      this.paintHand(context,hand.x,hand.y,1,-.12,true);
       return hand;
     }
 
@@ -1159,20 +1299,29 @@
       if (state.reveal > .001) {
         context.save();
         context.globalAlpha *= smoothStep((state.reveal - .58) / .3);
-        context.strokeStyle = "#f4c7b3";
-        context.lineWidth = scale*.044;
-        context.lineCap = "round";
-        const handX = (girlX-scale*.17)*(1-state.reach) + (ringX+scale*.125)*state.reach;
-        const handY = (centerY-scale*.03)*(1-state.reach) + (ringY-scale*.045)*state.reach;
-        context.beginPath();
-        context.moveTo(girlX-scale*.19,centerY-scale*.57);
-        context.quadraticCurveTo(girlX-scale*.32,centerY-scale*.14,handX,handY);
-        context.stroke();
-        context.lineWidth = scale*.03;
-        context.beginPath();
-        context.moveTo(handX,handY);
-        context.lineTo(handX-scale*(.01+.05*state.reach),handY+scale*.02);
-        context.stroke();
+        const handX = (girlX-scale*.19)*(1-state.reach) + (ringX+scale*.15)*state.reach;
+        const handY = (centerY-scale*.1)*(1-state.reach) + (ringY-scale*.04)*state.reach;
+        const shoulderX = girlX-scale*.19;
+        const shoulderY = centerY-scale*.7;
+        const elbowX = girlX-scale*(.27+.05*state.reach);
+        const elbowY = centerY-scale*(.25+.08*state.reach);
+        const arm = [
+          ...sampleCurve([[shoulderX,shoulderY],[shoulderX-scale*.07,shoulderY+scale*.16],[elbowX+scale*.02,elbowY-scale*.1],[elbowX,elbowY]],18),
+          ...sampleCurve([[elbowX,elbowY],[elbowX-scale*.065,elbowY+scale*.045],[handX+scale*.1,handY+scale*.01],[handX,handY]],22).slice(1)
+        ];
+        const edges = arm.map((point,index) => {
+          const previous = arm[Math.max(0,index-1)];
+          const next = arm[Math.min(arm.length-1,index+1)];
+          const normal = Math.atan2(next.y-previous.y,next.x-previous.x)+Math.PI/2;
+          const radius = scale * (.028-index/(arm.length-1)*.017);
+          return { left:[point.x+Math.cos(normal)*radius,point.y+Math.sin(normal)*radius],right:[point.x-Math.cos(normal)*radius,point.y-Math.sin(normal)*radius] };
+        });
+        context.beginPath();context.moveTo(...edges[0].left);edges.slice(1).forEach(edge=>context.lineTo(...edge.left));[...edges].reverse().forEach(edge=>context.lineTo(...edge.right));context.closePath();
+        const skin = context.createLinearGradient(shoulderX-scale*.04,shoulderY,shoulderX+scale*.05,shoulderY);
+        skin.addColorStop(0,"#cf9ca0");skin.addColorStop(.45,"#f7d6c5");skin.addColorStop(1,"#edbfad");
+        context.fillStyle=skin;context.fill();
+        context.translate(handX,handY);context.scale(scale,scale);
+        this.paintHand(context,0,0,-1,-.8*(1-state.reach));
         context.restore();
       }
       context.save();
