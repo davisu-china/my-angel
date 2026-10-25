@@ -415,7 +415,7 @@
         this.meteorShots = this.meteorShots.filter(event => elapsed - event.start < event.flight + 3.5);
         this.meteorShots.forEach(event => this.fallingMeteor(event, elapsed, 1));
       }
-      const scale = Math.min(this.width * .26, this.height * .225);
+      const scale = this.width < 600 ? Math.min(this.width * .35, this.height * .24) : Math.min(this.width * .26, this.height * .225);
       const centerX = this.width / 2;
       const centerY = this.height * .39;
       const yaw = this.reduced ? -.04 : Math.sin(elapsed * .23) * .06 + this.pointer.x * .16;
