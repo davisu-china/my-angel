@@ -12,9 +12,9 @@
   const smoothStep = value => { const progress = Math.max(0, Math.min(1, value)); return progress * progress * (3 - 2 * progress); };
 
   const meteorChapters = [
-    { kicker: "星落倾心 · 01 流星与涟漪", title: "星光奔向大地，我奔向你。", hint: "轻点夜空，添一颗流星 · 也可选择下方章节", time: 2 },
-    { kicker: "星落倾心 · 02 画一整个星空", title: "把夜空画成浪漫，把偏爱留给你。", hint: "蓝与金的旋涡里，藏着一份只给你的心意", time: 15 },
-    { kicker: "星落倾心 · 03 星光成你", title: "原来，万千星光，最后都像你。", hint: "王梓烨 · 这一整个宇宙，都有了温柔的轮廓", time: 32 }
+    { kicker: "流星与涟漪", title: "星光奔向大地，我奔向你。", time: 2 },
+    { kicker: "画一整个星空", title: "把夜空画成浪漫，把偏爱留给你。", time: 15 },
+    { kicker: "星光成你", title: "原来，万千星光，最后都像你。", time: 32 }
   ];
 
   function sampleCurve(anchors, count = 70) {
@@ -149,9 +149,11 @@
     resize() {
       const bounds = this.canvas.getBoundingClientRect();
       if (!bounds.width || !bounds.height || !this.context) return;
+      const ratio = Math.min(window.devicePixelRatio || 1, 1.7);
+      if (this.width === bounds.width && this.height === bounds.height && this.ratio === ratio) return;
       this.width = bounds.width;
       this.height = bounds.height;
-      const ratio = Math.min(window.devicePixelRatio || 1, 1.7);
+      this.ratio = ratio;
       this.canvas.width = Math.round(this.width * ratio);
       this.canvas.height = Math.round(this.height * ratio);
       this.context.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -413,7 +415,7 @@
         this.meteorShots = this.meteorShots.filter(event => elapsed - event.start < event.flight + 3.5);
         this.meteorShots.forEach(event => this.fallingMeteor(event, elapsed, 1));
       }
-      const scale = Math.min(this.width * .26, this.height * .225);
+      const scale = this.width < 600 ? Math.min(this.width * .35, this.height * .24) : Math.min(this.width * .26, this.height * .225);
       const centerX = this.width / 2;
       const centerY = this.height * .39;
       const yaw = this.reduced ? -.04 : Math.sin(elapsed * .23) * .06 + this.pointer.x * .16;
