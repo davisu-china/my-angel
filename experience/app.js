@@ -133,24 +133,19 @@
   });
 
   selectAll("[data-scroll]").forEach((button)=>button.addEventListener("click",()=>scrollToElement(button.dataset.scroll)));
-  selectAll("[data-top]").forEach((button)=>button.addEventListener("click",()=>window.scrollTo({top:0,behavior:reducedMotion?"instant":"smooth"})));
   const music = select("#background-music");
-  const musicFile = select("#music-file");
-  const musicStatus = select("#music-status");
   const soundToggle = select(".sound-toggle");
   let musicLoading = false;
   let musicRequest = 0;
-  let musicObjectURL;
   music.volume = .45;
   if (music.dataset.src) music.src = music.dataset.src;
 
   function updateSoundButton() {
-    const hasSource = Boolean(music.getAttribute("src"));
     const playing = !music.paused;
     soundToggle.setAttribute("aria-pressed", String(playing));
     soundToggle.setAttribute("aria-busy", String(musicLoading));
-    soundToggle.setAttribute("aria-label", musicLoading ? "取消歌曲加载" : playing ? "暂停歌曲" : hasSource ? "播放歌曲" : "选择歌曲音源");
-    select(".sound-label").textContent = musicLoading ? "加载中" : playing ? "音乐开启" : hasSource ? "播放音乐" : "选择音乐";
+    soundToggle.setAttribute("aria-label", musicLoading ? "取消歌曲加载" : playing ? "暂停歌曲" : "播放歌曲");
+    select(".sound-label").textContent = musicLoading ? "加载中" : playing ? "音乐开启" : "播放音乐";
   }
 
   function pauseMusic() {
@@ -158,33 +153,29 @@
     musicLoading = false;
     music.pause();
     updateSoundButton();
-    if (music.getAttribute("src")) musicStatus.textContent = "音乐已暂停；点击右上角继续播放。";
   }
 
   function musicFailed() {
     pauseMusic();
-    musicStatus.textContent = "音源无法播放，请检查文件或重新选择 MP3 / M4A。";
-    toast("歌曲暂时无法播放，可以换一个有权使用的音源。");
+    toast("歌曲暂时无法播放，请检查音频文件或稍后重试。");
   }
 
   async function playMusic() {
     if (document.hidden) return;
-    if (!music.getAttribute("src")) { musicFile.click(); return; }
+    if (!music.getAttribute("src")) { toast("暂未找到背景音乐，请检查配乐文件。"); return; }
     const request = ++musicRequest;
     musicLoading = true;
-    musicStatus.textContent = "正在加载歌曲…";
     updateSoundButton();
     try {
       await music.play();
       if (request !== musicRequest) return;
       musicLoading = false;
-      musicStatus.textContent = `正在播放 · ${music.dataset.title || "所选歌曲"}`;
       updateSoundButton();
     } catch (error) {
       if (request !== musicRequest) return;
       if (error.name === "NotAllowedError") {
         pauseMusic();
-        musicStatus.textContent = "浏览器需要手动确认，请点击右上角播放音乐。";
+        toast("浏览器需要手动确认，请点击右上角播放音乐。");
       } else musicFailed();
     }
   }
@@ -192,24 +183,6 @@
   soundToggle.addEventListener("click", () => {
     if (musicLoading || !music.paused) pauseMusic();
     else playMusic();
-  });
-  select(".music-import").addEventListener("click", () => musicFile.click());
-  musicFile.addEventListener("change", () => {
-    const file = musicFile.files?.[0];
-    if (!file) return;
-    if (!(file.type.startsWith("audio/") || /\.(mp3|m4a|ogg|wav)$/i.test(file.name))) {
-      toast("请选择 MP3、M4A、OGG 或 WAV 音频文件。");
-      musicFile.value = "";
-      return;
-    }
-    pauseMusic();
-    if (musicObjectURL) URL.revokeObjectURL(musicObjectURL);
-    musicObjectURL = URL.createObjectURL(file);
-    music.src = musicObjectURL;
-    music.dataset.title = file.name.replace(/\.[^.]+$/, "");
-    musicStatus.textContent = "歌曲已就绪，仅在本机使用；点击右上角播放。";
-    musicFile.value = "";
-    updateSoundButton();
   });
   music.addEventListener("play", updateSoundButton);
   music.addEventListener("pause", updateSoundButton);

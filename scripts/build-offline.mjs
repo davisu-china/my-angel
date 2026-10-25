@@ -71,4 +71,4 @@ for (const filename of ["index.html", "style.css", "effects.js", "app.js"]) {
 }
 await cp(path.join(source, "assets"), path.join(hosted, "assets"), { recursive: true });
 await copyFile(path.join(root, "使用说明.md"), path.join(output, "使用说明.md"));
-console.log(`Offline build complete: cinema-only HTML, private photos or placeholders, ${audioSource ? "embedded music" : "local song picker"}; hosted assets synced. Generated files are private and Git-ignored.`);
+console.log(`Offline build complete: cinema-only HTML, private photos or placeholders, ${audioSource ? "embedded music" : "no soundtrack configured"}; hosted assets synced. Generated files are private and Git-ignored.`);
