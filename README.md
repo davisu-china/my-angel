@@ -1,6 +1,6 @@
 # For You — A Private Screening
 
-One cinematic experience for 王梓烨: three private portraits, the starlight particle name, six Canvas particle scenes and three film chapters. Theme selection, alternative themes and the closing response section are removed.
+One cinematic experience for 王梓烨: three private portraits, one meteor Canvas narrative and three film chapters. Only 星落倾心 remains: meteor impacts and ripples → animated blue/gold painted sky → a rainbow girl silhouette, looping every 40 seconds. The particle name, page-wide starfield, other particle effects, theme selection and closing response section are removed. Chapter selection, pause/resume and replay remain available; reduced-motion mode shows still frames.
 
 See [使用说明.md](./使用说明.md) for opening, customization, interaction behavior and deployment status.
 

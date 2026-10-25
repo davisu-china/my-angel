@@ -5,19 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#100f11">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="一场只为你的私人放映，六幕粒子情书。星河万千，偏偏是你。">
+  <meta name="description" content="一场只为你的私人放映。星落倾心，万千星光，最后汇成你。">
   <title>偏偏是你 · 私人放映</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='18' fill='%2308171e'/%3E%3Cpath d='M30 45 13 28C0 10 24 7 30 22 36 7 60 10 47 28Z' fill='%23d9c4a0'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-scene="cinema">
   <a class="skip" href="#main">跳到主要内容</a>
-  <canvas id="atmosphere" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
   <div class="reading-progress" aria-hidden="true"><span></span></div>
   <header class="site-header">
     <a href="#cinema-start" class="brand" aria-label="回到电影开场"><span class="brand-mark">✧</span><span>FOR YOU<small>一份专属浪漫</small></span></a>
-    <nav class="scene-nav" aria-label="页面章节"><a href="#cinema-moments">光影里的你</a><a href="#cinema-name">星光姓名</a><a href="#particle-theatre">粒子情书</a></nav>
+    <nav class="scene-nav" aria-label="页面章节"><a href="#cinema-moments">光影里的你</a><a href="#particle-theatre">星落倾心</a><a href="#film-screen">心动字幕</a></nav>
     <button type="button" class="sound-toggle" aria-label="选择歌曲音源" aria-pressed="false"><span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="sound-label">选择音乐</span></button>
   </header>
   <main id="main" tabindex="-1">
@@ -31,12 +30,11 @@
           <button type="button" class="portrait-card portrait-night reveal" data-photo="2" aria-label="放大查看第三张照片"><span class="portrait-image"><img src="assets/ziye-evening.jpg" alt="暖灯与城市夜色里的王梓烨" width="1080" height="1385" loading="lazy" decoding="async"><span class="portrait-zoom">↗</span></span><span class="portrait-number">03 / MY FAVORITE LIGHT</span><strong>万家灯火，我偏偏看向你。</strong><span>所有想说的话，慢慢说给你听。</span></button>
         </div>
       </section>
-      <section id="cinema-name" class="name-section cinema-name-section page-width reveal"><p class="eyebrow">YOUR NAME, WRITTEN IN STARLIGHT</p><h2>后来，星河有了方向。<br>每一束光，都在写你的名字。</h2><div class="name-particle-wrap"><canvas id="name-particles" aria-hidden="true"></canvas><p class="name-accessible">王梓烨</p><span class="star-cross cross-one">+</span><span class="star-cross cross-two">+</span></div><p class="quiet-caption">星河万千，偏偏是你。<br><span>轻移指尖，星光会散开，也会重新向你靠近。</span></p><button type="button" class="text-link" data-scroll="particle-theatre">把心动，放映给你看 <span>↓</span></button></section>
       <section id="particle-theatre" class="particle-theatre page-width reveal" aria-labelledby="theatre-heading">
-        <div class="theatre-heading"><div><p class="eyebrow">SIX WAYS TO SAY IT / ONE NAME</p><h2 id="theatre-heading">有些喜欢，<em>想让你看见。</em></h2></div><span>六幕粒子情书 · 为你而亮</span></div>
-        <div class="particle-stage"><canvas id="romance-particles" role="img" aria-label="金色烟花粒子向夜空绽放"></canvas><div class="particle-stage-top"><span>EXCLUSIVELY FOR ZIYE</span><span id="effect-counter">ACT 01 / 06</span></div><div class="particle-stage-caption"><span id="effect-kicker">烟火为序</span><p id="effect-title">这一场烟火，只为你盛放。</p><span class="particle-stage-hint">轻点夜空，添一束烟花</span></div></div>
-        <div class="effect-controls"><div class="effect-tabs" role="group" aria-label="选择粒子场景"><button type="button" data-effect="fireworks" aria-pressed="true"><span>01</span>粒子烟花</button><button type="button" data-effect="heart" aria-pressed="false"><span>02</span>粒子爱心</button><button type="button" data-effect="meteors" aria-pressed="false"><span>03</span>星落倾心</button><button type="button" data-effect="rose" aria-pressed="false"><span>04</span>粒子玫瑰</button><button type="button" data-effect="sakura" aria-pressed="false"><span>05</span>樱花树</button><button type="button" data-effect="butterflies" aria-pressed="false"><span>06</span>蝴蝶飞舞</button></div><button type="button" class="effects-toggle" aria-pressed="true">Ⅱ 暂停特效</button></div>
-        <div class="meteor-chapters" hidden><div class="meteor-chapter-tabs" role="group" aria-label="星落倾心的三个章节"><button type="button" data-meteor-chapter="0" aria-pressed="true">01 流星涟漪</button><button type="button" data-meteor-chapter="1" aria-pressed="false">02 油画星空</button><button type="button" data-meteor-chapter="2" aria-pressed="false">03 星光成你</button></div><button type="button" class="meteor-replay">↺ 从第一颗流星重播</button></div>
+        <div class="theatre-heading"><div><p class="eyebrow">STARRY NIGHT, STARRY YOU</p><h2 id="theatre-heading">星落倾心，<em>万千星光都向你。</em></h2></div><span>流星与涟漪 / 油画星空 / 星光成你</span></div>
+        <div class="particle-stage"><canvas id="romance-particles" role="img" aria-label="星落倾心：流星落地泛起涟漪，旋成油画星空，最后汇成五彩少女轮廓"></canvas><div class="particle-stage-top"><span>EXCLUSIVELY FOR ZIYE</span><span id="effect-counter">CHAPTER 01 / 03</span></div><div class="particle-stage-caption"><span id="effect-kicker">星落倾心 · 01 流星与涟漪</span><p id="effect-title">星光奔向大地，我奔向你。</p><span class="particle-stage-hint">轻点夜空，落下一颗属于你的流星</span></div></div>
+        <div class="effect-controls"><span class="effect-summary">只放映这一场，约 40 秒循环。</span><button type="button" class="effects-toggle" aria-pressed="true">Ⅱ 暂停放映</button></div>
+        <div class="meteor-chapters"><div class="meteor-chapter-tabs" role="group" aria-label="星落倾心的三个章节"><button type="button" data-meteor-chapter="0" aria-pressed="true">01 流星涟漪</button><button type="button" data-meteor-chapter="1" aria-pressed="false">02 油画星空</button><button type="button" data-meteor-chapter="2" aria-pressed="false">03 星光成你</button></div><button type="button" class="meteor-replay">↺ 从第一颗流星重播</button></div>
         <div class="theatre-footnote"><span>不必一次看完，心动可以慢慢来。</span><button type="button" class="text-link" data-film-start>还有几句话，想亲口告诉你 <span>↗</span></button></div>
       </section>
       <section id="film-screen" class="film-screen-section page-width reveal"><div class="section-topline"><p class="eyebrow">THREE SCENES OF A FEELING</p><span>不赶情节，认真心动。</span></div><div class="screening"><div class="screening-glow" aria-hidden="true"></div><p class="scene-counter">SCENE <span id="film-current">01</span> / 03</p><div class="film-lines" aria-live="off"><p id="film-kicker">关于心动</p><h2 id="film-line">有些喜欢，<br>在开口之前，<em>已经认真了很久。</em></h2><p id="film-description">于是，想用一份小小的勇气，让你看见。</p></div><div class="screening-controls"><div class="film-tabs" role="group" aria-label="选择电影章节"><button type="button" data-film-scene="0" aria-label="第一幕，关于心动" aria-pressed="true"><span></span>01</button><button type="button" data-film-scene="1" aria-label="第二幕，关于靠近" aria-pressed="false"><span></span>02</button><button type="button" data-film-scene="2" aria-label="第三幕，关于以后" aria-pressed="false"><span></span>03</button></div><button type="button" class="film-pause" aria-pressed="false">▷ 自动放映</button></div></div></section>
@@ -52,7 +50,7 @@
   <audio id="background-music" preload="none" loop data-src="" data-title="Angel · 尹美莱 / 徐正权 / Bizzy"></audio>
   <dialog id="photo-dialog" aria-label="照片放大查看"><button class="photo-close" type="button" aria-label="关闭照片">×</button><img id="photo-large" alt=""><div class="photo-dialog-controls"><button type="button" data-photo-step="-1" aria-label="上一张照片">←</button><span id="photo-count" aria-live="polite">01 / 03</span><button type="button" data-photo-step="1" aria-label="下一张照片">→</button></div></dialog>
   <div class="toast" role="status" aria-live="polite"></div>
-  <noscript><p class="noscript-message">这是一封互动来信，请启用 JavaScript 来欣赏照片与粒子情书。</p></noscript>
+  <noscript><p class="noscript-message">这是一封互动来信，请启用 JavaScript 来欣赏照片与星落倾心。</p></noscript>
   <script src="effects.js"></script>
   <script src="app.js"></script>
 </body>

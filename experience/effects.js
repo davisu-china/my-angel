@@ -2,14 +2,7 @@
   "use strict";
 
   const TAU = Math.PI * 2;
-  const scenes = [
-    { key: "fireworks", kicker: "烟火为序", title: "这一场烟火，只为你盛放。", description: "金色与柔粉色的粒子烟花，拖着光尾升起，在夜空绽放", hint: "轻点夜空，添一束烟花" },
-    { key: "heart", kicker: "万千星尘，向你而来", title: "所有心动，都在慢慢汇向你。", description: "数千粒子从底部多股螺旋升空，逐渐汇成有透视和光影的立体爱心，缓缓旋转后化为星尘", hint: "移动指尖转动视角 · 轻点画布，重放聚心", duration: 22 },
-    { key: "meteors", kicker: "星落倾心 · 流星序章", title: "让整片星空，为你而来。", description: "蓝金粒子流星雨坠落镜面地面，泛起涟漪与心形星尘，旋成梵高式星空笔触，最后汇成五彩长发少女卡通轮廓", hint: "轻点夜空，落下一颗属于你的流星", duration: 40 },
-    { key: "rose", kicker: "一束偏爱", title: "把没说完的喜欢，藏进一朵玫瑰。", description: "柔粉粒子组成层叠玫瑰，金色花茎与叶片缓缓摇曳", hint: "不止今天，也想在普通日子送你花" },
-    { key: "sakura", kicker: "花开等你", title: "等风，也想等你一起看花开。", description: "粉金色粒子樱花树伸展枝桠，花瓣随风飘落", hint: "落花很慢，答案也可以慢慢来" },
-    { key: "butterflies", kicker: "向你飞去", title: "所有轻盈的心事，都想飞向你。", description: "金色与柔粉粒子蝴蝶振动翅膀，沿着弧线飞舞", hint: "翅膀的每一次轻颤，都是一句喜欢" }
-  ];
+  const duration = 40;
 
   function randomGenerator(seed) {
     let state = seed >>> 0;
@@ -17,32 +10,6 @@
   }
 
   const smoothStep = value => { const progress = Math.max(0, Math.min(1, value)); return progress * progress * (3 - 2 * progress); };
-
-  function heartField(positionX, height, depth) {
-    const shell = positionX * positionX + 2.25 * depth * depth + height * height - 1;
-    return shell * shell * shell - positionX * positionX * height * height * height - .1125 * depth * depth * height * height * height;
-  }
-
-  function heartParticleState(particle, elapsed, reduced = false) {
-    if (reduced) return { x: particle.x, y: particle.y, z: particle.z, alpha: 1, flying: false };
-    const age = elapsed - particle.delay;
-    const progress = Math.max(0, Math.min(1, age / particle.flight));
-    const angle = particle.spiralPhase - progress * TAU * 2.15;
-    const radius = (.27 + .38 * Math.sin(progress * Math.PI)) * (1 - progress * .25);
-    const merge = smoothStep((progress - .48) / .52);
-    const spiralX = Math.cos(angle) * radius;
-    const spiralZ = Math.sin(angle) * radius;
-    const spiralY = 1.85 - progress * 2.7;
-    const scatter = smoothStep((elapsed - 16.2 - particle.delay * .25) / 3.8);
-    const scatterAngle = particle.phase + scatter * TAU * .7;
-    return {
-      x: spiralX + (particle.x - spiralX) * merge + Math.cos(scatterAngle) * scatter * 1.1,
-      y: spiralY + (particle.y - spiralY) * merge + scatter * 2.1,
-      z: spiralZ + (particle.z - spiralZ) * merge + Math.sin(scatterAngle) * scatter * .9,
-      alpha: (age < 0 ? .09 : .9 + Math.sin(progress * Math.PI) * .1) * (1 - scatter * .94),
-      flying: age > 0 && progress < .98
-    };
-  }
 
   const meteorChapters = [
     { kicker: "星落倾心 · 01 流星与涟漪", title: "星光奔向大地，我奔向你。", hint: "轻点夜空，添一颗流星 · 也可选择下方章节", time: 2 },
@@ -156,133 +123,13 @@
     return { x: positionX + (particle.x - positionX) * gather, y: positionY + (particle.y - positionY) * gather, gather, alpha: (.12 + rise * .65) * (1 - gather) + gather * particle.alpha };
   }
 
-  function makeShape(kind, compact = false) {
-    if (kind === "meteors") return makeGirlParticles(compact);
-    const random = randomGenerator(921);
-    const points = [];
-    const add = (positionX, positionY, depth = 0, tone = "gold", size = 1) => {
-      points.push({ x: positionX, y: positionY, z: depth, tone, size, phase: random() * TAU, alpha: .45 + random() * .55 });
-    };
-    const density = compact ? .62 : 1;
-    if (kind === "heart") {
-      const count = compact ? 3400 : 6200;
-      for (let index = 0; index < count; index++) {
-        const directionY = 1 - 2 * (index + .5) / count;
-        const azimuth = index * 2.399963229728653;
-        const horizontal = Math.sqrt(1 - directionY * directionY);
-        const directionX = Math.cos(azimuth) * horizontal;
-        const directionZ = Math.sin(azimuth) * horizontal;
-        let near = 0;
-        let far = 2;
-        for (let iteration = 0; iteration < 19; iteration++) {
-          const radius = (near + far) / 2;
-          if (heartField(directionX * radius, directionY * radius, directionZ * radius) < 0) near = radius;
-          else far = radius;
-        }
-        const radius = (near + far) / 2;
-        const positionX = directionX * radius;
-        const height = directionY * radius;
-        const depth = directionZ * radius;
-        const shell = positionX * positionX + 2.25 * depth * depth + height * height - 1;
-        const normalX = 6 * positionX * shell * shell - 2 * positionX * height * height * height;
-        const normalY = -(6 * height * shell * shell - 3 * positionX * positionX * height * height - .3375 * depth * depth * height * height);
-        const normalZ = 13.5 * depth * shell * shell - .225 * depth * height * height * height;
-        const normalLength = Math.hypot(normalX, normalY, normalZ) || 1;
-        const layer = random() > .16 ? 1 : .6 + random() * .37;
-        add(positionX * .83 * layer, -height * .83 * layer + .1, depth * .83 * layer, random() > .12 ? "pink" : "gold", .55 + random() * .65);
-        Object.assign(points[points.length - 1], {
-          normalX: normalX / normalLength, normalY: normalY / normalLength, normalZ: normalZ / normalLength,
-          spiralPhase: index % 4 * TAU / 4 + (random() - .5) * .16,
-          delay: random() * 3 + (.95 - points[points.length - 1].y) * .25,
-          flight: 3.5 + random() * .8
-        });
-      }
-    }
-    if (kind === "rose") {
-      for (let layer = 0; layer < 5; layer++) {
-        const petalCount = 3 + layer * 2;
-        for (let petal = 0; petal < petalCount; petal++) {
-          const angle = petal / petalCount * TAU + layer * 1.1;
-          const count = Math.round((45 + layer * 9) * density);
-          for (let index = 0; index < count; index++) {
-            const along = index / (count - 1);
-            const edge = index % 3 !== 0;
-            const sweep = (along - .5) * TAU / petalCount * 1.7;
-            const radius = .025 + layer * .105 + Math.sin(along * Math.PI) * (.1 + layer * .025) * (edge ? 1 : random());
-            const positionX = Math.cos(angle + sweep) * radius;
-            const depth = Math.sin(angle + sweep) * radius;
-            add(positionX, -.55 + depth * .84 + Math.sin(along * Math.PI) * .03, depth * .25, edge && index % 7 === 0 ? "gold" : "pink", edge ? 1.1 : .65);
-          }
-        }
-      }
-      for (let index = 0; index < 210 * density; index++) {
-        const height = index / (210 * density);
-        add(Math.sin(height * 3) * .09, -.2 + height * 1.34, 0, "stem", .9);
-      }
-      for (const [direction, base] of [[-1, .57], [1, .32]]) {
-        for (let index = 0; index < 200 * density; index++) {
-          const along = random();
-          const breadth = (random() - .5) * Math.sin(along * Math.PI) * .32;
-          add(direction * along * .64 + .04, base - along * .42 + breadth, breadth * .15, random() > .6 ? "gold" : "stem", .85);
-        }
-      }
-    }
-    if (kind === "sakura") {
-      function branch(startX, startY, length, angle, depth) {
-        const endX = startX + Math.cos(angle) * length;
-        const endY = startY + Math.sin(angle) * length;
-        for (let index = 0; index < length * 100 * density; index++) {
-          const along = random();
-          add(startX + (endX - startX) * along + (random() - .5) * depth * .008, startY + (endY - startY) * along, 0, "branch", .65 + depth * .12);
-        }
-        if (depth <= 3) {
-          const flowerCount = Math.round((depth === 0 ? 32 : 13) * density);
-          for (let bloom = 0; bloom < flowerCount; bloom++) {
-            const angle = random() * TAU;
-            const radius = Math.sqrt(random()) * .14;
-            add(endX + Math.cos(angle) * radius, endY + Math.sin(angle) * radius * .7, (random() - .5) * .18, random() > .16 ? "pink" : "gold", 1 + random() * 1.3);
-          }
-        }
-        if (depth === 0) return;
-        branch(endX, endY, length * (.66 + random() * .07), angle - .35 - random() * .3, depth - 1);
-        branch(endX, endY, length * (.66 + random() * .07), angle + .35 + random() * .3, depth - 1);
-      }
-      branch(.03, 1.13, .63, -Math.PI / 2 - .08, 6);
-      for (let index = 0; index < 180 * density; index++) {
-        const angle = random() * TAU;
-        add(Math.cos(angle) * random() * .9, 1.15 + Math.sin(angle) * .065, 0, "pink", .7);
-      }
-    }
-    if (kind === "butterflies") {
-      for (let index = 0; index < 270 * density; index++) {
-        const along = random();
-        const spread = random();
-        const upperWing = random() > .33;
-        const positionX = upperWing ? .07 + Math.sin(along * Math.PI * .83) * .53 * spread : .06 + Math.sin(along * Math.PI) * .36 * spread;
-        const positionY = upperWing ? -.5 + along * .65 : .05 + along * .43;
-        add(positionX, positionY, 0, random() > .23 ? "gold" : "pink", .8 + random() * .6);
-        add(-positionX, positionY, 0, random() > .23 ? "gold" : "pink", .8 + random() * .6);
-      }
-      for (let index = 0; index < 130 * density; index++) {
-        const along = index / (130 * density);
-        for (const direction of [-1, 1]) {
-          add(direction * (.07 + Math.sin(along * Math.PI * .83) * .53), -.5 + along * .65, 0, "gold", 1);
-          add(direction * (.06 + Math.sin(along * Math.PI) * .36), .05 + along * .43, 0, "pink", .9);
-        }
-      }
-    }
-    return points;
-  }
-
   class Theatre {
-    constructor(canvas, onChange, onChapter = () => {}) {
+    constructor(canvas, onChapter = () => {}, reduced = false) {
       this.canvas = canvas;
       this.context = canvas.getContext("2d");
-      this.onChange = onChange;
       this.onChapter = onChapter;
       this.chapter = -1;
-      this.index = 0;
-      this.elapsed = 0;
+      this.elapsed = reduced ? 33 : 0;
       this.total = 0;
       this.lastTime = 0;
       this.frame = 0;
@@ -291,13 +138,12 @@
       this.active = false;
       this.visible = false;
       this.playing = true;
-      this.reduced = false;
+      this.reduced = reduced;
       this.pointer = { x: 0, y: 0 };
-      this.extraBursts = [];
       this.meteorShots = [];
       this.tick = this.tick.bind(this);
       this.resize();
-      this.setEffect("fireworks");
+      this.canvas.setAttribute("aria-label", "星落倾心：流星落地涟漪、蓝金油画星空，最后汇成五彩少女轮廓");
     }
 
     resize() {
@@ -311,22 +157,26 @@
       this.context.setTransform(ratio, 0, 0, ratio, 0, 0);
       const random = randomGenerator(19);
       this.stars = Array.from({ length: this.width < 600 ? 65 : 120 }, () => ({ x: random(), y: random(), radius: .3 + random(), phase: random() * TAU }));
-      this.points = makeShape(scenes[this.index].key, this.width < 600);
+      this.points = makeGirlParticles(this.width < 600);
       this.meteorEvents = makeMeteorEvents(this.width < 600);
       this.render();
     }
 
-    setEffect(key) {
-      const nextIndex = scenes.findIndex(scene => scene.key === key);
-      if (nextIndex < 0) return;
-      this.index = nextIndex;
-      this.elapsed = 0;
+    restart() {
+      this.elapsed = this.reduced ? 33 : 0;
+      this.total = 0;
+      this.lastTime = 0;
       this.chapter = -1;
-      this.extraBursts = [];
       this.meteorShots = [];
-      this.points = makeShape(key, this.width < 600);
-      this.canvas.setAttribute("aria-label", scenes[this.index].description);
-      this.onChange(scenes[this.index], this.index);
+      this.render();
+    }
+
+    seekChapter(index) {
+      const chapter = meteorChapters[index];
+      if (!chapter) return;
+      this.elapsed = chapter.time;
+      this.lastTime = 0;
+      this.meteorShots = [];
       this.render();
     }
 
@@ -348,14 +198,14 @@
         this.elapsed += advance;
         this.total += advance;
         this.lastTime = time;
-        if (this.elapsed >= (scenes[this.index].duration || 12)) this.setEffect(scenes[(this.index + 1) % scenes.length].key);
+        if (this.elapsed >= duration) this.restart();
         this.render();
       }
       this.frame = requestAnimationFrame(this.tick);
     }
 
     point(positionX, positionY, size, tone = "gold", alpha = 1) {
-      const palette = { gold: "235,203,147", pink: "246,170,192", stem: "159,187,143", branch: "172,141,103", white: "249,235,211" };
+      const palette = { gold: "235,203,147", pink: "246,170,192", white: "249,235,211" };
       const context = this.context;
       context.fillStyle = `rgba(${palette[tone] || (tone.includes(",") ? tone : palette.gold)},${Math.max(0, Math.min(alpha, 1))})`;
       context.beginPath();
@@ -363,58 +213,17 @@
       context.fill();
     }
 
-    trail(startX, startY, endX, endY, alpha, pink = false) {
+    trail(startX, startY, endX, endY, alpha) {
       const context = this.context;
       const gradient = context.createLinearGradient(startX, startY, endX, endY);
       gradient.addColorStop(0, "rgba(230,185,140,0)");
-      gradient.addColorStop(1, pink ? `rgba(246,170,192,${alpha})` : `rgba(245,219,170,${alpha})`);
+      gradient.addColorStop(1, `rgba(245,219,170,${alpha})`);
       context.strokeStyle = gradient;
       context.lineWidth = 1;
       context.beginPath();
       context.moveTo(startX, startY);
       context.lineTo(endX, endY);
       context.stroke();
-    }
-
-    burst(centerX, centerY, age, seed, heart = false) {
-      if (age < -.75 || age > 3.6) return;
-      const scale = Math.min(this.width, this.height);
-      if (age < 0) {
-        const progress = 1 + age / .75;
-        const positionY = this.height - (this.height - centerY) * progress;
-        this.trail(centerX - 4, positionY + 65, centerX, positionY, .9);
-        this.point(centerX, positionY, 2, "white", .9);
-        return;
-      }
-      const random = randomGenerator(seed);
-      const count = this.width < 600 ? 88 : 135;
-      const spread = (1 - Math.exp(-age * 1.8)) * scale * .24;
-      const fade = Math.max(0, 1 - age / 3.6);
-      for (let index = 0; index < count; index++) {
-        const angle = random() * TAU;
-        const radius = .4 + random() * .6;
-        const directionX = heart ? Math.pow(Math.sin(angle), 3) : Math.cos(angle);
-        const directionY = heart ? -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) / 16 : Math.sin(angle);
-        const positionX = centerX + directionX * spread * radius;
-        const positionY = centerY + directionY * spread * radius + age * age * 13;
-        this.trail(positionX - directionX * 15 * fade, positionY - directionY * 15 * fade - age * 3, positionX, positionY, fade * .7, seed % 2 === 0);
-        this.point(positionX, positionY, .6 + random() * 1.2, seed % 2 === 0 ? "pink" : "gold", fade * (.5 + random() * .5));
-      }
-    }
-
-    fireworks(time) {
-      if (this.reduced) {
-        this.burst(this.width * .32, this.height * .3, .65, 17);
-        this.burst(this.width * .7, this.height * .4, .8, 28, true);
-        return;
-      }
-      for (let index = 0; index < 5; index++) {
-        const random = randomGenerator(index * 33 + 9);
-        const age = ((time + index * 1.17) % 6) - .8;
-        this.burst(this.width * (.18 + random() * .64), this.height * (.2 + random() * .25), age, 31 + index, index % 3 === 1);
-      }
-      this.extraBursts = this.extraBursts.filter(burst => this.total - burst.start < 3.7);
-      this.extraBursts.forEach(burst => this.burst(burst.x, burst.y, this.total - burst.start, burst.seed, true));
     }
 
     starrySky(elapsed, opacity) {
@@ -634,131 +443,6 @@
       context.restore();
     }
 
-    heart() {
-      const context = this.context;
-      const elapsed = this.reduced ? 10 : this.elapsed;
-      const scale = Math.min(this.width * .335, this.height * .245);
-      const centerX = this.width / 2;
-      const centerY = this.height * .32;
-      const yaw = -.38 + Math.sin(elapsed * .27) * .58 + this.pointer.x * .85;
-      const pitch = -.12 + Math.sin(elapsed * .19) * .055;
-      const yawCosine = Math.cos(yaw);
-      const yawSine = Math.sin(yaw);
-      const pitchCosine = Math.cos(pitch);
-      const pitchSine = Math.sin(pitch);
-      const rotate = (positionX, positionY, depth) => {
-        const horizontal = positionX * yawCosine + depth * yawSine;
-        const rotatedDepth = depth * yawCosine - positionX * yawSine;
-        return { x: horizontal, y: positionY * pitchCosine - rotatedDepth * pitchSine, z: rotatedDepth * pitchCosine + positionY * pitchSine };
-      };
-      const project = position => {
-        const rotated = rotate(position.x, position.y, position.z);
-        const perspective = 4.5 / (4.5 - rotated.z);
-        return { x: centerX + rotated.x * scale * perspective, y: centerY + rotated.y * scale * perspective, z: rotated.z, perspective };
-      };
-      const sprites = this.points.map((particle, index) => {
-        const position = heartParticleState(particle, elapsed, this.reduced);
-        const projected = project(position);
-        const normal = rotate(particle.normalX, particle.normalY, particle.normalZ);
-        const diffuse = Math.max(0, normal.x * -.35 + normal.y * -.45 + normal.z * .82);
-        const front = .28 + smoothStep((normal.z + .55) / 1.2) * .72;
-        const depthLight = .5 + (projected.z + 1) * .22;
-        return { particle, index, position, projected, light: (.3 + diffuse * .7) * front * depthLight };
-      });
-      if (!this.reduced) {
-        context.save();
-        context.globalCompositeOperation = "lighter";
-        for (let index = 0; index < 260; index++) {
-          const phase = index / 260 * TAU;
-          const ring = project({ x: Math.cos(phase) * .56, y: 1.85, z: Math.sin(phase) * .56 });
-          this.point(ring.x, ring.y, index % 5 === 0 ? 1 : .5, "gold", .12 + Math.sin(phase + elapsed) * .04);
-        }
-        const streamCount = this.width < 600 ? 220 : 420;
-        for (let index = 0; index < streamCount; index++) {
-          const target = this.points[(index * 17) % this.points.length];
-          const age = (Math.max(0, elapsed - 4) + index / streamCount * 4.1) % 4.1;
-          if (elapsed < 4 || elapsed > 19) break;
-          const position = heartParticleState({ ...target, delay: 0, flight: 4.1 }, age);
-          const projected = project(position);
-          this.point(projected.x, projected.y, .65 * projected.perspective, index % 5 === 0 ? "gold" : "pink", .28 * Math.sin(age / 4.1 * Math.PI));
-        }
-        context.restore();
-      }
-      sprites.sort((first, second) => first.projected.z - second.projected.z);
-      context.save();
-      context.globalCompositeOperation = "lighter";
-      sprites.forEach(({ particle, index, position, projected, light }) => {
-        const brightness = position.flying ? .65 : .34 + light * .8;
-        const alpha = particle.alpha * position.alpha * brightness;
-        const size = particle.size * projected.perspective * (this.width < 600 ? .78 : 1);
-        if (position.flying && index % 9 === 0) {
-          const previous = project(heartParticleState(particle, Math.max(0, elapsed - .09)));
-          this.trail(previous.x, previous.y, projected.x, projected.y, alpha * .45, true);
-        }
-        if (index % 11 === 0) this.point(projected.x, projected.y, size * 3, particle.tone, alpha * .075);
-        this.point(projected.x, projected.y, size, particle.tone, alpha);
-        if (!position.flying && light > .65 && index % 3 === 0) this.point(projected.x, projected.y, size * .55, "white", alpha * .75);
-      });
-      context.restore();
-    }
-
-    shape(time, kind) {
-      const scale = Math.min(this.width * .34, this.height * .32);
-      const centerX = this.width / 2;
-      const centerY = this.height * .44;
-      const turn = this.reduced ? 0 : Math.sin(time * .3) * .13 + this.pointer.x * .2;
-      const reveal = this.reduced ? 1 : Math.min(1, this.elapsed / 1.5);
-      this.points.forEach((particle, index) => {
-        const drift = this.reduced ? 0 : Math.sin(time * .8 + particle.phase) * .004;
-        const positionX = particle.x * Math.cos(turn) + particle.z * Math.sin(turn);
-        const positionY = particle.y + drift;
-        const alpha = particle.alpha * (.75 + Math.sin(time * 1.2 + particle.phase) * .2) * Math.min(1, reveal * 2 - index / this.points.length * .65);
-        this.point(centerX + positionX * scale, centerY + positionY * scale, particle.size * (this.width < 600 ? .83 : 1), particle.tone, alpha);
-      });
-      if (kind === "sakura") {
-        for (let index = 0; index < 28; index++) {
-          const cycle = (time * .035 + index / 28) % 1;
-          const positionX = centerX + Math.sin(index * 13.8) * scale * .9 + Math.sin(time * .5 + index) * scale * .13 + cycle * scale * .25;
-          const positionY = centerY - scale * .7 + cycle * scale * 2;
-          const alpha = Math.sin(cycle * Math.PI) * .7;
-          const context = this.context;
-          context.save();
-          context.translate(positionX, positionY);
-          context.rotate(time * .7 + index);
-          context.fillStyle = `rgba(243,169,190,${alpha})`;
-          context.beginPath();
-          context.ellipse(0, 0, 1.8, 3, 0, 0, TAU);
-          context.fill();
-          context.restore();
-        }
-      }
-    }
-
-    butterflies(time) {
-      const scale = Math.min(this.width * .22, this.height * .21);
-      const count = this.width < 600 ? 4 : 6;
-      for (let index = 0; index < count; index++) {
-        const cycle = time * .16 + index * 1.9;
-        const centerX = this.width * (.5 + Math.sin(cycle) * (index === 0 ? .12 : .3));
-        const centerY = this.height * (.39 + Math.cos(cycle * .7 + index) * (index === 0 ? .08 : .2));
-        const size = index === 0 ? 1 : .3 + index * .07;
-        const flap = this.reduced ? .85 : .28 + Math.abs(Math.sin(time * 4.8 + index)) * .72;
-        const tilt = Math.sin(cycle * 1.3) * .35;
-        this.points.forEach(particle => {
-          const positionX = particle.x * flap;
-          const positionY = particle.y;
-          this.point(centerX + (positionX * Math.cos(tilt) - positionY * Math.sin(tilt)) * scale * size, centerY + (positionX * Math.sin(tilt) + positionY * Math.cos(tilt)) * scale * size, particle.size * Math.max(.6, size), particle.tone, particle.alpha * .85);
-        });
-        for (let segment = 0; segment < 22; segment++) this.point(centerX, centerY + (segment / 22 - .5) * scale * size * .65, .9, "white", .8);
-        this.trail(centerX, centerY - scale * size * .3, centerX - scale * size * .09, centerY - scale * size * .48, .6);
-        this.trail(centerX, centerY - scale * size * .3, centerX + scale * size * .09, centerY - scale * size * .48, .6);
-      }
-      for (let index = 0; index < 45; index++) {
-        const phase = time * .17 + index * .16;
-        this.point(this.width * (.5 + Math.sin(phase) * .38), this.height * (.45 + Math.cos(phase * 1.3) * .17), .6, "gold", .2);
-      }
-    }
-
     render() {
       if (!this.context || !this.width || !this.height) return;
       const context = this.context;
@@ -770,14 +454,9 @@
       context.fillStyle = glow;
       context.fillRect(0, 0, this.width, this.height);
       this.stars?.forEach(star => this.point(star.x * this.width, star.y * this.height * .88, star.radius, "gold", .15 + (Math.sin(time * .45 + star.phase) + 1) * .13));
-      const kind = scenes[this.index].key;
-      if (kind === "fireworks") this.fireworks(time);
-      else if (kind === "heart") this.heart();
-      else if (kind === "meteors") this.meteors();
-      else if (kind === "butterflies") this.butterflies(time);
-      else this.shape(time, kind);
+      this.meteors();
     }
   }
 
-  window.RomanceParticles = Object.freeze({ Theatre, makeShape, heartParticleState, makeMeteorEvents, meteorEventState, meteorParticleState, meteorChapters, scenes });
+  window.RomanceParticles = Object.freeze({ Theatre, makeGirlParticles, makeMeteorEvents, meteorEventState, meteorParticleState, meteorChapters, duration });
 })();
