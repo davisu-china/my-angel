@@ -1,4 +1,4 @@
-# For You — A Private Screening
+# 我的天使 · 私人告白
 
 One cinematic experience for 王梓烨: a photo cover, three private portraits, one full-width meteor Canvas narrative and a short personal note. The mobile-first reading flow replaces the old film tabs and duplicate closing credits. Only 星落倾心 remains, now with layered accelerating meteors, water reflections, splash crowns and perspective ripple rings. A branching sakura tree blooms along the shore, sheds petals and reflects on the water, alongside the blue/gold painted sky and rainbow girl silhouette. The 40-second narrative stays in one Canvas; no new effect panels or buttons are added. The duration note, pause/replay buttons, chapter tabs and transition link remain removed, as do retired standalone effects, particle names, theme selections and response sections.
 
@@ -12,7 +12,7 @@ Photos open in a dialog with previous/next buttons, keyboard arrows and horizont
 
 See [使用说明.md](./使用说明.md) for opening, customization, interaction behavior and deployment status.
 
-The portable browser experience lives in `experience/`. Run `npm run dev:offline` for a dependency-free preview, or open `experience/index.html`. Run `npm run build:offline` for a self-contained HTML export and to sync the vinext app's `public/experience/` route. Normal app dev/build/start commands run this sync automatically.
+The portable browser experience lives in `experience/`. Run `npm run dev:offline` for a dependency-free preview, or open `experience/index.html`. Run `npm run build:offline` for the self-contained `offline/我的天使_私人告白.html` export and to sync the vinext app's `public/experience/` route. Normal app dev/build/start commands run this sync automatically.
 
 ## Soundtrack
 
@@ -22,7 +22,7 @@ The audio element's `data-src` is set to `assets/bgm.mp3`. The offline build emb
 
 ## Private Media
 
-The three optimized photos (`ziye-warm.jpg`, `ziye-daylight.jpg`, and `ziye-evening.jpg`) and user-supplied `bgm.mp3` are included in Git for this experience. Original photo attachments, additional media, generated `public/experience/`, offline HTML and ZIPs are not included. Missing photos still fall back to a starlight placeholder. See `experience/assets/README.md`. A public repository makes included media downloadable; confirm the relevant sharing permissions before publication. Review actual hosting output, which can contain locally added media even when Git ignores it.
+The optimized cover photo (`ziye-evening.jpg`), three journal photos (`ziye-warm.jpg`, `ziye-daylight.jpg`, and `ziye-cafe.jpg`) and user-supplied `bgm.mp3` are included in Git for this experience. The café photo replaces only the third journal photo, with black borders cropped and no facial edits; the cover stays unchanged. Original photo attachments, additional media, generated `public/experience/`, offline HTML and ZIPs are not included. Missing photos still fall back to a starlight placeholder. See `experience/assets/README.md`. A public repository makes included media downloadable; confirm the relevant sharing permissions before publication. Review actual hosting output, which can contain locally added media even when Git ignores it.
 
 The intended remote is `https://github.com/davisu-china/my-angel`. A local commit or archive is not confirmation that a remote push succeeded. Fetch and inspect the existing remote branch before integrating; do not force-push or overwrite existing history.
 

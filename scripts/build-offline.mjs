@@ -28,7 +28,7 @@ let document = html
   .replace('  <script src="effects.js"></script>\n', "")
   .replace('<script src="app.js"></script>', `<script>\n${javascript}\n</script>`);
 
-for (const filename of ["ziye-warm.jpg", "ziye-daylight.jpg", "ziye-evening.jpg"]) {
+for (const filename of ["ziye-warm.jpg", "ziye-daylight.jpg", "ziye-evening.jpg", "ziye-cafe.jpg"]) {
   let imageSource = placeholder;
   try {
     const bytes = await readFile(path.join(source, "assets", filename));
@@ -62,10 +62,11 @@ for (const filename of [
   "03_偏偏是你.html",
   "偏偏是你_王梓烨_电影珍藏版.html",
   "偏偏是你_星落成你升级版.html",
+  "偏偏是你_纯享版.html",
 ]) {
   await rm(path.join(output, filename), { force: true });
 }
-await writeFile(path.join(output, "偏偏是你_纯享版.html"), document);
+await writeFile(path.join(output, "我的天使_私人告白.html"), document);
 for (const filename of ["index.html", "style.css", "effects.js", "app.js"]) {
   await copyFile(path.join(source, filename), path.join(hosted, filename));
 }
