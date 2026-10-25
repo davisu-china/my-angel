@@ -5,104 +5,52 @@
   const selectAll = (selector, root = document) => [...root.querySelectorAll(selector)];
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
   let reducedMotion = motionPreference.matches;
-  const scrollToElement = (target) => select(`#${target}`)?.scrollIntoView({ behavior: reducedMotion ? "instant" : "smooth", block: "start" });
-  let revealObserver;
+
   if ("IntersectionObserver" in window) {
-    revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("visible");
         revealObserver.unobserve(entry.target);
       });
     }, { threshold: .08 });
-    selectAll(".reveal").forEach((node) => { node.classList.add("observed"); revealObserver.observe(node); });
-  }
-
-  const filmScenes = [
-    { kicker: "关于心动", lines: ["有些喜欢，", "在开口之前，", "已经认真了很久。"], description: "于是，想用一份小小的勇气，让你看见。" },
-    { kicker: "关于靠近", lines: ["想陪你看晚霞，", "也想听你聊聊，", "今天过得怎么样。"], description: "比起轰轰烈烈，更期待每一次真实的相处。" },
-    { kicker: "关于以后", lines: ["故事没有剧本，", "但下一幕，", "我想邀请你。"], description: "王梓烨，如果你也愿意，我们就慢慢开始。" }
-  ];
-  let filmIndex = 0;
-  let filmTimer = null;
-
-  function showFilmScene(index) {
-    filmIndex = index;
-    const scene = filmScenes[index];
-    select("#film-current").textContent = String(index + 1).padStart(2, "0");
-    select("#film-kicker").textContent = scene.kicker;
-    const heading = select("#film-line");
-    heading.replaceChildren();
-    scene.lines.forEach((line, lineIndex) => {
-      const text = lineIndex === 2 ? document.createElement("em") : document.createTextNode(line);
-      if (lineIndex === 2) text.textContent = line;
-      heading.append(text);
-      if (lineIndex !== 2) heading.append(document.createElement("br"));
+    selectAll(".reveal").forEach(node => {
+      node.classList.add("observed");
+      revealObserver.observe(node);
     });
-    select("#film-description").textContent = scene.description;
-    selectAll("[data-film-scene]").forEach((button) => button.setAttribute("aria-pressed", String(Number(button.dataset.filmScene) === index)));
-    const lines = select(".film-lines");
-    lines.classList.remove("changing");
-    requestAnimationFrame(() => lines.classList.add("changing"));
   }
-
-  function stopFilm() {
-    clearInterval(filmTimer);
-    filmTimer = null;
-    select(".film-pause").setAttribute("aria-pressed", "false");
-    select(".film-pause").textContent = "▷ 自动放映";
-  }
-
-  function startFilm() {
-    stopFilm();
-    select(".film-pause").setAttribute("aria-pressed", "true");
-    select(".film-pause").textContent = "Ⅱ 暂停放映";
-    filmTimer = setInterval(() => {
-      if (filmIndex >= filmScenes.length - 1) { stopFilm(); return; }
-      showFilmScene(filmIndex + 1);
-    }, 7000);
-  }
-
-  selectAll("[data-film-scene]").forEach((button) => button.addEventListener("click", () => { stopFilm(); showFilmScene(Number(button.dataset.filmScene)); }));
-  select(".film-pause").addEventListener("click", () => {
-    if (filmTimer) stopFilm();
-    else { if (filmIndex === filmScenes.length - 1) showFilmScene(0); startFilm(); }
-  });
-  select("[data-film-start]").addEventListener("click", () => { showFilmScene(0); startFilm(); scrollToElement("film-screen"); });
 
   const theatreCanvas = select("#romance-particles");
-  const theatre = new window.RomanceParticles.Theatre(theatreCanvas, (chapter, index) => {
-    select("#effect-counter").textContent = `CHAPTER ${String(index + 1).padStart(2, "0")} / 03`;
+  const theatre = new window.RomanceParticles.Theatre(theatreCanvas, chapter => {
     select("#effect-kicker").textContent = chapter.kicker;
     select("#effect-title").textContent = chapter.title;
-    select(".particle-stage-hint").textContent = chapter.hint;
-    selectAll("[data-meteor-chapter]").forEach(button => button.setAttribute("aria-pressed", String(Number(button.dataset.meteorChapter) === index)));
   }, reducedMotion);
-  const effectToggle = select(".effects-toggle");
-  function updateEffectsButton() {
-    effectToggle.setAttribute("aria-pressed", String(theatre.playing && !reducedMotion));
-    effectToggle.textContent = reducedMotion ? "静态赏映 · 减少动态" : theatre.playing ? "Ⅱ 暂停放映" : "▷ 继续放映";
-    effectToggle.disabled = reducedMotion;
-  }
-  updateEffectsButton();
-  selectAll("[data-meteor-chapter]").forEach(button => button.addEventListener("click", () => {
-    theatre.seekChapter(Number(button.dataset.meteorChapter));
-  }));
-  select(".meteor-replay").addEventListener("click", () => theatre.restart());
-  effectToggle.addEventListener("click", () => { theatre.playing = !theatre.playing; updateEffectsButton(); theatre.sync(); });
   if ("IntersectionObserver" in window) {
-    new IntersectionObserver(entries => { theatre.visible = entries[0].isIntersecting; theatre.sync(); }, { threshold: .08 }).observe(theatreCanvas);
-  } else { theatre.visible = true; }
+    new IntersectionObserver(entries => {
+      theatre.visible = entries[0].isIntersecting;
+      theatre.sync();
+    }, { threshold: .08 }).observe(theatreCanvas);
+  } else theatre.visible = true;
+
   theatreCanvas.addEventListener("pointermove", event => {
+    if (event.pointerType === "touch") return;
     const bounds = theatreCanvas.getBoundingClientRect();
-    theatre.pointer.x = (event.clientX - bounds.left) / bounds.width - .5;
+    if (bounds.width) theatre.pointer.x = (event.clientX - bounds.left) / bounds.width - .5;
   }, { passive: true });
   theatreCanvas.addEventListener("pointerleave", () => { theatre.pointer.x = 0; });
   theatreCanvas.addEventListener("click", event => {
     if (!theatre.playing || reducedMotion) return;
     const bounds = theatreCanvas.getBoundingClientRect();
+    if (!bounds.width) return;
     theatre.meteorShots.push({ start: theatre.elapsed, flight: .95, groundX: Math.max(-1.2, Math.min(1.2, (event.clientX - bounds.left - bounds.width / 2) / (bounds.width * .3))), depth: .6, power: 1.4, seed: Date.now() % 1000, color: "247,172,231" });
     if (theatre.meteorShots.length > 5) theatre.meteorShots.shift();
+  });
+  theatreCanvas.addEventListener("keydown", event => {
+    if (![" ", "Escape"].includes(event.key)) return;
+    event.preventDefault();
+    if (event.repeat || reducedMotion) return;
+    theatre.playing = event.key === "Escape" ? false : !theatre.playing;
+    theatre.sync();
   });
 
   const photoDialog = select("#photo-dialog");
@@ -116,6 +64,7 @@
     if (image.complete && !image.naturalWidth) showPlaceholder();
   });
   let photoIndex = 0;
+  let photoOpener;
   function showPhoto(index) {
     photoIndex = (index + portraitImages.length) % portraitImages.length;
     const image = portraitImages[photoIndex];
@@ -123,16 +72,46 @@
     select("#photo-large").alt = image.alt;
     select("#photo-count").textContent = `${String(photoIndex + 1).padStart(2, "0")} / 03`;
   }
-  selectAll("[data-photo]").forEach(button => button.addEventListener("click", () => { showPhoto(Number(button.dataset.photo)); photoDialog.showModal(); theatre.sync(); }));
+  function syncPhotoDialog() {
+    document.body.classList.toggle("photo-open", photoDialog.open);
+    theatre.active = !photoDialog.open;
+    theatre.sync();
+  }
+  selectAll("[data-photo]").forEach(button => button.addEventListener("click", () => {
+    photoOpener = button;
+    showPhoto(Number(button.dataset.photo));
+    photoDialog.showModal();
+    syncPhotoDialog();
+  }));
   selectAll("[data-photo-step]").forEach(button => button.addEventListener("click", () => showPhoto(photoIndex + Number(button.dataset.photoStep))));
   select(".photo-close").addEventListener("click", () => photoDialog.close());
-  photoDialog.addEventListener("click", event => { if (event.target === photoDialog) photoDialog.close(); });
+  photoDialog.addEventListener("close", () => {
+    syncPhotoDialog();
+    photoOpener?.focus({ preventScroll: true });
+  });
+  photoDialog.addEventListener("click", event => {
+    if (event.target !== photoDialog) return;
+    const bounds = photoDialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) photoDialog.close();
+  });
   photoDialog.addEventListener("keydown", event => {
     if (event.key === "ArrowRight") { event.preventDefault(); showPhoto(photoIndex + 1); }
     if (event.key === "ArrowLeft") { event.preventDefault(); showPhoto(photoIndex - 1); }
   });
+  let swipeStart;
+  const photoLarge = select("#photo-large");
+  photoLarge.addEventListener("touchstart", event => {
+    swipeStart = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
+  }, { passive: true });
+  photoLarge.addEventListener("touchend", event => {
+    if (!swipeStart || event.touches.length || event.changedTouches.length !== 1) { swipeStart = null; return; }
+    const distanceX = event.changedTouches[0].clientX - swipeStart.x;
+    const distanceY = event.changedTouches[0].clientY - swipeStart.y;
+    swipeStart = null;
+    if (Math.abs(distanceX) > 48 && Math.abs(distanceX) > Math.abs(distanceY) * 1.5) showPhoto(photoIndex + (distanceX < 0 ? 1 : -1));
+  }, { passive: true });
+  photoLarge.addEventListener("touchcancel", () => { swipeStart = null; }, { passive: true });
 
-  selectAll("[data-scroll]").forEach((button)=>button.addEventListener("click",()=>scrollToElement(button.dataset.scroll)));
   const music = select("#background-music");
   let musicLoading = false;
   let musicRequest = 0;
@@ -161,6 +140,11 @@
 
   function startBackgroundMusic(event) {
     if (event.type === "keydown" && (event.repeat || event.ctrlKey || event.metaKey || event.altKey || !["Enter", " "].includes(event.key))) return;
+    if (music.muted) {
+      music.muted = false;
+      if (music.paused) playMusic();
+      return;
+    }
     playMusic();
   }
   ["pointerup", "touchend", "click", "keydown"].forEach(event => {
@@ -169,22 +153,35 @@
   music.addEventListener("error", () => { musicUnavailable = true; pauseMusic(); });
   window.addEventListener("pagehide", pauseMusic);
   window.addEventListener("pageshow", event => { if (event.persisted) playMusic(); });
-  if (music.dataset.src) music.src = music.dataset.src;
+  if (music.dataset.src) {
+    music.src = music.dataset.src;
+    // 静音预播放：浏览器允许静音自动播放，音频从进入页面就开始缓冲，
+    // 首次触摸/点击时只取消静音，声音立刻响起，不用等下载。
+    music.muted = true;
+    music.play().catch(() => {});
+  }
 
   let resizeTimer;
-  window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { if (theatre.active) theatre.resize(); }, 150); });
-  window.addEventListener("scroll", () => { const maxScroll = document.documentElement.scrollHeight - innerHeight; select(".reading-progress span").style.transform = `scaleX(${maxScroll > 0 ? Math.min(scrollY / maxScroll, 1) : 0})`; }, { passive: true });
+  function resizeTheatre() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => theatre.resize(), 120);
+  }
+  window.addEventListener("resize", resizeTheatre);
+  if ("ResizeObserver" in window) new ResizeObserver(resizeTheatre).observe(theatreCanvas.parentElement);
+  window.addEventListener("scroll", () => {
+    const maxScroll = document.documentElement.scrollHeight - innerHeight;
+    select(".reading-progress span").style.transform = `scaleX(${maxScroll > 0 ? Math.min(scrollY / maxScroll, 1) : 0})`;
+  }, { passive: true });
   document.addEventListener("visibilitychange", () => {
     theatre.sync();
-    if (document.hidden) { stopFilm(); pauseMusic(); }
+    if (document.hidden) pauseMusic();
     else playMusic();
   });
   motionPreference.addEventListener("change", () => {
     reducedMotion = motionPreference.matches;
     theatre.reduced = reducedMotion;
-    if (reducedMotion) { theatre.seekChapter(2); stopFilm(); }
+    if (reducedMotion) theatre.seekChapter(2);
     theatre.sync();
-    updateEffectsButton();
   });
   theatre.active = true;
   theatre.sync();
