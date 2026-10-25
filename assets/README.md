@@ -1,6 +1,6 @@
 # 照片与音乐资源
 
-按用户明确要求，`ziye-warm.jpg`、`ziye-daylight.jpg`、`ziye-evening.jpg` 三张照片和用户提供的 `bgm.mp3` 纳入 Git。这三张是压缩并清理元数据的网页版本，不是原始附件。其他媒体仍由 `.gitignore` 默认排除。
+按用户明确要求，封面 `ziye-evening.jpg`、相册 `ziye-warm.jpg`、`ziye-daylight.jpg`、`ziye-cafe.jpg` 和用户提供的 `bgm.mp3` 纳入 Git。这些是压缩并清理元数据的网页版本，不是原始附件。`ziye-cafe.jpg` 来自最新提供的照片，仅裁去上下黑边，用于「万家灯火，偏偏看向你。」及其放大预览，不替换封面。其他媒体仍由 `.gitignore` 默认排除。
 
 星光占位 SVG 仍保留，缺少照片时，源码页面与导出页面都使用占位图。公开仓库中的照片可以被他人下载和复制，请确认相关分享权限。
 
