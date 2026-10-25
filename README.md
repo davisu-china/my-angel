@@ -1,6 +1,8 @@
 # For You — A Private Screening
 
-One cinematic experience for 王梓烨: a photo cover, three private portraits, one full-width meteor Canvas narrative and a short personal note. The mobile-first reading flow replaces the old film tabs and duplicate closing credits. Only 星落倾心 remains: meteor impacts and ripples → animated blue/gold painted sky → a rainbow girl silhouette, looping every 40 seconds. The screenshot's duration note, pause/replay buttons, chapter tabs and transition link are removed, not hidden. There are no retired effects, particle names, theme selections or response sections.
+One cinematic experience for 王梓烨: a photo cover, three private portraits, one full-width meteor Canvas narrative and a short personal note. The mobile-first reading flow replaces the old film tabs and duplicate closing credits. Only 星落倾心 remains, now with layered accelerating meteors, water reflections, splash crowns and perspective ripple rings. A branching sakura tree blooms along the shore, sheds petals and reflects on the water, alongside the blue/gold painted sky and rainbow girl silhouette. The 40-second narrative stays in one Canvas; no new effect panels or buttons are added. The duration note, pause/replay buttons, chapter tabs and transition link remain removed, as do retired standalone effects, particle names, theme selections and response sections.
+
+Tree geometry is seeded and generated on resize. Flower/glow sprites, tree growth stages and the slowly moving painted sky are cached in offscreen canvases, with direct Canvas drawing as a fallback. Girl particles are grouped by color/opacity to reduce draw calls. Phones use fewer meteors, petals and particles. There are no strobe flashes or camera shake; reduced-motion mode shows the still girl, tree and sky.
 
 ## Layout and Interaction
 

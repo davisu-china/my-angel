@@ -13,7 +13,7 @@
 
   const meteorChapters = [
     { kicker: "流星与涟漪", title: "星光奔向大地，我奔向你。", time: 2 },
-    { kicker: "画一整个星空", title: "把夜空画成浪漫，把偏爱留给你。", time: 15 },
+    { kicker: "樱花与星夜", title: "等一树花开，也等你看向我。", time: 15 },
     { kicker: "星光成你", title: "原来，万千星光，最后都像你。", time: 32 }
   ];
 
@@ -91,15 +91,17 @@
 
   function makeMeteorEvents(compact = false) {
     const random = randomGenerator(31007);
-    const count = compact ? 38 : 64;
+    const count = compact ? 26 : 44;
     return Array.from({ length: count }, (_, index) => ({
-      start: index === 0 ? -.3 : index / count * 12.5 + random() * .4,
-      flight: 1.2 + random() * .7,
+      start: index === 0 ? -.8 : index / count * 12.5 + random() * .4,
+      flight: 1.65 + random() * .9,
       groundX: (random() - .5) * 2.6,
-      depth: .15 + random() * 1.8,
-      power: index % 7 === 0 ? 1.4 : .6 + random() * .45,
+      depth: .12 + random() * 2.2,
+      power: index % 8 === 0 ? 1.5 : .55 + random() * .5,
+      slant: .25 + random() * .32,
+      curve: (random() - .5) * .08,
       seed: index * 41 + 77,
-      color: index % 3 === 0 ? "255,205,127" : index % 3 === 1 ? "121,202,255" : "209,157,255"
+      color: index % 5 === 0 ? "255,210,153" : index % 5 === 1 ? "218,183,244" : "146,210,255"
     }));
   }
 
@@ -123,6 +125,36 @@
     return { x: positionX + (particle.x - positionX) * gather, y: positionY + (particle.y - positionY) * gather, gather, alpha: (.12 + rise * .65) * (1 - gather) + gather * particle.alpha };
   }
 
+  function makeSakuraTree(compact = false) {
+    const random = randomGenerator(80225);
+    const branches = [];
+    const blossoms = [];
+    function branch(startX, startY, length, angle, width, level) {
+      const endX = startX + Math.cos(angle) * length;
+      const endY = startY + Math.sin(angle) * length;
+      const bend = (random() - .5) * length * .6;
+      const birth = (6 - level) * .095;
+      branches.push({ anchors: [[startX, startY], [startX + Math.cos(angle + .25) * length * .35 + bend, startY + Math.sin(angle) * length * .3], [endX - Math.cos(angle - .2) * length * .25, endY - Math.sin(angle) * length * .25], [endX, endY]], width, birth });
+      if (level < 3) {
+        const count = compact ? 10 : 17;
+        for (let index = 0; index < count; index++) {
+          const phase = random() * TAU;
+          const radius = Math.sqrt(random()) * (.075 + length * .25);
+          blossoms.push({ x: endX + Math.cos(phase) * radius * 1.3, y: endY + Math.sin(phase) * radius * .7, size: .009 + random() * .012, tone: Math.floor(random() * 4), birth: .44 + random() * .35, phase: random() * TAU });
+        }
+      }
+      if (!level) return;
+      const spread = level > 3 ? .53 : .45;
+      for (const direction of [-1, 1]) branch(endX, endY, length * (.65 + random() * .12), angle + direction * (spread + random() * .2), width * .65, level - 1);
+    }
+    branch(0, 0, .36, -Math.PI / 2 + .14, .045, 6);
+    const petals = Array.from({ length: compact ? 32 : 64 }, () => {
+      const flower = blossoms[Math.floor(random() * blossoms.length)];
+      return { x: flower.x, y: flower.y, phase: random() * TAU, offset: random(), speed: .7 + random() * .6, size: .012 + random() * .014, tone: Math.floor(random() * 4) };
+    });
+    return { branches, blossoms, petals };
+  }
+
   class Theatre {
     constructor(canvas, onChapter = () => {}, reduced = false) {
       this.canvas = canvas;
@@ -143,7 +175,7 @@
       this.meteorShots = [];
       this.tick = this.tick.bind(this);
       this.resize();
-      this.canvas.setAttribute("aria-label", "星落倾心：流星落地涟漪、蓝金油画星空，最后汇成五彩少女轮廓");
+      this.canvas.setAttribute("aria-label", "星落倾心：立体流星与水面涟漪，樱花树在蓝金星夜里开花，最后星光汇成五彩少女轮廓");
     }
 
     resize() {
@@ -161,6 +193,13 @@
       this.stars = Array.from({ length: this.width < 600 ? 65 : 120 }, () => ({ x: random(), y: random(), radius: .3 + random(), phase: random() * TAU }));
       this.points = makeGirlParticles(this.width < 600);
       this.meteorEvents = makeMeteorEvents(this.width < 600);
+      this.sakura = makeSakuraTree(this.width < 600);
+      this.treeSurface = null;
+      this.treeGrowth = -1;
+      this.skySurface = null;
+      this.skyTime = -1;
+      this.glowSprites = new Map();
+      this.flowerSprites = [];
       this.render();
     }
 
@@ -228,7 +267,213 @@
       context.stroke();
     }
 
+    makeSurface(width, height) {
+      const surface = this.canvas.ownerDocument?.createElement("canvas");
+      if (!surface) return null;
+      surface.width = Math.max(1, Math.round(width));
+      surface.height = Math.max(1, Math.round(height));
+      return surface.getContext("2d") ? surface : null;
+    }
+
+    glow(positionX, positionY, radius, color, opacity) {
+      if (opacity <= .001 || radius < 1) return;
+      let sprite = this.glowSprites.get(color);
+      if (sprite === undefined) {
+        sprite = this.makeSurface(64, 64);
+        if (sprite) {
+          const context = sprite.getContext("2d");
+          const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32);
+          gradient.addColorStop(0, `rgba(${color},.75)`);
+          gradient.addColorStop(.15, `rgba(${color},.35)`);
+          gradient.addColorStop(.45, `rgba(${color},.09)`);
+          gradient.addColorStop(1, `rgba(${color},0)`);
+          context.fillStyle = gradient;
+          context.fillRect(0, 0, 64, 64);
+        }
+        this.glowSprites.set(color, sprite);
+      }
+      const context = this.context;
+      context.save();
+      context.globalAlpha *= opacity;
+      if (sprite) context.drawImage(sprite, positionX - radius, positionY - radius, radius * 2, radius * 2);
+      else {
+        const gradient = context.createRadialGradient(positionX, positionY, 0, positionX, positionY, radius);
+        gradient.addColorStop(0, `rgba(${color},.5)`);
+        gradient.addColorStop(1, `rgba(${color},0)`);
+        context.fillStyle = gradient;
+        context.fillRect(positionX - radius, positionY - radius, radius * 2, radius * 2);
+      }
+      context.restore();
+    }
+
+    flowerSprite(tone) {
+      if (this.flowerSprites[tone] !== undefined) return this.flowerSprites[tone];
+      const sprite = this.makeSurface(32, 32);
+      if (sprite) {
+        const context = sprite.getContext("2d");
+        const colors = ["#f8b9ce", "#e88aaf", "#ffe0df", "#cf85b0"];
+        context.fillStyle = colors[tone];
+        for (let index = 0; index < 5; index++) {
+          const angle = index / 5 * TAU;
+          context.beginPath();
+          context.ellipse(16 + Math.cos(angle) * 5, 16 + Math.sin(angle) * 5, 5.2, 3.2, angle, 0, TAU);
+          context.fill();
+        }
+        context.fillStyle = "#ffe8b0";
+        context.beginPath();
+        context.arc(16, 16, 1.7, 0, TAU);
+        context.fill();
+      }
+      this.flowerSprites[tone] = sprite;
+      return sprite;
+    }
+
+    drawSakura(context, size, growth) {
+      context.save();
+      context.translate(size * .9, size * 1.45);
+      context.scale(size * .88, size * .88);
+      context.lineCap = "round";
+      this.sakura.branches.forEach(branch => {
+        const reveal = smoothStep((growth - branch.birth) / .22);
+        if (!reveal) return;
+        const anchors = branch.anchors;
+        context.save();
+        context.globalAlpha = reveal;
+        context.strokeStyle = "#573441";
+        context.lineWidth = branch.width;
+        context.beginPath();
+        context.moveTo(...anchors[0]);
+        context.bezierCurveTo(...anchors[1], ...anchors[2], ...anchors[3]);
+        context.stroke();
+        context.strokeStyle = "rgba(242,163,185,.45)";
+        context.lineWidth = branch.width * .23;
+        context.stroke();
+        context.restore();
+      });
+      this.sakura.blossoms.forEach(flower => {
+        const bloom = smoothStep((growth - flower.birth) / .18);
+        if (!bloom) return;
+        const sprite = this.flowerSprite(flower.tone);
+        const radius = flower.size * ( .35 + bloom * .65);
+        context.globalAlpha = bloom * .85;
+        if (sprite) context.drawImage(sprite, flower.x - radius, flower.y - radius, radius * 2, radius * 2);
+        else {
+          context.fillStyle = ["#f8b9ce", "#e88aaf", "#ffe0df", "#cf85b0"][flower.tone];
+          context.beginPath();
+          context.ellipse(flower.x, flower.y, radius, radius * .6, flower.phase, 0, TAU);
+          context.fill();
+        }
+      });
+      context.restore();
+    }
+
+    sakuraTree(elapsed, finale) {
+      const context = this.context;
+      const compact = this.width < 600;
+      const growth = this.reduced ? 1 : smoothStep((elapsed - .6) / 9);
+      if (!growth) return;
+      const size = Math.min(this.width * (compact ? .56 : .32), this.height * .6);
+      const shoreY = this.height * .66;
+      const originX = this.width * (compact ? .19 : .17);
+      const left = originX - size * .9;
+      const top = shoreY - size * 1.45;
+      const opacity = (compact ? .84 - finale * .43 : .98 - finale * .2);
+      if (!this.treeSurface) this.treeSurface = this.makeSurface(size * 2, size * 1.6);
+      const growthFrame = Math.round(growth * 36);
+      if (this.treeSurface && this.treeGrowth !== growthFrame) {
+        const cachedContext = this.treeSurface.getContext("2d");
+        cachedContext.clearRect(0, 0, this.treeSurface.width, this.treeSurface.height);
+        this.drawSakura(cachedContext, size, growthFrame / 36);
+        this.treeGrowth = growthFrame;
+      }
+      const sway = this.reduced ? 0 : Math.sin(elapsed * .38) * .006;
+      context.save();
+      context.globalAlpha = opacity;
+      context.translate(originX, shoreY);
+      context.rotate(sway);
+      if (this.treeSurface) context.drawImage(this.treeSurface, left - originX, top - shoreY);
+      else {
+        context.translate(left - originX, top - shoreY);
+        this.drawSakura(context, size, growth);
+      }
+      context.restore();
+      if (this.treeSurface) {
+        context.save();
+        context.globalAlpha = opacity * .14;
+        context.translate(0, shoreY * 1.34);
+        context.scale(1, -.34);
+        context.drawImage(this.treeSurface, left, top);
+        context.restore();
+      }
+      this.glow(originX, shoreY, size * .42, "231,143,189", opacity * .14);
+      if (growth < .55) return;
+      const time = this.reduced ? 12 : elapsed;
+      this.sakura.petals.forEach(petal => {
+        const progress = (time * .065 * petal.speed + petal.offset) % 1;
+        const positionX = originX + petal.x * size * .88 + progress * size * .8 + Math.sin(progress * 9 + petal.phase) * size * .06;
+        const positionY = shoreY + petal.y * size * .88 + progress * size * .65;
+        const alpha = Math.sin(progress * Math.PI) * opacity * .75 * smoothStep((growth - .55) / .3);
+        context.save();
+        context.globalAlpha = alpha;
+        context.translate(positionX, positionY);
+        context.rotate(petal.phase + time * .6);
+        context.fillStyle = petal.tone % 2 ? "#ffc7de" : "#ec9dbd";
+        context.beginPath();
+        context.ellipse(0, 0, petal.size * size * .6, petal.size * size * (.18 + Math.abs(Math.sin(time * .7 + petal.phase)) * .2), 0, 0, TAU);
+        context.fill();
+        context.restore();
+      });
+    }
+
+    waterSurface(elapsed, finale) {
+      const context = this.context;
+      const horizon = this.height * .59;
+      const gradient = context.createLinearGradient(0, horizon, 0, this.height);
+      gradient.addColorStop(0, "rgba(21,43,69,.7)");
+      gradient.addColorStop(.18, "rgba(9,24,42,.85)");
+      gradient.addColorStop(1, "rgba(5,10,21,0)");
+      context.fillStyle = gradient;
+      context.fillRect(0, horizon, this.width, this.height - horizon);
+      context.save();
+      context.globalCompositeOperation = "lighter";
+      const random = randomGenerator(4301);
+      const time = this.reduced ? 12 : elapsed;
+      const count = this.width < 600 ? 36 : 70;
+      for (let index = 0; index < count; index++) {
+        const depth = random();
+        const positionX = random() * this.width;
+        const positionY = horizon + depth ** 1.5 * this.height * .24;
+        const shimmer = .025 + (Math.sin(time * .65 + index * 2) + 1) * .02;
+        context.strokeStyle = `rgba(140,191,225,${shimmer * (1 - finale * .45)})`;
+        context.lineWidth = .5;
+        context.beginPath();
+        context.moveTo(positionX, positionY);
+        context.lineTo(positionX + 4 + depth * this.width * .03, positionY);
+        context.stroke();
+      }
+      context.restore();
+    }
+
     starrySky(elapsed, opacity) {
+      if (!this.skySurface) this.skySurface = this.makeSurface(this.width, this.height);
+      if (!this.skySurface) { this.paintStarrySky(elapsed, opacity); return; }
+      const time = Math.floor(elapsed * 4) / 4;
+      const context = this.context;
+      if (time !== this.skyTime) {
+        const cachedContext = this.skySurface.getContext("2d");
+        cachedContext.clearRect(0, 0, this.width, this.height);
+        this.context = cachedContext;
+        try { this.paintStarrySky(time, 1); }
+        finally { this.context = context; }
+        this.skyTime = time;
+      }
+      context.save();
+      context.globalAlpha = opacity;
+      context.drawImage(this.skySurface, 0, 0);
+      context.restore();
+    }
+
+    paintStarrySky(elapsed, opacity) {
       const context = this.context;
       const random = randomGenerator(8809);
       context.save();
@@ -302,52 +547,99 @@
     }
 
     meteorGround(positionX, depth) {
-      const perspective = 1 / (1 + depth * .56);
-      return { x: this.width / 2 + positionX * this.width * .36 * perspective, y: this.height * (.56 + .21 / (1 + Math.max(-.1, depth) * .95)), perspective };
+      const safeDepth = Math.max(-.15, depth);
+      const perspective = 1 / (1 + safeDepth * .56);
+      return { x: this.width / 2 + positionX * this.width * .36 * perspective, y: this.height * (.59 + .19 / (1 + safeDepth * .95)), perspective };
+    }
+
+    ripple(impact, age, power, color, opacity) {
+      const context = this.context;
+      const radius = (1 - Math.exp(-age * .9)) * Math.min(this.width * .3, 240) * power * impact.perspective;
+      const flatten = .2 + impact.perspective * .09;
+      for (let ring = 0; ring < 5; ring++) {
+        const delayed = age - ring * .13;
+        if (delayed <= 0) continue;
+        const ringRadius = radius * Math.max(.1, 1 - ring * .13);
+        const fade = Math.exp(-delayed * .9) * (1 - ring * .15) * opacity;
+        context.strokeStyle = `rgba(${color},${fade * .7})`;
+        context.lineWidth = ring === 0 ? 1.5 * impact.perspective : .65;
+        context.beginPath();
+        const segments = this.width < 600 ? 48 : 72;
+        for (let index = 0; index <= segments; index++) {
+          const angle = index / segments * TAU;
+          const distortion = Math.sin(angle * 7 + age * 4) * 1.3 * Math.exp(-age);
+          const positionX = impact.x + Math.cos(angle) * (ringRadius + distortion);
+          const positionY = impact.y + Math.sin(angle) * ringRadius * flatten;
+          if (index === 0) context.moveTo(positionX, positionY);
+          else context.lineTo(positionX, positionY);
+        }
+        context.stroke();
+        if (ring < 2) {
+          context.strokeStyle = `rgba(226,239,255,${fade * .65})`;
+          context.lineWidth = .75;
+          context.beginPath();
+          context.ellipse(impact.x, impact.y, ringRadius, ringRadius * flatten, 0, .15 + ring, 2.1 + ring);
+          context.stroke();
+        }
+      }
+      const beads = this.width < 600 ? 14 : 24;
+      for (let index = 0; index < beads; index++) {
+        const angle = index / beads * TAU + age * .12;
+        this.point(impact.x + Math.cos(angle) * radius, impact.y + Math.sin(angle) * radius * flatten, .65, color, Math.exp(-age * 1.5) * opacity * .6);
+      }
     }
 
     meteorImpact(event, age, opacity = 1) {
+      if (opacity < .005 || age < 0) return;
       const context = this.context;
       const impact = this.meteorGround(event.groundX, event.depth);
-      const fade = Math.exp(-age * .8) * opacity;
+      const fade = Math.exp(-age * 1.15) * opacity;
+      this.ripple(impact, age, .55 + event.power * .5, event.color, opacity);
+      this.glow(impact.x, impact.y, (24 + event.power * 20 + age * 12) * impact.perspective, event.color, Math.exp(-age * 3) * opacity * .7);
+      const count = this.width < 600 ? 22 : 38;
       const random = randomGenerator(event.seed);
-      for (let ring = 0; ring < 4; ring++) {
-        const radius = Math.max(0, age - ring * .12) * (.52 + event.power * .35);
-        if (!radius) continue;
-        context.strokeStyle = `rgba(${event.color},${fade * (.7 - ring * .12)})`;
-        context.lineWidth = (ring === 0 ? 1.6 : .8) * impact.perspective;
+      for (let index = 0; index < count; index++) {
+        const angle = random() * TAU;
+        const speed = (20 + random() * 70) * event.power * impact.perspective;
+        const lift = (30 + random() * 70) * impact.perspective;
+        const gravity = 66;
+        const positionX = impact.x + Math.cos(angle) * age * speed;
+        const positionY = impact.y + Math.sin(angle) * age * speed * .19 - lift * age + gravity * age * age;
+        if (positionY > impact.y + 8) continue;
+        const previous = Math.max(0, age - .055);
+        context.strokeStyle = `rgba(${event.color},${fade * .65})`;
+        context.lineWidth = .7;
         context.beginPath();
-        for (let index = 0; index <= 64; index++) {
-          const angle = index / 64 * TAU;
-          const position = this.meteorGround(event.groundX + Math.cos(angle) * radius, event.depth + Math.sin(angle) * radius * .35);
-          if (index === 0) context.moveTo(position.x, position.y);
-          else context.lineTo(position.x, position.y);
+        context.moveTo(impact.x + Math.cos(angle) * previous * speed, impact.y + Math.sin(angle) * previous * speed * .19 - lift * previous + gravity * previous * previous);
+        context.lineTo(positionX, positionY);
+        context.stroke();
+        this.point(positionX, positionY, .5 + random() * .9, "white", fade);
+      }
+      if (age < .65) {
+        const crown = Math.sin(Math.min(1, age / .65) * Math.PI);
+        context.strokeStyle = `rgba(${event.color},${crown * opacity * .6})`;
+        context.lineWidth = .8;
+        context.beginPath();
+        for (let index = 0; index <= 48; index++) {
+          const angle = index / 48 * TAU;
+          const radius = (6 + age * 35) * event.power * impact.perspective;
+          const height = (9 + Math.sin(angle * 12) * 5) * crown * impact.perspective;
+          const positionX = impact.x + Math.cos(angle) * radius;
+          const positionY = impact.y + Math.sin(angle) * radius * .25 - height;
+          if (index === 0) context.moveTo(positionX, positionY);
+          else context.lineTo(positionX, positionY);
         }
         context.stroke();
       }
-      const bloom = context.createRadialGradient(impact.x, impact.y, 0, impact.x, impact.y, 35 * event.power + age * 18);
-      bloom.addColorStop(0, `rgba(${event.color},${Math.max(0, .55 - age * .5) * opacity})`);
-      bloom.addColorStop(1, `rgba(${event.color},0)`);
-      context.fillStyle = bloom;
-      context.fillRect(impact.x - 100, impact.y - 100, 200, 200);
-      const count = this.width < 600 ? 30 : 55;
-      for (let index = 0; index < count; index++) {
-        const angle = random() * TAU;
-        const speed = (25 + random() * 80) * event.power * impact.perspective;
-        const positionX = impact.x + Math.cos(angle) * age * speed;
-        const positionY = impact.y - (30 + random() * 80) * age * impact.perspective + age * age * 38;
-        this.point(positionX, positionY, .5 + random() * 1.1, event.color, fade * Math.max(0, 1 - age / 2.5));
-      }
-      if (age < 2.8) {
-        const rise = age * this.height * .065;
-        const scale = (3 + Math.sin(Math.min(1, age) * Math.PI / 2) * 8) * impact.perspective;
-        context.strokeStyle = `rgba(255,171,208,${fade * .8})`;
-        context.lineWidth = 1;
+      if (event.power > 1.2 && age < 2.5) {
+        const scale = (3 + smoothStep(age / .5) * 6) * impact.perspective;
+        context.strokeStyle = `rgba(255,184,211,${fade * .65})`;
+        context.lineWidth = .8;
         context.beginPath();
-        for (let index = 0; index <= 45; index++) {
-          const angle = index / 45 * TAU;
-          const positionX = impact.x + Math.sin(age * 2) * 5 + Math.sin(angle) ** 3 * scale;
-          const positionY = impact.y - rise - (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) / 16 * scale;
+        for (let index = 0; index <= 40; index++) {
+          const angle = index / 40 * TAU;
+          const positionX = impact.x + Math.sin(angle) ** 3 * scale;
+          const positionY = impact.y - age * 22 - (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) / 16 * scale;
           if (index === 0) context.moveTo(positionX, positionY);
           else context.lineTo(positionX, positionY);
         }
@@ -356,40 +648,57 @@
     }
 
     fallingMeteor(event, elapsed, opacity) {
+      if (opacity < .005) return;
       const state = meteorEventState(event, elapsed);
+      if (!state.flying && !state.impacted) return;
       const impact = this.meteorGround(event.groundX, event.depth);
       if (state.flying) {
-        const startX = impact.x + this.width * (.25 + event.power * .12);
-        const startY = -this.height * .12;
-        const positionAt = progress => ({ x: startX + (impact.x - startX) * progress, y: startY + (impact.y - startY) * progress });
-        const head = positionAt(state.progress);
-        const tail = positionAt(Math.max(0, state.progress - .23));
         const context = this.context;
+        const startX = impact.x + this.width * (event.slant ?? .4);
+        const startY = -this.height * .14;
+        const positionAt = progress => {
+          const accelerated = progress ** 1.18;
+          return { x: startX + (impact.x - startX) * accelerated + Math.sin(progress * Math.PI) * this.width * (event.curve ?? .025), y: startY + (impact.y - startY) * accelerated };
+        };
+        const head = positionAt(state.progress);
+        const tail = positionAt(Math.max(0, state.progress - .27));
         const gradient = context.createLinearGradient(tail.x, tail.y, head.x, head.y);
         gradient.addColorStop(0, `rgba(${event.color},0)`);
-        gradient.addColorStop(.75, `rgba(${event.color},${opacity * .55})`);
-        gradient.addColorStop(1, `rgba(244,244,255,${opacity})`);
+        gradient.addColorStop(.55, `rgba(${event.color},.16)`);
+        gradient.addColorStop(.9, `rgba(${event.color},.8)`);
+        gradient.addColorStop(1, "rgba(244,249,255,1)");
+        context.save();
         context.strokeStyle = gradient;
-        context.lineWidth = 6 + event.power * 3;
-        context.globalAlpha = .12;
-        context.beginPath();
-        context.moveTo(tail.x, tail.y);
-        context.lineTo(head.x, head.y);
-        context.stroke();
-        context.globalAlpha = 1;
-        context.lineWidth = 1.3 + event.power * 1.2;
-        context.beginPath();
-        context.moveTo(tail.x, tail.y);
-        context.lineTo(head.x, head.y);
-        context.stroke();
-        this.point(head.x, head.y, 6 * event.power, event.color, opacity * .055);
-        this.point(head.x, head.y, 2 * event.power, "white", opacity);
-        for (let dust = 0; dust < 13; dust++) {
-          const behind = positionAt(Math.max(0, state.progress - dust * .012));
-          this.point(behind.x + Math.sin(dust * event.seed) * 2, behind.y, .6, event.color, (1 - dust / 13) * opacity * .65);
+        context.lineCap = "round";
+        for (const [width, alpha] of [[15,.045],[6,.16],[1.5,.9]]) {
+          context.globalAlpha = opacity * alpha;
+          context.lineWidth = width * event.power * impact.perspective;
+          context.beginPath();
+          context.moveTo(tail.x, tail.y);
+          const middle = positionAt(Math.max(0, state.progress - .135));
+          context.quadraticCurveTo(middle.x, middle.y, head.x, head.y);
+          context.stroke();
         }
-        const reflection = Math.max(0, (state.progress - .7) / .3);
-        this.trail(impact.x, impact.y + reflection * 20, impact.x, impact.y, reflection * opacity * .35);
+        context.restore();
+        this.glow(head.x, head.y, 22 * event.power * impact.perspective, event.color, opacity * .7);
+        this.point(head.x, head.y, 1.8 * event.power * impact.perspective, "white", opacity);
+        const dustCount = this.width < 600 ? 14 : 22;
+        for (let dust = 0; dust < dustCount; dust++) {
+          const progress = Math.max(0, state.progress - dust * .012);
+          const behind = positionAt(progress);
+          const spread = dust * .2;
+          this.point(behind.x + Math.sin(event.seed + dust * 13) * spread, behind.y + Math.cos(dust * 9) * spread, .35 + dust % 3 * .15, event.color, (1 - dust / dustCount) * opacity * .65);
+        }
+        const approach = smoothStep((state.progress - .5) / .5);
+        context.save();
+        context.globalAlpha = approach * opacity * .16;
+        context.strokeStyle = gradient;
+        context.lineWidth = 2 * impact.perspective;
+        context.beginPath();
+        context.moveTo(head.x, impact.y + (impact.y - head.y) * .2);
+        context.lineTo(tail.x, impact.y + (impact.y - tail.y) * .2);
+        context.stroke();
+        context.restore();
       }
       if (state.impacted) this.meteorImpact(event, state.impactAge, opacity);
     }
@@ -401,12 +710,9 @@
       if (chapter !== this.chapter) { this.chapter = chapter; this.onChapter(meteorChapters[chapter], chapter); }
       const paint = smoothStep((elapsed - 7) / 7);
       const finale = smoothStep((elapsed - 23) / 7);
-      this.starrySky(elapsed, (.18 + paint * .82) * (1 - finale * .78));
-      const ground = context.createLinearGradient(0, this.height * .55, 0, this.height * .79);
-      ground.addColorStop(0, "rgba(27,65,97,.18)");
-      ground.addColorStop(1, "rgba(10,15,29,0)");
-      context.fillStyle = ground;
-      context.fillRect(0, this.height * .55, this.width, this.height * .24);
+      this.starrySky(elapsed, (.1 + paint * .64) * (1 - finale * .65));
+      this.waterSurface(elapsed, finale);
+      this.sakuraTree(elapsed, finale);
       context.save();
       context.globalCompositeOperation = "lighter";
       const rainOpacity = 1 - smoothStep((elapsed - 13) / 5);
@@ -419,6 +725,7 @@
       const centerX = this.width / 2;
       const centerY = this.height * .39;
       const yaw = this.reduced ? -.04 : Math.sin(elapsed * .23) * .06 + this.pointer.x * .16;
+      const particleBatches = new Map();
       this.points.forEach((particle, index) => {
         const state = meteorParticleState(particle, elapsed, this.reduced && elapsed >= 24);
         if (elapsed < 6 && !this.reduced) return;
@@ -428,7 +735,17 @@
         const alpha = state.alpha * (state.gather > .9 ? .95 : .28) * (this.reduced ? 1 : Math.min(1, (elapsed - 6) / 3));
         const color = state.gather < .2 ? index % 4 === 0 ? "255,214,124" : "113,179,251" : particle.color;
         if (index % 17 === 0) this.point(positionX, positionY, particle.size * 3, color, alpha * .065);
-        this.point(positionX, positionY, particle.size * (this.width < 600 ? .8 : 1), color, alpha);
+        if (alpha <= .005) return;
+        const opacity = Math.max(.025, Math.round(alpha * 12) / 12);
+        const key = `${color},${opacity}`;
+        if (!particleBatches.has(key)) particleBatches.set(key, []);
+        particleBatches.get(key).push({ x: positionX, y: positionY, radius: Math.max(.2, particle.size * (this.width < 600 ? .8 : 1)) });
+      });
+      particleBatches.forEach((particles, color) => {
+        context.fillStyle = `rgba(${color})`;
+        particles.forEach(particle => {
+          context.fillRect(particle.x - particle.radius, particle.y - particle.radius, particle.radius * 2, particle.radius * 2);
+        });
       });
       if (finale > .05) {
         for (let index = 0; index < 150; index++) {
@@ -450,15 +767,17 @@
       const context = this.context;
       const time = this.reduced ? 4.6 : this.total;
       context.clearRect(0, 0, this.width, this.height);
-      const glow = context.createRadialGradient(this.width / 2, this.height * .42, 0, this.width / 2, this.height * .42, this.width * .55);
-      glow.addColorStop(0, "rgba(126,79,89,.08)");
-      glow.addColorStop(1, "rgba(14,14,17,0)");
-      context.fillStyle = glow;
+      const background = context.createLinearGradient(0, 0, 0, this.height);
+      background.addColorStop(0, "#060c1c");
+      background.addColorStop(.55, "#101b30");
+      background.addColorStop(1, "#060b15");
+      context.fillStyle = background;
       context.fillRect(0, 0, this.width, this.height);
+      this.glow(this.width * .58, this.height * .28, this.width * .5, "77,108,180", .12);
       this.stars?.forEach(star => this.point(star.x * this.width, star.y * this.height * .88, star.radius, "gold", .15 + (Math.sin(time * .45 + star.phase) + 1) * .13));
       this.meteors();
     }
   }
 
-  window.RomanceParticles = Object.freeze({ Theatre, makeGirlParticles, makeMeteorEvents, meteorEventState, meteorParticleState, meteorChapters, duration });
+  window.RomanceParticles = Object.freeze({ Theatre, makeGirlParticles, makeMeteorEvents, makeSakuraTree, meteorEventState, meteorParticleState, meteorChapters, duration });
 })();
