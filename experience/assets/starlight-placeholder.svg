@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1385" viewBox="0 0 1080 1385">
+  <defs>
+    <radialGradient id="night"><stop stop-color="#323045"/><stop offset="1" stop-color="#100f15"/></radialGradient>
+    <linearGradient id="orbit"><stop stop-color="#e8cf9c" stop-opacity="0"/><stop offset=".5" stop-color="#e8cf9c" stop-opacity=".65"/><stop offset="1" stop-color="#b993dc" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1080" height="1385" fill="url(#night)"/>
+  <g fill="#e8cf9c"><circle cx="185" cy="245" r="2"/><circle cx="765" cy="180" r="3"/><circle cx="885" cy="450" r="2"/><circle cx="300" cy="820" r="2"/><circle cx="810" cy="1020" r="2"/><circle cx="165" cy="1120" r="3"/><circle cx="510" cy="310" r="2"/><circle cx="635" cy="1140" r="2"/></g>
+  <g fill="none" stroke="url(#orbit)" stroke-width="2"><ellipse cx="540" cy="650" rx="330" ry="145" transform="rotate(-32 540 650)"/><ellipse cx="540" cy="650" rx="220" ry="320" transform="rotate(25 540 650)"/></g>
+  <path d="M540 550c-85-110-235 20 0 185 235-165 85-295 0-185" fill="none" stroke="#e8cf9c" stroke-opacity=".8" stroke-width="3"/>
+  <text x="540" y="1090" text-anchor="middle" fill="#e8cf9c" font-family="Georgia,serif" font-size="24" letter-spacing="8">A LITTLE STARLIGHT</text>
+  <text x="540" y="1140" text-anchor="middle" fill="#ab9f94" font-family="sans-serif" font-size="18">PRIVATE PHOTO · NOT INCLUDED</text>
+</svg>
