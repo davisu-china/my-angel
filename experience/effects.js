@@ -14,7 +14,7 @@
   const meteorChapters = [
     { kicker: "流星与涟漪", title: "星光奔向大地，我奔向你。", time: 2 },
     { kicker: "樱花与星夜", title: "等一树花开，也等你看向我。", time: 15 },
-    { kicker: "星光成你", title: "星光为证，往后的温柔都给你。", time: 35 }
+    { kicker: "星光成你", title: "原来，万千星光，最后都像你。", time: 32 }
   ];
 
   function sampleCurve(anchors, count = 70) {
@@ -30,26 +30,24 @@
     return points;
   }
 
-  const girlShapes = [
-    { part: "hair", curves: [ [[-.13,-.92],[-.26,-1.19],[-.06,-1.32],[.12,-1.23]], [[.12,-1.23],[.33,-1.13],[.22,-.84],[.25,-.62]], [[.25,-.62],[.23,-.38],[.4,-.16],[.3,.12]], [[.3,.12],[.22,.29],[.12,.23],[.08,.12]], [[.08,.12],[.22,-.06],[-.12,-.29],[-.08,-.55]], [[-.08,-.55],[-.18,-.72],[-.12,-.8],[-.13,-.92]] ] },
-    { part: "skin", curves: [ [[-.015,-.85],[-.022,-.77],[-.05,-.755],[-.19,-.71]], [[-.19,-.71],[-.24,-.66],[-.19,-.56],[-.1,-.55]], [[-.1,-.55],[.01,-.51],[.14,-.54],[.2,-.64]], [[.2,-.64],[.17,-.71],[.07,-.73],[.07,-.84]], [[.07,-.84],[.04,-.87],[.01,-.87],[-.015,-.85]] ] },
-    { part: "shoe", curves: [ [[-.13,1.01],[-.16,1.04],[-.23,1.09],[-.13,1.1]], [[-.13,1.1],[-.03,1.11],[-.02,1.08],[-.06,1.02]], [[-.06,1.02],[-.08,1],[-.11,1],[-.13,1.01]] ] },
-    { part: "dress", curves: [ [[-.18,-.63],[-.1,-.59],[-.04,-.57],[.01,-.59]], [[.01,-.59],[.08,-.57],[.14,-.61],[.19,-.64]], [[.19,-.64],[.18,-.44],[.085,-.21],[.115,-.09]], [[.115,-.09],[.13,.24],[.28,.68],[.42,.94]], [[.42,.94],[.49,1.01],[.6,1.035],[.69,1.04]], [[.69,1.04],[.46,1.16],[.17,1.09],[.035,1.07]], [[.035,1.07],[-.18,1.13],[-.39,1.08],[-.43,1.025]], [[-.43,1.025],[-.33,.74],[-.17,.29],[-.12,-.08]], [[-.12,-.08],[-.09,-.26],[-.21,-.46],[-.18,-.63]] ] },
-    { part: "face", curves: [ [[-.13,-1.13],[-.163,-1.08],[-.14,-1.025],[-.168,-.994]], [[-.168,-.994],[-.197,-.965],[-.181,-.951],[-.162,-.949]], [[-.162,-.949],[-.167,-.931],[-.181,-.924],[-.164,-.916]], [[-.164,-.916],[-.165,-.877],[-.126,-.842],[-.083,-.844]], [[-.083,-.844],[.015,-.861],[.086,-.984],[.069,-1.09]], [[.069,-1.09],[.035,-1.165],[-.059,-1.177],[-.13,-1.13]] ] },
-    { part: "fringe", curves: [ [[-.167,-1.105],[-.18,-1.24],[.009,-1.29],[.132,-1.161]], [[.132,-1.161],[.22,-1.08],[.154,-.907],[.083,-.882]], [[.083,-.882],[.09,-1.014],[.007,-1.032],[-.025,-1.137]], [[-.025,-1.137],[-.085,-1.083],[-.12,-1.078],[-.167,-1.105]] ] }
-  ];
-
-  function traceShape(context, shape) {
-    context.beginPath();
-    context.moveTo(...shape.curves[0][0]);
-    shape.curves.forEach(curve => context.bezierCurveTo(...curve[1], ...curve[2], ...curve[3]));
-    context.closePath();
-  }
-
   function makeGirlParticles(compact) {
     const random = randomGenerator(20261026);
     const points = [];
-    const colors = ["132,189,247", "169,150,241", "237,165,212", "245,205,159", "135,222,215"];
+    const colors = ["112,171,255", "155,127,255", "242,136,214", "255,194,125", "108,233,225", "255,224,154"];
+    const paths = [
+      { part: "hair", curves: [ [[-.38,-.48],[-.72,-.98],[-.26,-1.4],[.17,-1.21]], [[.17,-1.21],[.55,-1.17],[.53,-.8],[.49,-.47]], [[.49,-.47],[.48,-.02],[.96,.02],[.65,.37]], [[.65,.37],[.42,.53],[.22,.18],[.18,-.14]], [[.18,-.14],[-.05,-.04],[-.22,-.06],[-.29,-.22]], [[-.29,-.22],[-.35,.11],[-.63,.44],[-.74,.16]], [[-.74,.16],[-.39,.21],[-.62,-.25],[-.38,-.48]] ] },
+      { part: "dress", curves: [ [[-.17,-.18],[-.24,-.02],[-.32,.08],[-.25,.3]], [[-.25,.3],[-.26,.52],[-.49,.74],[-.62,.88]], [[-.62,.88],[-.43,1.04],[-.17,.99],[0,.96]], [[0,.96],[.21,1.04],[.45,.98],[.6,.86]], [[.6,.86],[.42,.64],[.28,.46],[.25,.27]], [[.25,.27],[.27,.09],[.17,-.03],[.15,-.18]], [[.15,-.18],[.05,-.1],[-.06,-.1],[-.17,-.18]] ] },
+      { part: "skin", curves: [ [[-.28,-.89],[-.38,-.55],[-.22,-.28],[.02,-.27]], [[.02,-.27],[.27,-.3],[.37,-.59],[.29,-.91]], [[.29,-.91],[.08,-.87],[.02,-1.13],[-.11,-1.02]], [[-.11,-1.02],[-.16,-.92],[-.19,-.91],[-.28,-.89]] ] },
+      { part: "skin", curves: [ [[-.07,-.29],[-.07,-.21],[-.11,-.18],[-.16,-.16]], [[-.16,-.16],[-.05,-.05],[.08,-.06],[.15,-.16]], [[.15,-.16],[.08,-.2],[.09,-.25],[.09,-.3]], [[.09,-.3],[.04,-.28],[-.02,-.28],[-.07,-.29]] ] },
+      { part: "skin", curves: [ [[-.19,-.1],[-.35,-.06],[-.37,.13],[-.42,.25]], [[-.42,.25],[-.48,.4],[-.33,.43],[-.28,.27]], [[-.28,.27],[-.2,.13],[-.13,.03],[-.19,-.1]] ] },
+      { part: "skin", curves: [ [[.18,-.1],[.34,-.09],[.31,.15],[.42,.18]], [[.42,.18],[.55,.19],[.55,.06],[.59,-.01]], [[.59,-.01],[.67,-.08],[.73,.01],[.66,.09]], [[.66,.09],[.62,.37],[.43,.41],[.3,.28]], [[.3,.28],[.2,.2],[.13,.03],[.18,-.1]] ] },
+      { part: "skin", curves: [ [[-.25,.94],[-.24,1.04],[-.2,1.12],[-.19,1.18]], [[-.19,1.18],[-.12,1.22],[-.08,1.21],[-.07,1.16]], [[-.07,1.16],[-.09,1.08],[-.08,1.01],[-.07,.97]], [[-.07,.97],[-.15,.98],[-.21,.97],[-.25,.94]] ] },
+      { part: "skin", curves: [ [[.1,.97],[.09,1.05],[.12,1.15],[.1,1.2]], [[.1,1.2],[.19,1.25],[.29,1.21],[.24,1.15]], [[.24,1.15],[.22,1.07],[.26,1.01],[.28,.94]], [[.28,.94],[.2,.97],[.16,.97],[.1,.97]] ] }
+    ];
+    const add = (positionX, positionY, part, edge = false) => {
+      const colorIndex = Math.floor((positionY + 1.4) * 5.8 + positionX * 5.2 + random() * .9 + 24) % colors.length;
+      points.push({ x: positionX, y: positionY, color: part === "skin" ? "255,209,184" : colors[colorIndex], size: edge ? 1.05 : .6 + random() * .35, alpha: edge ? .9 : .35 + random() * .35, edge, phase: random() * TAU, orbit: random(), delay: random() * 1.8, part });
+    };
     const inside = (positionX, positionY, polygon) => {
       let contained = false;
       for (let index = 0, previous = polygon.length - 1; index < polygon.length; previous = index++) {
@@ -59,43 +57,36 @@
       }
       return contained;
     };
-    girlShapes.forEach(path => {
+    paths.forEach(path => {
       const outline = path.curves.flatMap(curve => sampleCurve(curve, compact ? 23 : 38));
       const bounds = outline.reduce((bounds, point) => ({ left: Math.min(bounds.left, point.x), right: Math.max(bounds.right, point.x), top: Math.min(bounds.top, point.y), bottom: Math.max(bounds.bottom, point.y) }), { left: Infinity, right: -Infinity, top: Infinity, bottom: -Infinity });
-      const add = (positionX, positionY, edge) => {
-        const skin = path.part === "skin" || path.part === "face";
-        const colorIndex = Math.abs(Math.floor(positionY * 6 + positionX * 3 + 30)) % colors.length;
-        const depth = Math.sqrt(Math.max(0, 1 - (positionX / .58) ** 2)) * (skin ? .18 : .1);
-        points.push({ x: positionX, y: positionY, z: depth, color: skin ? "255,218,197" : colors[colorIndex], size: edge ? .75 : .4 + random() * .3, alpha: edge ? .68 : .18 + depth, edge, phase: random() * TAU, orbit: random(), delay: random() * 1.8, part: path.part });
-      };
-      const step = compact ? .029 : .023;
+      const step = compact ? .034 : .024;
       for (let positionY = bounds.top; positionY < bounds.bottom; positionY += step) {
         for (let positionX = bounds.left; positionX < bounds.right; positionX += step) {
           const sampleX = positionX + (random() - .5) * step * .7;
           const sampleY = positionY + (random() - .5) * step * .7;
-          if (inside(sampleX, sampleY, outline)) add(sampleX, sampleY, false);
+          if (inside(sampleX, sampleY, outline)) add(sampleX, sampleY, path.part);
         }
       }
-      outline.forEach(point => add(point.x, point.y, true));
+      outline.forEach(point => add(point.x, point.y, path.part, true));
     });
+    const details = [
+      [[-.23,-.64],[-.18,-.71],[-.1,-.72],[-.06,-.65]],
+      [[.07,-.65],[.12,-.73],[.21,-.7],[.24,-.63]],
+      [[-.07,-.43],[-.01,-.38],[.07,-.38],[.12,-.44]],
+      [[-.2,.21],[-.06,.25],[.08,.25],[.24,.21]],
+      [[-.16,.36],[-.18,.55],[-.28,.74],[-.34,.9]],
+      [[.04,.34],[.01,.57],[.03,.78],[.08,.96]],
+      [[.18,.35],[.24,.57],[.29,.73],[.36,.91]],
+      [[-.4,-.83],[-.55,-.48],[-.34,-.02],[-.55,.21]],
+      [[.36,-.96],[.44,-.54],[.33,-.12],[.59,.26]]
+    ];
+    details.forEach((curve, detailIndex) => sampleCurve(curve, compact ? 38 : 62).forEach(point => {
+      add(point.x, point.y, "detail", true);
+      points[points.length - 1].color = detailIndex < 3 ? "255,238,214" : "144,227,255";
+      points[points.length - 1].size = detailIndex < 3 ? 1.15 : .8;
+    }));
     return points;
-  }
-
-  function proposalState(elapsed, reduced = false) {
-    const time = reduced ? 38 : elapsed;
-    return {
-      reveal: smoothStep((time - 23.5) / 4.5),
-      arrival: smoothStep((time - 26) / 3),
-      kneel: smoothStep((time - 29.5) / 3),
-      offer: smoothStep((time - 32) / 2.8),
-      reach: smoothStep((time - 34) / 2.5),
-      farewell: 1 - smoothStep((time - 38.8) / 1.2)
-    };
-  }
-
-  function proposalLayout(width, height) {
-    const scale = Math.min(width * .29, height * .255);
-    return { scale, centerX: width * (width < 600 ? .6 : .53), centerY: height * .74 - scale * 1.1, groundY: height * .74 };
   }
 
   function makeMeteorEvents(compact = false) {
@@ -138,91 +129,30 @@
     const random = randomGenerator(80225);
     const branches = [];
     const blossoms = [];
-    const clusters = [];
-    const scaffold = [
-      { anchors:[[0,.025],[-.055,-.2],[.135,-.43],[.02,-.71]], width:.105 },
-      { parent:0, along:.69, controls:[[-.13,-.62],[-.45,-.64],[-.7,-.91]], width:.053 },
-      { parent:1, along:.59, controls:[[-.59,-.76],[-.77,-.77],[-.97,-.91]], width:.027 },
-      { parent:1, along:.85, controls:[[-.62,-1.02],[-.69,-1.09],[-.86,-1.1]], width:.021 },
-      { parent:0, along:.86, controls:[[-.13,-.84],[-.23,-1.07],[-.4,-1.19]], width:.042 },
-      { parent:4, along:.66, controls:[[-.3,-1.13],[-.43,-1.24],[-.61,-1.2]], width:.021 },
-      { parent:0, along:1, controls:[[-.04,-.87],[.015,-1.1],[.19,-1.26]], width:.047 },
-      { parent:6, along:.52, controls:[[.32,-.96],[.49,-.93],[.68,-1.05]], width:.032 },
-      { parent:6, along:.8, controls:[[.28,-1.17],[.39,-1.27],[.57,-1.23]], width:.024 },
-      { parent:7, along:.53, controls:[[.6,-.97],[.78,-.82],[.98,-.86]], width:.021 },
-      { parent:7, along:.88, controls:[[.73,-1.17],[.9,-1.13],[1.04,-1.02]], width:.016 },
-      { parent:0, along:.63, controls:[[.23,-.57],[.39,-.7],[.63,-.69]], width:.033 },
-      { parent:11, along:.78, controls:[[.67,-.66],[.78,-.58],[.9,-.64]], width:.014 }
-    ];
-    const addBranch = (anchors, width, birth, depth) => {
-      const samples = sampleCurve(anchors, 24);
-      const bark = Array.from({length: Math.ceil(width * 600)}, () => ({along:random(),across:(random()-.5)*.85,light:random()>.55}));
-      branches.push({anchors,width,birth,depth,samples,bark,taper:branches.length===0?.3:.43});
-      return samples;
-    };
-    scaffold.forEach((limb, limbIndex) => {
-      if (limb.parent !== undefined) {
-        const parent = branches[scaffold[limb.parent].branchIndex];
-        const parentSamples = sampleCurve(parent.anchors, 100);
-        const jointIndex = Math.round(limb.along * 100);
-        const joint = parentSamples[jointIndex];
-        const previous = parentSamples[Math.max(0,jointIndex-2)];
-        const next = parentSamples[Math.min(100,jointIndex+2)];
-        const tangent = Math.atan2(next.y-previous.y,next.x-previous.x);
-        const control = limb.controls[0];
-        const distance = Math.min(.14,Math.hypot(control[0]-joint.x,control[1]-joint.y)*.65);
-        limb.anchors = [[joint.x, joint.y], [joint.x+Math.cos(tangent)*distance,joint.y+Math.sin(tangent)*distance], ...limb.controls.slice(1)];
-      }
-      limb.branchIndex = branches.length;
-      const birth = limbIndex === 0 ? 0 : .06 + limbIndex*.018;
-      const depth = random();
-      const samples = addBranch(limb.anchors,limb.width,birth,depth);
-      if(limbIndex === 0) return;
-      const count = limbIndex < 7 ? 6 : 7;
-      for(let index=0;index<count;index++) {
-        const along = .42 + index/count*.57;
-        const sampleIndex = Math.min(22,Math.floor(along*24));
-        const start = samples[sampleIndex];
-        const next = samples[sampleIndex+1];
-        const angle = Math.atan2(next.y-start.y,next.x-start.x) + (random()-.62)*1.65;
-        const length = .065 + random()*.13;
-        const end = {x:start.x+Math.cos(angle)*length,y:start.y+Math.sin(angle)*length};
-        const droop = .016 + random()*.035;
-        addBranch([[start.x,start.y],[start.x+Math.cos(angle)*length*.4,start.y+Math.sin(angle)*length*.3],[end.x,end.y-droop],[end.x,end.y]],limb.width*(1-along)*.45+.0012,birth+.13,depth);
-        clusters.push({x:end.x,y:end.y,radius:.065+random()*.075,depth,birth:.3+random()*.2});
-      }
-      clusters.push({x:limb.anchors[3][0],y:limb.anchors[3][1],radius:.12,depth,birth:.4});
-    });
-    clusters.sort((first,second)=>first.depth-second.depth);
-    clusters.forEach(cluster=>{
-      const count=compact?78:118;
-      for(let index=0;index<count;index++) {
-        const phase=random()*TAU;
-        const radius=Math.sqrt(random())*cluster.radius;
-        const vertical = Math.sin(phase) * radius * .78;
-        const tone = vertical > cluster.radius * .12 ? 3 : random() > .48 ? 2 : random() > .4 ? 0 : 1;
-        blossoms.push({x:cluster.x+Math.cos(phase)*radius*1.32,y:cluster.y+vertical,size:.005+random()*.01,phase,depth:cluster.depth,tone,birth:cluster.birth+random()*.16});
-      }
-      if (cluster.depth > .6) {
-        const length = .045 + random() * .1;
-        for (let index = 0; index < 8; index++) {
-          const along = index / 7;
-          blossoms.push({x:cluster.x+Math.sin(along*2.2)*.02,y:cluster.y+cluster.radius*.4+along*length,size:.006+random()*.004,phase:random()*TAU,depth:cluster.depth,tone:index%3?0:3,birth:cluster.birth+along*.1});
+    function branch(startX, startY, length, angle, width, level) {
+      const endX = startX + Math.cos(angle) * length;
+      const endY = startY + Math.sin(angle) * length;
+      const bend = (random() - .5) * length * .6;
+      const birth = (6 - level) * .095;
+      branches.push({ anchors: [[startX, startY], [startX + Math.cos(angle + .25) * length * .35 + bend, startY + Math.sin(angle) * length * .3], [endX - Math.cos(angle - .2) * length * .25, endY - Math.sin(angle) * length * .25], [endX, endY]], width, birth });
+      if (level < 3) {
+        const count = compact ? 10 : 17;
+        for (let index = 0; index < count; index++) {
+          const phase = random() * TAU;
+          const radius = Math.sqrt(random()) * (.075 + length * .25);
+          blossoms.push({ x: endX + Math.cos(phase) * radius * 1.3, y: endY + Math.sin(phase) * radius * .7, size: .009 + random() * .012, tone: Math.floor(random() * 4), birth: .44 + random() * .35, phase: random() * TAU });
         }
       }
-    });
-    const petals = Array.from({ length: compact ? 25 : 44 }, () => {
+      if (!level) return;
+      const spread = level > 3 ? .53 : .45;
+      for (const direction of [-1, 1]) branch(endX, endY, length * (.65 + random() * .12), angle + direction * (spread + random() * .2), width * .65, level - 1);
+    }
+    branch(0, 0, .36, -Math.PI / 2 + .14, .045, 6);
+    const petals = Array.from({ length: compact ? 32 : 64 }, () => {
       const flower = blossoms[Math.floor(random() * blossoms.length)];
-      return { x: flower.x, y: flower.y, phase: random() * TAU, offset: random(), speed: .7 + random() * .6, size: .008 + random() * .008, tone: Math.floor(random() * 4) };
+      return { x: flower.x, y: flower.y, phase: random() * TAU, offset: random(), speed: .7 + random() * .6, size: .012 + random() * .014, tone: Math.floor(random() * 4) };
     });
-    return { branches, blossoms, petals, clusters };
-  }
-
-  function butterflyState(index, elapsed, reduced = false) {
-    const time = reduced ? 37 : elapsed;
-    const phase = index*1.83;
-    const angle = time*.32+phase;
-    return { x:.49+Math.cos(angle)*(.24+index*.012),y:.4+Math.sin(angle*1.21+phase)*.13+Math.sin(time*.9+phase)*.015,depth:Math.sin(angle),flap:.2+Math.abs(Math.sin(time*7+phase))*.8,rotation:Math.sin(angle+phase)*.35,opacity:smoothStep((time-26-index*.65)/2.5)*(1-smoothStep((time-38.8)/1.2)) };
+    return { branches, blossoms, petals };
   }
 
   class Theatre {
@@ -245,7 +175,7 @@
       this.meteorShots = [];
       this.tick = this.tick.bind(this);
       this.resize();
-      this.canvas.setAttribute("aria-label", "星落倾心：流星落水、自然樱花树与蓝金星夜，星尘汇成修长礼服恋人，男生单膝献戒，几只蝴蝶环绕飞舞");
+      this.canvas.setAttribute("aria-label", "星落倾心：立体流星与水面涟漪，樱花树在蓝金星夜里开花，最后星光汇成五彩少女轮廓");
     }
 
     resize() {
@@ -270,10 +200,6 @@
       this.skyTime = -1;
       this.glowSprites = new Map();
       this.flowerSprites = [];
-      this.girlSurface = null;
-      this.girlRevealSurface = null;
-      this.suitorSurface = null;
-      this.suitorPose = null;
       this.render();
     }
 
@@ -385,34 +311,18 @@
       const sprite = this.makeSurface(32, 32);
       if (sprite) {
         const context = sprite.getContext("2d");
-        const colors = ["#e9b4c9", "#cb8fae", "#fff1ea", "#916f96"];
+        const colors = ["#f8b9ce", "#e88aaf", "#ffe0df", "#cf85b0"];
+        context.fillStyle = colors[tone];
         for (let index = 0; index < 5; index++) {
           const angle = index / 5 * TAU;
-          context.save();
-          context.translate(16,16);
-          context.rotate(angle);
-          const gradient=context.createLinearGradient(0,0,11,0);
-          gradient.addColorStop(0,tone===3?"#6c577a":"#be809c");gradient.addColorStop(.45,colors[tone]);gradient.addColorStop(1,tone===3?"#b792b4":"#ffe9e9");
-          context.fillStyle=gradient;
           context.beginPath();
-          context.moveTo(0,0);
-          context.bezierCurveTo(4,-6,12,-5,11,-1);
-          context.lineTo(9,0);
-          context.lineTo(11,1);
-          context.bezierCurveTo(12,5,4,6,0,0);
+          context.ellipse(16 + Math.cos(angle) * 5, 16 + Math.sin(angle) * 5, 5.2, 3.2, angle, 0, TAU);
           context.fill();
-          context.strokeStyle="rgba(255,236,228,.28)";context.lineWidth=.5;context.stroke();
-          context.restore();
         }
         context.fillStyle = "#ffe8b0";
         context.beginPath();
-        context.arc(16, 16, 1, 0, TAU);
+        context.arc(16, 16, 1.7, 0, TAU);
         context.fill();
-        for(let index=0;index<7;index++) {
-          const angle=index/7*TAU;
-          context.strokeStyle="#e3b99a";context.lineWidth=.45;
-          context.beginPath();context.moveTo(16,16);context.lineTo(16+Math.cos(angle)*3,16+Math.sin(angle)*3);context.stroke();
-        }
       }
       this.flowerSprites[tone] = sprite;
       return sprite;
@@ -420,103 +330,32 @@
 
     drawSakura(context, size, growth) {
       context.save();
-      context.translate(size * 1.05, size * 1.45);
+      context.translate(size * .9, size * 1.45);
       context.scale(size * .88, size * .88);
       context.lineCap = "round";
-      this.sakura.clusters.forEach(cluster => {
-        const bloom = smoothStep((growth - cluster.birth) / .24);
-        if (!bloom) return;
-        const radius = cluster.radius * 1.35;
-        const volume = context.createRadialGradient(cluster.x - radius * .2, cluster.y - radius * .25, radius * .1, cluster.x, cluster.y, radius);
-        volume.addColorStop(0, "rgba(176,114,149,.18)");
-        volume.addColorStop(.62, "rgba(107,79,118,.1)");
-        volume.addColorStop(1, "rgba(89,63,99,0)");
-        context.globalAlpha = bloom * (.65 + cluster.depth * .25);
-        context.fillStyle = volume;
-        context.beginPath();
-        context.ellipse(cluster.x, cluster.y, radius * 1.2, radius * .8, -.12, 0, TAU);
-        context.fill();
-      });
-      context.globalAlpha = 1;
-      [...this.sakura.branches].sort((first,second)=>first.width-second.width).forEach(branch => {
+      this.sakura.branches.forEach(branch => {
         const reveal = smoothStep((growth - branch.birth) / .22);
         if (!reveal) return;
         const anchors = branch.anchors;
         context.save();
         context.globalAlpha = reveal;
-        const samples=branch.samples;
-        const edges=samples.map((point,index)=>{
-          const previous=samples[Math.max(0,index-1)];const next=samples[Math.min(samples.length-1,index+1)];
-          const angle=Math.atan2(next.y-previous.y,next.x-previous.x)+Math.PI/2;
-          const radius=branch.width*(.53-index/(samples.length-1)*branch.taper)*(1+Math.sin(index*1.7+branch.birth*20)*.035);
-          return {left:[point.x+Math.cos(angle)*radius,point.y+Math.sin(angle)*radius],right:[point.x-Math.cos(angle)*radius,point.y-Math.sin(angle)*radius]};
-        });
-        const material=context.createLinearGradient(...edges[0].left,...edges[0].right);
-        material.addColorStop(0,"#7b6066");material.addColorStop(.26,"#5e4a55");material.addColorStop(.62,"#3d3445");material.addColorStop(1,"#252a3a");
-        context.beginPath();context.moveTo(...edges[0].left);edges.slice(1).forEach(edge=>context.lineTo(...edge.left));[...edges].reverse().forEach(edge=>context.lineTo(...edge.right));context.closePath();context.fillStyle=material;context.fill();
-        context.save();context.clip();
-        if (branch.width > .018) {
-          for (let index = 0; index < edges.length - 1; index++) {
-            const first = edges[index];
-            const next = edges[index + 1];
-            const shading = context.createLinearGradient(...first.left, ...first.right);
-            shading.addColorStop(0, "#796169");
-            shading.addColorStop(.28, "#65505c");
-            shading.addColorStop(.65, "#42394b");
-            shading.addColorStop(1, "#292e40");
-            context.fillStyle = shading;
-            context.beginPath();
-            context.moveTo(...first.left);context.lineTo(...next.left);context.lineTo(...next.right);context.lineTo(...first.right);context.closePath();
-            context.fill();
-          }
-        }
-        branch.bark.forEach(mark=>{
-          const sampleIndex=Math.min(samples.length-2,Math.floor(mark.along*(samples.length-1)));
-          const point=samples[sampleIndex];const next=samples[sampleIndex+1];
-          const angle=Math.atan2(next.y-point.y,next.x-point.x);const radius=branch.width*(.53-mark.along*branch.taper);
-          const positionX=point.x+Math.cos(angle+Math.PI/2)*radius*mark.across;
-          const positionY=point.y+Math.sin(angle+Math.PI/2)*radius*mark.across;
-          context.strokeStyle=mark.light?"rgba(202,163,140,.32)":"rgba(16,20,29,.48)";context.lineWidth=.0013;
-          context.beginPath();context.moveTo(positionX-Math.cos(angle+Math.PI/2)*radius*.6,positionY-Math.sin(angle+Math.PI/2)*radius*.6);context.lineTo(positionX+Math.cos(angle+Math.PI/2)*radius*.5,positionY+Math.sin(angle+Math.PI/2)*radius*.5);context.stroke();
-        });
-        if (branch.width > .024) {
-          for (let seam = 0; seam < 3; seam++) {
-            context.beginPath();
-            samples.forEach((point, index) => {
-              const edge = edges[index];
-              const offset = .2 + seam * .27 + Math.sin(index * .63 + seam * 2.1) * .04;
-              const positionX = edge.left[0] + (edge.right[0] - edge.left[0]) * offset;
-              const positionY = edge.left[1] + (edge.right[1] - edge.left[1]) * offset;
-              if (index === 0) context.moveTo(positionX, positionY);
-              else context.lineTo(positionX, positionY);
-            });
-            context.strokeStyle = seam % 2 ? "rgba(220,178,155,.17)" : "rgba(19,23,32,.28)";
-            context.lineWidth = branch.width * .017;
-            context.stroke();
-          }
-          const knot = samples[10];
-          const direction = Math.atan2(samples[11].y - knot.y, samples[11].x - knot.x);
-          context.strokeStyle = "rgba(35,28,35,.46)";
-          context.lineWidth = .0014;
-          context.beginPath();
-          context.ellipse(knot.x, knot.y, branch.width * .23, branch.width * .095, direction, 0, TAU);
-          context.stroke();
-        }
-        context.restore();
-        context.strokeStyle="rgba(210,170,154,.14)";context.lineWidth=branch.width*.035;
-        context.beginPath();context.moveTo(...edges[0].left);edges.slice(1).forEach(edge=>context.lineTo(...edge.left));context.stroke();
+        context.strokeStyle = "#573441";
+        context.lineWidth = branch.width;
+        context.beginPath();
+        context.moveTo(...anchors[0]);
+        context.bezierCurveTo(...anchors[1], ...anchors[2], ...anchors[3]);
+        context.stroke();
+        context.strokeStyle = "rgba(242,163,185,.45)";
+        context.lineWidth = branch.width * .23;
+        context.stroke();
         context.restore();
       });
-      for(const direction of [-1,1]) {
-        context.globalAlpha = smoothStep(growth / .22);
-        context.fillStyle="#4f4249";context.beginPath();context.moveTo(-.025,0);context.bezierCurveTo(direction*.07,.015,direction*.1,.02,direction*.13,.022);context.bezierCurveTo(direction*.06,.014,direction*.035,-.04,.025,-.1);context.closePath();context.fill();
-      }
       this.sakura.blossoms.forEach(flower => {
         const bloom = smoothStep((growth - flower.birth) / .18);
         if (!bloom) return;
         const sprite = this.flowerSprite(flower.tone);
         const radius = flower.size * ( .35 + bloom * .65);
-        context.globalAlpha = bloom * (.66+flower.depth*.3);
+        context.globalAlpha = bloom * .85;
         if (sprite) context.drawImage(sprite, flower.x - radius, flower.y - radius, radius * 2, radius * 2);
         else {
           context.fillStyle = ["#f8b9ce", "#e88aaf", "#ffe0df", "#cf85b0"][flower.tone];
@@ -533,18 +372,18 @@
       const compact = this.width < 600;
       const growth = this.reduced ? 1 : smoothStep((elapsed - .6) / 9);
       if (!growth) return;
-      const size = Math.min(this.width * (compact ? .6 : .3), this.height * .48);
+      const size = Math.min(this.width * (compact ? .56 : .32), this.height * .6);
       const shoreY = this.height * .66;
-      const originX = this.width * (compact ? .35 : .24);
-      const left = originX - size * 1.05;
+      const originX = this.width * (compact ? .19 : .17);
+      const left = originX - size * .9;
       const top = shoreY - size * 1.45;
-      const opacity = (compact ? .96 - finale * .38 : 1 - finale * .15);
-      if (!this.treeSurface) this.treeSurface = this.makeSurface(size * 2.2, size * 1.6);
-      const growthFrame = Math.round(growth * 24);
+      const opacity = (compact ? .84 - finale * .43 : .98 - finale * .2);
+      if (!this.treeSurface) this.treeSurface = this.makeSurface(size * 2, size * 1.6);
+      const growthFrame = Math.round(growth * 36);
       if (this.treeSurface && this.treeGrowth !== growthFrame) {
         const cachedContext = this.treeSurface.getContext("2d");
         cachedContext.clearRect(0, 0, this.treeSurface.width, this.treeSurface.height);
-        this.drawSakura(cachedContext, size, growthFrame / 24);
+        this.drawSakura(cachedContext, size, growthFrame / 36);
         this.treeGrowth = growthFrame;
       }
       const sway = this.reduced ? 0 : Math.sin(elapsed * .38) * .006;
@@ -698,6 +537,11 @@
       }
       context.lineTo(this.width, this.height * .79);
       context.lineTo(0, this.height * .79);
+      context.fill();
+      context.beginPath();
+      context.moveTo(this.width * .08, this.height * .61);
+      context.bezierCurveTo(this.width * .04, this.height * .44, this.width * .09, this.height * .34, this.width * .08, this.height * .25);
+      context.bezierCurveTo(this.width * .16, this.height * .42, this.width * .12, this.height * .43, this.width * .17, this.height * .61);
       context.fill();
       context.restore();
     }
@@ -859,495 +703,6 @@
       if (state.impacted) this.meteorImpact(event, state.impactAge, opacity);
     }
 
-    paintHand(context, positionX, positionY, direction = 1, rotation = 0, supporting = false) {
-      context.save();
-      context.translate(positionX, positionY);
-      context.rotate(rotation);
-      context.scale(direction, 1);
-      const skin = context.createLinearGradient(0, -.025, 0, .04);
-      skin.addColorStop(0, "#fce1d0");
-      skin.addColorStop(.5, "#efc3ae");
-      skin.addColorStop(1, "#c58f8d");
-      context.fillStyle = skin;
-      context.beginPath();
-      context.moveTo(-.02, -.017);
-      context.bezierCurveTo(.005, -.022, .023, -.03, .047, -.025);
-      context.bezierCurveTo(.055, -.01, .05, .014, .032, .021);
-      context.quadraticCurveTo(.007, .024, -.02, .012);
-      context.closePath();
-      context.fill();
-      const lengths = [.061, .075, .069, .052];
-      lengths.forEach((length, index) => {
-        const baseY = -.02 + index * .011;
-        const bend = supporting ? -.016 : .008 + index * .003;
-        context.beginPath();
-        context.moveTo(.034, baseY - .0035);
-        context.bezierCurveTo(.061, baseY - .008, .045 + length, baseY + bend - .012, .046 + length, baseY + bend);
-        context.quadraticCurveTo(.046 + length, baseY + bend + .004, .039 + length, baseY + bend + .004);
-        context.bezierCurveTo(.069, baseY + .009, .051, baseY + .008, .03, baseY + .004);
-        context.closePath();
-        context.fill();
-        context.strokeStyle = "rgba(123,76,84,.24)";
-        context.lineWidth = .0018;
-        context.stroke();
-        context.strokeStyle = "rgba(255,239,227,.75)";
-        context.lineWidth = .0024;
-        context.beginPath();
-        context.moveTo(.036 + length, baseY + bend - .001);
-        context.lineTo(.042 + length, baseY + bend - .001);
-        context.stroke();
-      });
-      context.fillStyle = skin;
-      context.beginPath();
-      context.moveTo(.004, .012);
-      context.bezierCurveTo(.017, .024, .036, .043, .054, .039);
-      context.quadraticCurveTo(.062, .031, .05, .027);
-      context.quadraticCurveTo(.03, .027, .026, .006);
-      context.closePath();
-      context.fill();
-      context.restore();
-    }
-
-    paintGirl(context) {
-      const gradient=(startX,startY,endX,endY,stops)=>{
-        const fill=context.createLinearGradient(startX,startY,endX,endY);
-        stops.forEach(([offset,color])=>fill.addColorStop(offset,color));return fill;
-      };
-      const skin=gradient(-.22,-1.06,.2,-.55,[[0,"#c5969e"],[.28,"#f5d7c8"],[.49,"#ffe8d7"],[.77,"#deb6b0"],[1,"#a47b8e"]]);
-      const materials={
-        hair:gradient(-.2,-1.2,.34,.15,[[0,"#171d2c"],[.32,"#483444"],[.49,"#79606c"],[.62,"#322d40"],[.9,"#473247"],[1,"#957084"]]),
-        fringe:gradient(-.18,-1.24,.2,-.85,[[0,"#51404b"],[.35,"#76606a"],[.62,"#3a2f40"],[1,"#212534"]]),
-        skin,face:skin,shoe:"#b8a6a6",
-        dress:gradient(-.43,-.1,.61,.5,[[0,"#748697"],[.19,"#c0c6cf"],[.34,"#f4e7df"],[.46,"#fff1e2"],[.6,"#b9c5d4"],[.77,"#d1b9cd"],[1,"#8196af"]])
-      };
-      const curve=(anchors,color,width)=>{
-        context.beginPath();context.moveTo(...anchors[0]);context.bezierCurveTo(...anchors[1],...anchors[2],...anchors[3]);
-        context.strokeStyle=color;context.lineWidth=width;context.lineCap="round";context.stroke();
-      };
-      const ellipse=(positionX,positionY,radiusX,radiusY,color,rotation=0)=>{
-        context.fillStyle=color;context.beginPath();context.ellipse(positionX,positionY,radiusX,radiusY,rotation,0,TAU);context.fill();
-      };
-      curve([[.17,-.67],[.24,-.48],[.21,-.27],[.18,-.13]],skin,.038);
-      this.paintHand(context,.18,-.12,1,1.34);
-      girlShapes.forEach(shape=>{
-        traceShape(context,shape);context.fillStyle=materials[shape.part];context.fill();
-        context.strokeStyle=shape.part==="dress"?"rgba(255,234,217,.6)":"rgba(225,184,187,.18)";context.lineWidth=.003;context.stroke();
-      });
-      traceShape(context,girlShapes.find(shape=>shape.part==="dress"));
-      context.save();context.clip();
-      for(let index=0;index<10;index++){
-        const offset=(index-4.5)*.073;
-        curve([[offset*.25,-.18],[offset*.5,.14],[offset*1.2,.72],[offset*1.6+.06,1.1]],index%2?"rgba(255,246,229,.44)":"rgba(67,87,123,.2)",index%2?.009:.018);
-      }
-      for(let index=0;index<6;index++){
-        const offset=index*.018;
-        curve([[-.17,-.6+offset],[-.04,-.54+offset],[.09,-.61+offset],[.17,-.62+offset]],"rgba(255,242,222,.4)",.003);
-      }
-      const random=randomGenerator(9371);
-      for(let index=0;index<105;index++){
-        const positionY=-.45+random()*1.54;const positionX=(random()-.5)*1.1;
-        ellipse(positionX,positionY,.0018+random()*.0018,.002,index%3?"rgba(255,244,222,.37)":"rgba(185,209,228,.33)");
-      }
-      context.restore();
-      curve([[-.12,-.09],[-.03,-.06],[.04,-.06],[.115,-.09]],"#d8c1b0",.008);
-      ellipse(.002,-.077,.01,.009,"#fff1cf");
-      traceShape(context,girlShapes.find(shape=>shape.part==="face"));
-      context.save();context.clip();
-      const cheek=context.createRadialGradient(-.102,-.947,.002,-.102,-.947,.067);
-      cheek.addColorStop(0,"rgba(226,137,149,.28)");cheek.addColorStop(1,"rgba(223,145,157,0)");
-      ellipse(-.102,-.947,.067,.067,cheek);
-      ellipse(-.114,-1.013,.037,.017,"#fff0e1",-.14);
-      ellipse(-.133,-1.013,.009,.011,"#6a5865");
-      ellipse(-.135,-1.014,.004,.007,"#292d43");
-      ellipse(-.137,-1.017,.0025,.0025,"#fff6e8");
-      curve([[-.151,-1.014],[-.13,-1.032],[-.103,-1.025],[-.079,-1.023]],"#49353e",.005);
-      curve([[-.151,-1.014],[-.159,-1.016],[-.158,-1.023],[-.159,-1.026]],"#49353e",.003);
-      context.restore();
-      curve([[-.146,-1.044],[-.122,-1.055],[-.101,-1.054],[-.082,-1.049]],"rgba(85,58,67,.76)",.004);
-      ellipse(-.122,-.942,.023,.009,"rgba(202,122,138,.16)",-.2);
-      curve([[-.168,-.928],[-.157,-.931],[-.15,-.924],[-.143,-.927]],"#b87585",.004);
-      curve([[-.162,-.919],[-.155,-.916],[-.148,-.919],[-.143,-.921]],"rgba(255,230,224,.7)",.003);
-      ellipse(.077,-.945,.012,.019,"#ddb9a8");
-      ellipse(.079,-.918,.006,.02,"#fce1b3");
-      curve([[-.105,-.748],[-.035,-.694],[.03,-.693],[.11,-.725]],"rgba(242,214,184,.6)",.003);
-      ellipse(.002,-.705,.005,.009,"#fff0d1");
-      for(let index=0;index<7;index++){
-        const offset=index*.016;
-        curve([[.09+offset,-1.19],[.24+offset,-.92],[.1+offset,-.43],[.26+offset,.12]],"rgba(194,159,169,.22)",.0025);
-      }
-      for(let index=0;index<5;index++){
-        const angle=index/5*TAU;
-        ellipse(.14+Math.cos(angle)*.018,-1.04+Math.sin(angle)*.018,.017,.008,"#f1c2cb",angle);
-      }
-      ellipse(.14,-1.04,.006,.006,"#ffe6bc");
-    }
-
-    featherPortrait(surface, reveal) {
-      if (reveal >= 1) return;
-      const context = surface.getContext("2d");
-      const feather = surface.height * .16;
-      const boundary = surface.height * (1 - reveal) * 1.2 - feather;
-      const mask = context.createLinearGradient(0, boundary, 0, boundary + feather);
-      mask.addColorStop(0, "rgba(255,255,255,0)");
-      mask.addColorStop(1, "rgba(255,255,255,1)");
-      context.save();
-      context.globalCompositeOperation = "destination-in";
-      context.fillStyle = mask;
-      context.fillRect(0, 0, surface.width, surface.height);
-      context.restore();
-    }
-
-    girlPortrait(context, positionX, positionY, scale, opacity, reveal = 1) {
-      if (opacity <= .001) return;
-      const density = Math.min(this.ratio || 1, 1.5);
-      if (!this.girlSurface) {
-        const surface = this.makeSurface(scale * 1.4 * density, scale * 2.55 * density);
-        if (surface) {
-          const cached = surface.getContext("2d");
-          cached.translate(surface.width / 2, scale * density * 1.32);
-          cached.scale(scale * density, scale * density);
-          this.paintGirl(cached);
-        }
-        this.girlSurface = surface;
-      }
-      context.save();
-      context.globalAlpha *= opacity;
-      if (this.girlSurface) {
-        let portrait=this.girlSurface;
-        if(reveal<1) {
-          if(!this.girlRevealSurface)this.girlRevealSurface=this.makeSurface(portrait.width,portrait.height);
-          if(this.girlRevealSurface) {
-            const target=this.girlRevealSurface.getContext("2d");
-            target.clearRect(0,0,portrait.width,portrait.height);target.drawImage(portrait,0,0);
-            this.featherPortrait(this.girlRevealSurface, reveal);
-            portrait=this.girlRevealSurface;
-          }
-        }
-        context.drawImage(portrait, positionX - this.girlSurface.width / density / 2, positionY - scale * 1.32, this.girlSurface.width / density, this.girlSurface.height / density);
-      }
-      else {
-        context.translate(positionX, positionY);
-        context.scale(scale, scale);
-        this.paintGirl(context);
-      }
-      context.restore();
-    }
-
-    drawSuitor(context, state) {
-      const kneel = state.kneel;
-      const offer = state.offer;
-      const hip = { x: -1.15, y: .02 + kneel * .43 };
-      const shoulder = { x: -1.19 + kneel * .1, y: -.72 + kneel * .47 };
-      const neck = { x: shoulder.x + .022, y: shoulder.y - .095 };
-      const head = { x: neck.x + .025, y: neck.y - .135 };
-      const kneeFront = { x: -.95 + kneel * .26, y: .57 + kneel * .055 };
-      const footFront = { x: -.9 + kneel * .3, y: 1.05 };
-      const kneeBack = { x: -1.37 - kneel * .14, y: .6 + kneel * .45 };
-      const footBack = { x: -1.43 - kneel * .32, y: 1.05 };
-      const hand = { x: shoulder.x + .22 + offer * .5, y: shoulder.y + .49 - offer * .44 };
-      const elbow = { x: shoulder.x + .1 + offer * .17, y: shoulder.y + .4 - offer * .07 };
-      const line = (points, color, width) => {
-        context.beginPath();
-        context.moveTo(points[0].x, points[0].y);
-        points.slice(1).forEach(point => context.lineTo(point.x, point.y));
-        context.strokeStyle = color;
-        context.lineWidth = width;
-        context.lineCap = "round";
-        context.lineJoin = "round";
-        context.stroke();
-      };
-      const polygon = (points, color) => {
-        context.beginPath();
-        context.moveTo(...points[0]);
-        points.slice(1).forEach(point => context.lineTo(...point));
-        context.closePath();
-        context.fillStyle = color;
-        context.fill();
-      };
-      const limb = (start, middle, end, upperWidth, lowerWidth, material) => {
-        const upperAngle = Math.atan2(middle.y - start.y, middle.x - start.x) + Math.PI / 2;
-        const lowerAngle = Math.atan2(end.y - middle.y, end.x - middle.x) + Math.PI / 2;
-        const upper = { x: Math.cos(upperAngle) * upperWidth, y: Math.sin(upperAngle) * upperWidth };
-        const lower = { x: Math.cos(lowerAngle) * lowerWidth, y: Math.sin(lowerAngle) * lowerWidth };
-        context.beginPath();
-        context.moveTo(start.x + upper.x, start.y + upper.y);
-        context.lineTo(middle.x + upper.x * .7, middle.y + upper.y * .7);
-        context.quadraticCurveTo(middle.x + upper.x, middle.y + upper.y, middle.x + lower.x, middle.y + lower.y);
-        context.lineTo(end.x + lower.x, end.y + lower.y);
-        context.lineTo(end.x - lower.x, end.y - lower.y);
-        context.lineTo(middle.x - lower.x, middle.y - lower.y);
-        context.quadraticCurveTo(middle.x - upper.x, middle.y - upper.y, middle.x - upper.x * .7, middle.y - upper.y * .7);
-        context.lineTo(start.x - upper.x, start.y - upper.y);
-        context.closePath();
-        context.fillStyle = material;
-        context.fill();
-      };
-      const face = context.createLinearGradient(head.x - .13, head.y, head.x + .21, head.y + .15);
-      face.addColorStop(0,"#9f7a8d");
-      face.addColorStop(.52,"#edc7b7");
-      face.addColorStop(1,"#f9decb");
-      const jacket = context.createLinearGradient(shoulder.x - .2, shoulder.y, shoulder.x + .2, shoulder.y + .1);
-      jacket.addColorStop(0,"#141e39");
-      jacket.addColorStop(.4,"#394e72");
-      jacket.addColorStop(.7,"#203451");
-      jacket.addColorStop(1,"#6d7291");
-      limb(hip,kneeBack,footBack,.083,.052,"#17243a");
-      limb(hip,kneeFront,footFront,.087,.05,"#2c3c53");
-      line([{x:hip.x+.045,y:hip.y+.03},kneeFront,{x:footFront.x-.02,y:1}],"rgba(166,183,214,.26)",.007);
-      line([{x:footFront.x-.075,y:1.075},{x:footFront.x+.12,y:1.075}],"#111a2c",.055);
-      line([{x:footBack.x-.1,y:1.075},{x:footBack.x+.07,y:1.075}],"#131d32",.053);
-      const restingHand = { x: kneeFront.x - .045, y: kneeFront.y - .09 };
-      limb({x:shoulder.x-.08,y:shoulder.y+.02},{x:shoulder.x-.13,y:shoulder.y+.41},restingHand,.062,.028,"#24334e");
-      this.paintHand(context, restingHand.x, restingHand.y, 1, .38);
-      context.beginPath();context.moveTo(shoulder.x-.15,shoulder.y+.025);context.quadraticCurveTo(shoulder.x-.07,shoulder.y-.035,shoulder.x+.115,shoulder.y+.005);context.bezierCurveTo(shoulder.x+.14,shoulder.y+.16,hip.x+.085,hip.y-.09,hip.x+.13,hip.y+.115);context.quadraticCurveTo(hip.x-.04,hip.y+.14,hip.x-.145,hip.y+.095);context.closePath();context.fillStyle=jacket;context.fill();
-      polygon([[neck.x-.06,shoulder.y-.025],[neck.x+.095,shoulder.y-.025],[shoulder.x+.035,shoulder.y+.42]],"#e7e2df");
-      polygon([[neck.x+.015,shoulder.y+.04],[neck.x+.045,shoulder.y+.09],[shoulder.x+.05,shoulder.y+.32],[shoulder.x+.02,shoulder.y+.35],[shoulder.x+.005,shoulder.y+.3]],"#a78098");
-      polygon([[shoulder.x-.115,shoulder.y+.015],[shoulder.x-.044,shoulder.y+.035],[shoulder.x+.025,shoulder.y+.35],[shoulder.x-.09,shoulder.y+.18],[shoulder.x-.05,shoulder.y+.14]],"#57617d");
-      polygon([[shoulder.x+.095,shoulder.y+.01],[shoulder.x+.14,shoulder.y+.15],[shoulder.x+.098,shoulder.y+.21],[shoulder.x+.025,shoulder.y+.35]],"#485674");
-      line([{x:shoulder.x-.044,y:shoulder.y+.035},{x:shoulder.x+.025,y:shoulder.y+.35}],"rgba(182,188,211,.46)",.005);
-      context.fillStyle = "#a4a6b5";
-      for (let button = 0; button < 2; button++) { context.beginPath();context.arc(shoulder.x+.04,shoulder.y+.43+button*.11,.005,0,TAU);context.fill(); }
-      line([{x:neck.x,y:neck.y-.02},{x:neck.x,y:shoulder.y+.02}],face,.085);
-      context.save();
-      context.translate(head.x,head.y);
-      context.rotate(-.05-kneel*.18);
-      context.beginPath();context.moveTo(-.087,-.11);context.bezierCurveTo(-.06,-.18,.067,-.16,.092,-.087);context.quadraticCurveTo(.09,-.047,.106,-.013);context.quadraticCurveTo(.117,.008,.132,.023);context.quadraticCurveTo(.131,.037,.102,.04);context.lineTo(.104,.065);context.quadraticCurveTo(.118,.075,.1,.083);context.lineTo(.103,.099);context.quadraticCurveTo(.075,.13,.037,.135);context.lineTo(-.042,.082);context.lineTo(-.075,.04);context.closePath();context.fillStyle=face;context.fill();
-      context.strokeStyle="rgba(116,77,94,.3)";context.lineWidth=.003;context.beginPath();context.moveTo(.1,.099);context.quadraticCurveTo(.068,.116,.037,.135);context.lineTo(-.042,.082);context.stroke();
-      const hair=context.createLinearGradient(-.1,-.18,.1,.03);hair.addColorStop(0,"#151e32");hair.addColorStop(.45,"#3d3544");hair.addColorStop(1,"#242c40");
-      context.beginPath();context.moveTo(-.092,.04);context.bezierCurveTo(-.13,-.024,-.116,-.16,-.055,-.18);context.bezierCurveTo(-.024,-.196,.016,-.219,.041,-.191);context.quadraticCurveTo(.112,-.186,.12,-.118);context.quadraticCurveTo(.07,-.079,.014,-.103);context.quadraticCurveTo(-.027,-.112,-.034,-.018);context.lineTo(-.054,.042);context.closePath();context.fillStyle=hair;context.fill();
-      for(let strand=0;strand<4;strand++){context.strokeStyle="rgba(160,146,164,.3)";context.lineWidth=.002;context.beginPath();context.moveTo(-.096+strand*.012,-.08);context.bezierCurveTo(-.07,-.16,.01,-.18,.087,-.134+strand*.008);context.stroke();}
-      line([{x:.038,y:-.035},{x:.079,y:-.04}],"#493442",.006);
-      context.fillStyle="#fce7d7";context.beginPath();context.ellipse(.061,-.017,.022,.009,-.12,0,TAU);context.fill();
-      context.fillStyle="#35354b";context.beginPath();context.ellipse(.074,-.018,.005,.007,0,0,TAU);context.fill();
-      line([{x:.04,y:-.022},{x:.067,y:-.03},{x:.083,y:-.023}],"#3c3442",.0035);
-      line([{x:.101,y:.073},{x:.088,y:.077}],"#9d687c",.003);
-      context.fillStyle="#d5a398";context.beginPath();context.ellipse(-.063,.031,.016,.026,-.12,0,TAU);context.fill();
-      context.restore();
-      limb(shoulder,elbow,{x:hand.x-.03,y:hand.y},.067,.028,jacket);
-      line([{x:elbow.x,y:elbow.y-.045},{x:hand.x-.055,y:hand.y-.027}],"rgba(192,197,219,.35)",.005);
-      line([{x:hand.x-.065,y:hand.y},{x:hand.x-.018,y:hand.y}],"#eee4de",.052);
-      this.paintHand(context,hand.x,hand.y,1,-.12,true);
-      return hand;
-    }
-
-    suitorPortrait(context, state, scale) {
-      const density = Math.min(this.ratio || 1, 1.5);
-      const resolution = scale * density;
-      if (!this.suitorSurface) this.suitorSurface = this.makeSurface(resolution * 2.3, resolution * 2.6);
-      if (!this.suitorSurface) return this.drawSuitor(context, state);
-      if (this.suitorPose !== state) {
-        const portrait = this.suitorSurface.getContext("2d");
-        portrait.clearRect(0, 0, this.suitorSurface.width, this.suitorSurface.height);
-        portrait.save();
-        portrait.translate(resolution * 2, resolution * 1.32);
-        portrait.scale(resolution, resolution);
-        this.suitorHand = this.drawSuitor(portrait, state);
-        portrait.restore();
-        this.featherPortrait(this.suitorSurface, this.reduced ? 1 : state.arrival);
-        this.suitorPose = state;
-      }
-      context.drawImage(this.suitorSurface, -2, -1.32, this.suitorSurface.width / resolution, this.suitorSurface.height / resolution);
-      return this.suitorHand;
-    }
-
-    entranceStardust(elapsed) {
-      if(this.reduced || elapsed<21 || elapsed>30) return;
-      const context=this.context;
-      const layout=proposalLayout(this.width,this.height);
-      const progress=smoothStep((elapsed-21)/7);
-      const fade=smoothStep((elapsed-21)/1.5)*(1-smoothStep((elapsed-27)/3));
-      const count=this.width<600?90:150;
-      context.save();context.globalCompositeOperation="lighter";
-      for(let index=0;index<count;index++) {
-        const along=index/(count-1);
-        const angle=along*TAU*2.2+elapsed*.55;
-        const radius=layout.scale*(.8-along*.4)*(1-progress*.35);
-        const positionX=layout.centerX+layout.scale*.1+Math.cos(angle)*radius;
-        const positionY=layout.groundY-along*layout.scale*2.6+Math.sin(angle)*layout.scale*.1;
-        this.point(positionX,positionY,index%9===0?1.2:.55,index%3?"255,217,176":"236,177,206",fade*(.12+along*.22));
-      }
-      context.restore();
-    }
-
-    flutteringButterflies(elapsed,foreground) {
-      const context=this.context;
-      const count=this.width<600?3:5;
-      for(let index=0;index<count;index++) {
-        const state=butterflyState(index,elapsed,this.reduced);
-        if(state.opacity<.005 || (state.depth>0)!==foreground) continue;
-        const size=Math.min(this.width,this.height)*(.012+index*.001)*(1+state.depth*.17);
-        const positionX=state.x*this.width;const positionY=state.y*this.height;
-        context.save();context.translate(positionX,positionY);context.rotate(state.rotation);
-        context.globalAlpha=state.opacity*(.7+state.depth*.15);
-        for(const side of [-1,1]) {
-          context.save();context.scale(side*(.22+state.flap*.78),1);
-          const wing=context.createLinearGradient(0,0,size*1.25,-size*.6);
-          wing.addColorStop(0,index%2?"#a98cbd":"#ba8c99");wing.addColorStop(.56,index%2?"#c6c8ef":"#f3c5d0");wing.addColorStop(1,"#fff0d7");
-          context.fillStyle=wing;context.strokeStyle="rgba(252,227,205,.68)";context.lineWidth=.55;
-          context.beginPath();context.moveTo(0,0);context.bezierCurveTo(size*.25,-size*.92,size*1.46,-size*1.24,size*1.2,-size*.14);context.bezierCurveTo(size*1.05,size*.15,size*.45,size*.1,0,0);context.fill();context.stroke();
-          context.beginPath();context.moveTo(0,0);context.bezierCurveTo(size*.96,-size*.04,size*1.11,size*.69,size*.49,size*.7);context.bezierCurveTo(size*.16,size*.64,size*.08,size*.2,0,0);context.fill();context.stroke();
-          context.strokeStyle="rgba(100,81,130,.3)";context.lineWidth=.4;
-          for(let vein=0;vein<3;vein++){context.beginPath();context.moveTo(0,0);context.quadraticCurveTo(size*.35,-size*.17,size*(.55+vein*.22),-size*(.25+vein*.22));context.stroke();}
-          context.restore();
-        }
-        context.strokeStyle="#ebd2bd";context.lineWidth=.85;context.beginPath();context.moveTo(0,-size*.32);context.lineTo(0,size*.42);context.stroke();
-        context.lineWidth=.45;context.beginPath();context.moveTo(0,-size*.3);context.quadraticCurveTo(-size*.14,-size*.58,-size*.22,-size*.57);context.moveTo(0,-size*.3);context.quadraticCurveTo(size*.14,-size*.58,size*.22,-size*.57);context.stroke();
-        context.restore();
-      }
-    }
-
-    proposalScene(elapsed) {
-      const context = this.context;
-      const state = proposalState(elapsed, this.reduced);
-      const opacity = state.reveal * state.farewell;
-      if (opacity <= .001) return;
-      const { scale, centerX, centerY, groundY } = proposalLayout(this.width, this.height);
-      const time = this.reduced ? 38 : elapsed;
-      const girlX = centerX + scale * .47;
-      const manX = centerX;
-      const lift = 0;
-      context.save();
-      context.globalAlpha *= opacity;
-      this.glow(girlX,centerY-scale*.4,scale*1.25,"215,161,205",.16);
-      context.fillStyle = "rgba(6,10,24,.5)";
-      context.beginPath();
-      context.ellipse(centerX-scale*.38,groundY+scale*.04,scale*1.36,scale*.11,0,0,TAU);
-      context.fill();
-      context.strokeStyle = "rgba(235,195,173,.15)";
-      context.lineWidth = .7;
-      context.beginPath();
-      context.ellipse(centerX-scale*.4,groundY+scale*.03,scale*1.45,scale*.14,0,0,TAU);
-      context.stroke();
-      this.girlPortrait(context,girlX,centerY+lift,scale,1,state.reveal);
-      context.save();
-      context.translate(0,groundY*1.22);
-      context.scale(1,-.22);
-      this.girlPortrait(context,girlX,centerY,scale,.13,state.reveal);
-      context.restore();
-      context.save();
-      context.translate(manX,centerY+lift);
-      context.scale(scale,scale);
-      context.globalAlpha *= state.arrival;
-      const hand = this.suitorPortrait(context, state, scale);
-      context.restore();
-      context.save();
-      context.translate(0,groundY*1.22);
-      context.scale(1,-.22);
-      context.translate(manX,centerY+lift);
-      context.scale(scale,scale);
-      context.globalAlpha *= state.arrival*.1;
-      this.suitorPortrait(context, state, scale);
-      context.restore();
-      const ringX = manX + (hand.x+.02)*scale;
-      const ringY = centerY + (hand.y-.14)*scale + lift;
-      if (state.arrival > .01) {
-        context.save();
-        context.globalAlpha *= state.arrival;
-        context.translate(ringX,ringY+scale*.09);
-        context.rotate(-.08-state.offer*.09);
-        context.fillStyle = "#704564";
-        context.strokeStyle = "#e3b5c3";
-        context.lineWidth = .7;
-        context.fillRect(-scale*.085,-scale*.035,scale*.17,scale*.075);
-        context.strokeRect(-scale*.085,-scale*.035,scale*.17,scale*.075);
-        context.rotate(-state.offer*1.08);
-        context.fillStyle = "#392c50";
-        context.fillRect(-scale*.085,-scale*.115,scale*.17,scale*.083);
-        context.strokeRect(-scale*.085,-scale*.115,scale*.17,scale*.083);
-        context.restore();
-      }
-      if (state.offer > .01) {
-        context.save();
-        context.globalAlpha *= state.offer;
-        this.glow(ringX,ringY-scale*.035,scale*.38,"255,225,177",.3);
-        context.strokeStyle = "#f7dbab";
-        context.lineWidth = Math.max(1,scale*.012);
-        context.beginPath();
-        context.ellipse(ringX,ringY,scale*.043,scale*.054,-.2,0,TAU);
-        context.stroke();
-        context.fillStyle = "#e4f7ff";
-        context.beginPath();
-        context.moveTo(ringX-scale*.044,ringY-scale*.059);
-        context.lineTo(ringX-scale*.024,ringY-scale*.091);
-        context.lineTo(ringX+scale*.026,ringY-scale*.091);
-        context.lineTo(ringX+scale*.047,ringY-scale*.059);
-        context.lineTo(ringX,ringY-scale*.018);
-        context.closePath();
-        context.fill();
-        context.strokeStyle = "#93c8e3";
-        context.lineWidth = .6;
-        context.stroke();
-        context.beginPath();
-        context.moveTo(ringX-scale*.044,ringY-scale*.059);
-        context.lineTo(ringX+scale*.047,ringY-scale*.059);
-        context.moveTo(ringX-scale*.024,ringY-scale*.091);
-        context.lineTo(ringX,ringY-scale*.018);
-        context.lineTo(ringX+scale*.026,ringY-scale*.091);
-        context.stroke();
-        const shimmer = .65 + Math.sin(time*1.8)*.16;
-        context.globalAlpha *= shimmer;
-        context.strokeStyle = "#fff6d8";
-        context.lineWidth = 1;
-        context.beginPath();
-        context.moveTo(ringX-scale*.09,ringY-scale*.062);
-        context.lineTo(ringX+scale*.09,ringY-scale*.062);
-        context.moveTo(ringX,ringY-scale*.15);
-        context.lineTo(ringX,ringY+scale*.025);
-        context.stroke();
-        context.restore();
-      }
-      if (state.reveal > .001) {
-        context.save();
-        context.globalAlpha *= smoothStep((state.reveal - .58) / .3);
-        const handX = (girlX-scale*.19)*(1-state.reach) + (ringX+scale*.15)*state.reach;
-        const handY = (centerY-scale*.1)*(1-state.reach) + (ringY-scale*.04)*state.reach;
-        const shoulderX = girlX-scale*.19;
-        const shoulderY = centerY-scale*.7;
-        const elbowX = girlX-scale*(.27+.05*state.reach);
-        const elbowY = centerY-scale*(.25+.08*state.reach);
-        const arm = [
-          ...sampleCurve([[shoulderX,shoulderY],[shoulderX-scale*.07,shoulderY+scale*.16],[elbowX+scale*.02,elbowY-scale*.1],[elbowX,elbowY]],18),
-          ...sampleCurve([[elbowX,elbowY],[elbowX-scale*.065,elbowY+scale*.045],[handX+scale*.1,handY+scale*.01],[handX,handY]],22).slice(1)
-        ];
-        const edges = arm.map((point,index) => {
-          const previous = arm[Math.max(0,index-1)];
-          const next = arm[Math.min(arm.length-1,index+1)];
-          const normal = Math.atan2(next.y-previous.y,next.x-previous.x)+Math.PI/2;
-          const radius = scale * (.028-index/(arm.length-1)*.017);
-          return { left:[point.x+Math.cos(normal)*radius,point.y+Math.sin(normal)*radius],right:[point.x-Math.cos(normal)*radius,point.y-Math.sin(normal)*radius] };
-        });
-        context.beginPath();context.moveTo(...edges[0].left);edges.slice(1).forEach(edge=>context.lineTo(...edge.left));[...edges].reverse().forEach(edge=>context.lineTo(...edge.right));context.closePath();
-        const skin = context.createLinearGradient(shoulderX-scale*.04,shoulderY,shoulderX+scale*.05,shoulderY);
-        skin.addColorStop(0,"#cf9ca0");skin.addColorStop(.45,"#f7d6c5");skin.addColorStop(1,"#edbfad");
-        context.fillStyle=skin;context.fill();
-        context.translate(handX,handY);context.scale(scale,scale);
-        this.paintHand(context,0,0,-1,-.8*(1-state.reach));
-        context.restore();
-      }
-      context.save();
-      context.globalCompositeOperation = "lighter";
-      const count = this.width < 600 ? 48 : 78;
-      for (let index = 0; index < count; index++) {
-        const progress = (index/count + time*.025)%1;
-        const angle = progress*TAU;
-        const radius = scale*(1.22 + Math.sin(index*13)*.1);
-        const positionX = centerX-scale*.4+Math.cos(angle)*radius;
-        const positionY = centerY+Math.sin(angle)*radius*.82;
-        this.point(positionX,positionY,index%11===0?1.3:.6,index%3?"gold":"pink",opacity*(.12+state.offer*.18));
-      }
-      if (state.offer > .05) {
-        for (let index = 0; index < 70; index++) {
-          const angle = index/70*TAU;
-          const size = scale*.17;
-          const positionX = ringX+Math.sin(angle)**3*size;
-          const positionY = ringY-scale*.43-(13*Math.cos(angle)-5*Math.cos(2*angle)-2*Math.cos(3*angle)-Math.cos(4*angle))/16*size;
-          this.point(positionX,positionY,.7,index%4?"255,190,212":"255,225,175",state.offer*.63);
-        }
-      }
-      context.restore();
-      context.restore();
-    }
-
     meteors() {
       const context = this.context;
       const elapsed = this.reduced ? this.elapsed || 33 : this.elapsed;
@@ -1355,12 +710,9 @@
       if (chapter !== this.chapter) { this.chapter = chapter; this.onChapter(meteorChapters[chapter], chapter); }
       const paint = smoothStep((elapsed - 7) / 7);
       const finale = smoothStep((elapsed - 23) / 7);
-      this.starrySky(elapsed, (.1 + paint * .64) * (1 - finale * .45));
+      this.starrySky(elapsed, (.1 + paint * .64) * (1 - finale * .65));
       this.waterSurface(elapsed, finale);
       this.sakuraTree(elapsed, finale);
-      this.entranceStardust(elapsed);
-      this.flutteringButterflies(elapsed,false);
-      this.proposalScene(elapsed);
       context.save();
       context.globalCompositeOperation = "lighter";
       const rainOpacity = 1 - smoothStep((elapsed - 13) / 5);
@@ -1369,22 +721,19 @@
         this.meteorShots = this.meteorShots.filter(event => elapsed - event.start < event.flight + 3.5);
         this.meteorShots.forEach(event => this.fallingMeteor(event, elapsed, 1));
       }
-      const layout = proposalLayout(this.width, this.height);
-      const scale = layout.scale;
-      const centerX = layout.centerX + scale * .47;
-      const centerY = layout.centerY;
-      const state = proposalState(elapsed, this.reduced);
-      const yaw = this.reduced ? -.025 : Math.sin(elapsed * .23) * .035 + this.pointer.x * .07;
+      const scale = this.width < 600 ? Math.min(this.width * .35, this.height * .24) : Math.min(this.width * .26, this.height * .225);
+      const centerX = this.width / 2;
+      const centerY = this.height * .39;
+      const yaw = this.reduced ? -.04 : Math.sin(elapsed * .23) * .06 + this.pointer.x * .16;
       const particleBatches = new Map();
       this.points.forEach((particle, index) => {
-        const particleState = meteorParticleState(particle, elapsed, this.reduced && elapsed >= 24);
+        const state = meteorParticleState(particle, elapsed, this.reduced && elapsed >= 24);
         if (elapsed < 6 && !this.reduced) return;
-        const parallax = Math.sin(particle.phase) * .06 * (1 - particleState.gather) + particle.z * particleState.gather;
-        const positionX = centerX + (particleState.x * Math.cos(yaw) + parallax * Math.sin(yaw)) * scale;
-        const positionY = centerY + particleState.y * scale;
-        const settledOpacity = ["face", "skin", "shoe", "fringe", "hair"].includes(particle.part) ? .005 : .055;
-        const alpha = particleState.alpha * (particleState.gather > .9 ? settledOpacity : .12) * state.farewell * (this.reduced ? 1 : Math.min(1, (elapsed - 6) / 3));
-        const color = particleState.gather < .2 ? index % 4 === 0 ? "255,214,124" : "113,179,251" : particle.color;
+        const parallax = Math.sin(particle.phase) * .06 * (1 - state.gather);
+        const positionX = centerX + (state.x * Math.cos(yaw) + parallax * Math.sin(yaw)) * scale;
+        const positionY = centerY + state.y * scale;
+        const alpha = state.alpha * (state.gather > .9 ? .95 : .28) * (this.reduced ? 1 : Math.min(1, (elapsed - 6) / 3));
+        const color = state.gather < .2 ? index % 4 === 0 ? "255,214,124" : "113,179,251" : particle.color;
         if (index % 17 === 0) this.point(positionX, positionY, particle.size * 3, color, alpha * .065);
         if (alpha <= .005) return;
         const opacity = Math.max(.025, Math.round(alpha * 12) / 12);
@@ -1398,8 +747,19 @@
           context.fillRect(particle.x - particle.radius, particle.y - particle.radius, particle.radius * 2, particle.radius * 2);
         });
       });
+      if (finale > .05) {
+        for (let index = 0; index < 150; index++) {
+          const angle = index / 150 * TAU;
+          const radius = scale * (1.1 + Math.sin(angle * 4 + elapsed * .2) * .12);
+          this.point(centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius * .83, index % 11 === 0 ? 1.3 : .5, index % 2 ? "pink" : "gold", finale * .28);
+        }
+        for (let index = 0; index < 55; index++) {
+          const angle = index / 54 * TAU;
+          const size = scale * .17;
+          this.point(centerX + scale * .66 + Math.sin(angle) ** 3 * size, centerY - scale * .25 - (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) / 16 * size, 1, "255,154,206", finale * .8);
+        }
+      }
       context.restore();
-      this.flutteringButterflies(elapsed,true);
     }
 
     render() {
@@ -1542,5 +902,5 @@
     }
   }
 
-  window.RomanceParticles = Object.freeze({ Theatre, NameDedication, makeGirlParticles, makeMeteorEvents, makeSakuraTree, meteorEventState, meteorParticleState, proposalState, proposalLayout, butterflyState, meteorChapters, duration });
+  window.RomanceParticles = Object.freeze({ Theatre, NameDedication, makeGirlParticles, makeMeteorEvents, makeSakuraTree, meteorEventState, meteorParticleState, meteorChapters, duration });
 })();
